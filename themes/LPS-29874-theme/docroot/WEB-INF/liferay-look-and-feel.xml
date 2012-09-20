@@ -9,6 +9,6 @@
     <!--
     <template-extension>ftl</template-extension>
     -->
-    <template-extension>vm</template-extension>
+    <template-extension>ftl</template-extension>
   </theme>
 </look-and-feel>

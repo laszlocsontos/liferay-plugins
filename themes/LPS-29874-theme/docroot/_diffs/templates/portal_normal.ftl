@@ -6,8 +6,17 @@
 
 <head>
 
-  <!-- Include jQuery -->
-  <@liferay.js file_name="${javascript_folder}/jquery.js" />
+  <!-- Include main js file -->
+  <@liferay.js file_name="${js_main_file}" />
+
+  <!-- Include main css file -->
+  <@liferay.css file_name="${css_main_file}" />
+
+  <!-- Include test.js -->
+  <@liferay.js file_name="${javascript_folder}/test.js" />
+
+  <!-- Include test.css -->
+  <@liferay.css file_name="${css_folder}/test.css" />
 
 	<title>${the_title} - ${company_name}</title>
 

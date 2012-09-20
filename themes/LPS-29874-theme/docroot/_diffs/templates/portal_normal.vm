@@ -6,8 +6,17 @@
 
 <head>
 
-  <!-- Include jQuery -->
-  #js("$javascript_folder/jquery.js")
+  <!-- Include main js file -->
+  #js($js_main_file)
+
+  <!-- Include main css file -->
+  #css($css_main_file)
+
+  <!-- Include test.js -->
+  #js("${javascript_folder}/test.js")
+
+  <!-- Include test.css -->
+  #css("${css_folder}/test.css")
 
 	<title>$the_title - $company_name</title>
 
