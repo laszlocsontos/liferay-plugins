@@ -62,8 +62,8 @@ String subject = PrivateMessagingUtil.getThreadSubject(mbThreadId);
 		if (!hasExistingRecipients) {
 			hasExistingRecipients = curUser.isActive();
 		}
-		
-		curUser = curUser.toEscapedModel();
+
+		User curUserEscaped = curUser.toEscapedModel();
 	%>
 
 		<c:choose>
@@ -74,16 +74,16 @@ String subject = PrivateMessagingUtil.getThreadSubject(mbThreadId);
 					<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 				</liferay-portlet:actionURL>
 
-				<a class="profile-link" href="<%= publicPagesURL %>"><%= curUser.getFullName() %></a>
+				<a class="profile-link" href="<%= publicPagesURL %>"><%= curUserEscaped.getFullName() %></a>
 			</c:when>
 			<c:otherwise>
 				<c:choose>
 					<c:when test="<%= curUser.isActive() %>">
-						<span class="profile-link"><%= curUser.getFullName() %></span>
+						<span class="profile-link"><%= curUserEscaped.getFullName() %></span>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:icon-help message="deleted-user">
-							<span class="profile-link line-through"><%= curUser.getFullName() %></span>
+							<span class="profile-link line-through"><%= curUserEscaped.getFullName() %></span>
 						</liferay-ui:icon-help>
 					</c:otherwise>
 				</c:choose>
@@ -153,7 +153,7 @@ String subject = PrivateMessagingUtil.getThreadSubject(mbThreadId);
 				curUser.setStatus(WorkflowConstants.STATUS_INACTIVE);
 			}
 
-			curUser = curUser.toEscapedModel();
+			User curUserEscaped = curUser.toEscapedModel();
 			%>
 
 			<div class="message">
@@ -166,20 +166,20 @@ String subject = PrivateMessagingUtil.getThreadSubject(mbThreadId);
 						</liferay-portlet:actionURL>
 
 						<span class="name">
-							<a class="profile-link" href="<%= publicPagesURL %>"><%= curUser.getFullName() %></a>
+							<a class="profile-link" href="<%= publicPagesURL %>"><%= curUserEscaped.getFullName() %></a>
 						</span>
 					</c:when>
 					<c:otherwise>
 						<c:choose>
 							<c:when test="<%= curUser.isActive() %>">
 								<span class="name">
-									<span class="profile-link"><%= curUser.getFullName() %></span>
+									<span class="profile-link"><%= curUserEscaped.getFullName() %></span>
 								</span>
 							</c:when>
 							<c:otherwise>
 								<span class="name">
 									<liferay-ui:icon-help message="deleted-user">
-										<span class="profile-link line-through"><%= curUser.getFullName() %></span>
+										<span class="profile-link line-through"><%= curUserEscaped.getFullName() %></span>
 									</liferay-ui:icon-help>
 								</span>
 							</c:otherwise>
