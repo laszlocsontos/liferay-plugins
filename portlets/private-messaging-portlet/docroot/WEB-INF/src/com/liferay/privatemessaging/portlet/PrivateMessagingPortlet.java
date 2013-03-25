@@ -309,7 +309,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 				message = e.getMessage();
 			}
 			else {
-				message = getMessage(resourceRequest, e.getClass());
+				message = getMessage(resourceRequest, e);
 
 				_log.error(e);
 			}
@@ -323,7 +323,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 
 	protected String getMessage(
 			PortletRequest portletRequest,
-			Class<? extends Exception> exceptionClass, Object... arguments)
+			Exception exceptionClass, Object... arguments)
 		throws Exception {
 
 		String message = null;
@@ -367,19 +367,6 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 		}
 
 		return message;
-	}
-
-	protected <E extends PortalException> E getPortalException(
-			PortletRequest portletRequest, Class<E> exceptionClass,
-			Object... arguments)
-		throws Exception {
-
-		String message = getMessage(portletRequest, exceptionClass, arguments);
-
-		Constructor<E> exceptionConstructor = exceptionClass.getConstructor(
-			String.class);
-
-		return exceptionConstructor.newInstance(message);
 	}
 
 	protected void getUsers(
@@ -477,16 +464,19 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 			if ((fileMaxSize > 0) &&
 				((file == null) || (file.length() > fileMaxSize))) {
 
-				throw getPortalException(
-					portletRequest, FileSizeException.class,
+				String message = getMessage(
+					portletRequest, new FileSizeException(),
 					Long.valueOf(fileMaxSize / 1024));
+
+				throw new FileSizeException(message);
 			}
 		}
 
 		if (!isValidName(fileName)) {
+			String message = getMessage(
+				portletRequest, new FileNameException(), fileName);
 
-			throw getPortalException(
-				portletRequest, FileNameException.class, fileName);
+			throw new FileNameException(message);
 		}
 
 		String[] fileExtensions = PrefsPropsUtil.getStringArray(
@@ -505,9 +495,10 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 		}
 
 		if (!validFileExtension) {
+			String message = getMessage(
+				portletRequest, new FileExtensionException(), fileName);
 
-			throw getPortalException(
-				portletRequest, FileExtensionException.class, fileName);
+			throw new FileExtensionException(message);
 		}
 	}
 
@@ -551,8 +542,10 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 			sb.append(StringUtil.merge(failedRecipients, "', '"));
 			sb.append(StringPool.APOSTROPHE);
 
-			throw getPortalException(
-				portletRequest, UserScreenNameException.class, sb.toString());
+			String message = getMessage(
+				portletRequest, new UserScreenNameException(), sb.toString());
+
+			throw new UserScreenNameException(message);
 		}
 	}
 
@@ -566,9 +559,11 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 			long fileMaxSize = PrefsPropsUtil.getLong(
 				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 
-			throw getPortalException(
-				portletRequest, FileSizeException.class,
+			String message = getMessage(
+				portletRequest, new UserScreenNameException(),
 				Long.valueOf(fileMaxSize / 1024));
+
+			throw new FileSizeException(message);
 		}
 	}
 
