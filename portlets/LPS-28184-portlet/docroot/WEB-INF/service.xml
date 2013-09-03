@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.support">
+    <namespace>hd</namespace>
+
+    <entity name="Test" local-service="true" remote-service="false">
+        <!-- Primary key column -->
+        <column name="testId" type="long" primary="true" />
+
+        <!-- Foreign key columns -->
+        <column name="companyId" type="long" />
+        <column name="userId" type="long" />
+
+        <!-- Other columns -->		
+        <column name="test" type="String" />
+
+        <finder name="C_U" return-type="Collection">
+            <finder-column name="companyId" />
+            <finder-column name="userId" />
+        </finder> 
+    </entity>
+</service-builder>
