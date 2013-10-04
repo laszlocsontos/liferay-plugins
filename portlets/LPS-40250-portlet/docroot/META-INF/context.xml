@@ -1,0 +1,5 @@
+<Context
+antiJARLocking="false"
+antiResourceLocking="false">
+	<ResourceLink global="jdbc/myDB" name="jdbc/myDB" type="javax.sql.DataSource" />
+</Context>
