@@ -18,6 +18,11 @@
 		<property name="dataSource" ref="myDS" />
 	</bean>
 
+	<bean id="testDao"
+		class="com.liferay.support.TestDao">
+		<property name="dataSource" ref="myDS" />
+	</bean>
+
 	<tx:annotation-driven />
 
 </beans>
