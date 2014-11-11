@@ -54,6 +54,9 @@
 	<classpathentry kind="lib" path="lib/solr-core.jar" />
 	<classpathentry kind="lib" path="lib/solr-solrj.jar" />
 	<classpathentry kind="lib" path="lib/spatial4j.jar" />
+	<classpathentry kind="lib" path="lib/spring-asm.jar" />
+	<classpathentry kind="lib" path="lib/spring-beans.jar" />
+	<classpathentry kind="lib" path="lib/spring-core.jar" />
 	<classpathentry kind="lib" path="lib/wstx-asl.jar" />
 	<classpathentry kind="lib" path="lib/zookeeper.jar" />
 	<classpathentry kind="output" path="bin" />
