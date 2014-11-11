@@ -38,7 +38,35 @@
 			</list>
 		</property>
 		<property name="maxTotalConnections" value="20" />
+
+		<!--
+		<property name="username" value="solr" />
+		<property name="password" value="solr" />
+		-->
+
 	</bean>
+
+	<!--
+	<bean id="httpClientFactory" class="com.liferay.portal.search.solr.http.CertAuthPoolingHttpClientFactory">
+		<property name="defaultMaxConnectionsPerRoute" value="20" />
+		<property name="hostnameVerifier">
+			<bean class="org.apache.http.conn.ssl.AllowAllHostnameVerifier" />
+		</property>
+		<property name="httpRequestInterceptors">
+			<list>
+				<bean class="com.liferay.portal.search.solr.interceptor.PreemptiveAuthInterceptor" />
+			</list>
+		</property>
+		<property name="keyStoreLocation" value="/etc/pki/cert/client/keystore.jks" />
+		<property name="keyStorePassword" value="secret" />
+		<property name="keyStoreType" value="JKS" />
+		<property name="maxTotalConnections" value="20" />
+		<property name="trustStoreLocation" value="/etc/pki/cert/ca/truststore.jks" />
+		<property name="trustStorePassword" value="secret" />
+		<property name="trustStoreType" value="JKS" />
+	</bean>
+	-->
+
 	<bean id="com.liferay.portal.search.solr.http.HttpSolrServer" class="com.liferay.portal.search.solr.http.HttpSolrServer">
 		<property name="httpClient" ref="httpClientFactory" />
 		<property name="url" value="http://localhost:8080/solr" />
