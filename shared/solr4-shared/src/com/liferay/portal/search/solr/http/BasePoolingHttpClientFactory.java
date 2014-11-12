@@ -39,6 +39,10 @@ public class BasePoolingHttpClientFactory {
 	}
 
 	public DefaultHttpClient createInstance() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("createInstance()");
+		}
+
 		DefaultHttpClient defaultHttpClient = new DefaultHttpClient(
 			_poolingClientConnectionManager);
 
@@ -74,6 +78,10 @@ public class BasePoolingHttpClientFactory {
 	}
 
 	public void shutdown() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("shutdown()");
+		}
+
 		int retry = 0;
 
 		while (retry < 10) {
