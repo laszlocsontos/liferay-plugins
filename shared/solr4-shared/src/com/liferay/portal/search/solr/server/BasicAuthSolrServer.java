@@ -114,7 +114,9 @@ public class BasicAuthSolrServer extends HttpSolrServer {
 	public void shutdown() {
 		super.shutdown();
 
-		_httpClientFactory.destroyInstance();
+		if (isStopped()) {
+			_httpClientFactory.destroyInstance();
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(BasicAuthSolrServer.class);
