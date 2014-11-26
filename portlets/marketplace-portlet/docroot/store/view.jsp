@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <div class="loading-animation">
-	<iframe class="aui-helper-hidden-accessible" frameborder="0" id="<portlet:namespace />frame" name="<portlet:namespace />frame" scrolling="no" src="about:blank"></iframe>
+	<iframe class="hide-accessible" frameborder="0" id="<portlet:namespace />frame" name="<portlet:namespace />frame" scrolling="no" src="about:blank"></iframe>
 </div>
 
 <form action="<%= iFrameURL %>" id="<portlet:namespace />fm" method="post" target="<portlet:namespace />frame">
@@ -25,11 +25,11 @@
 <input name="mpClientURL" type="hidden" value="<%= themeDisplay.getPortalURL() + themeDisplay.getURLCurrent() %>" />
 </form>
 
-<div class="aui-helper-hidden time-out-message portlet-msg-error">
+<div class="alert alert-error hide time-out-message">
 	<liferay-ui:message key="could-not-connect-to-the-liferay-marketplace" />
 </div>
 
-<aui:script use="aui-base,aui-io,liferay-marketplace-messenger">
+<aui:script use="aui-base,aui-io,liferay-marketplace-messenger,liferay-marketplace-util">
 	var frame = A.one('#<portlet:namespace />frame');
 
 	var timeout = setTimeout(
@@ -57,7 +57,7 @@
 			if (response.cmd == 'init') {
 				clearTimeout(timeout);
 
-				frame.removeClass('aui-helper-hidden-accessible');
+				frame.removeClass('hide-accessible');
 
 				frame.ancestor().removeClass('loading-animation');
 
@@ -81,14 +81,14 @@
 			else if (response.cmd == 'goto') {
 				var url = null;
 
-				if (response.panel === "control-panel") {
+				if (response.panel === 'control-panel') {
 					url = '<%= themeDisplay.getURLControlPanel() %>';
 				}
 				else {
 					url = '<liferay-portlet:renderURL doAsGroupId="<%= themeDisplay.getScopeGroupId() %>" portletName="<%= portletId.equals(PortletKeys.STORE) ? PortletKeys.MY_MARKETPLACE : PortletKeys.STORE %>" windowState="<%= WindowState.MAXIMIZED.toString() %>" />';
 
 					if (response.appId) {
-						url = Liferay.Util.addParams('appId=' + response.appId, url);
+						url = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(PortletKeys.STORE) %>appId=' + response.appId, url);
 					}
 				}
 
@@ -104,10 +104,12 @@
 				}
 			}
 			else {
+				var data = Liferay.MarketplaceUtil.namespaceObject('<portlet:namespace />', response);
+
 				A.io.request(
 					'<portlet:actionURL />',
 					{
-						data: response,
+						data: data,
 						dataType: 'JSON',
 						method: 'POST',
 						on: {

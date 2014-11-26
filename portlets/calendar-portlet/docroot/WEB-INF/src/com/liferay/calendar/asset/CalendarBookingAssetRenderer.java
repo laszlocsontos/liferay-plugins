@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,35 +24,46 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 /**
  * @author Fabio Pezzutto
  * @author Eduardo Lundgren
+ * @author Pier Paolo Ramon
  */
-public class CalendarBookingAssetRenderer extends BaseAssetRenderer {
+public class CalendarBookingAssetRenderer
+	extends BaseAssetRenderer implements TrashRenderer {
 
 	public CalendarBookingAssetRenderer(CalendarBooking calendarBooking) {
 		_calendarBooking = calendarBooking;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return CalendarBookingAssetRendererFactory.CLASS_NAME;
+	@Override
+	public String getClassName() {
+		return CalendarBooking.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _calendarBooking.getCalendarBookingId();
 	}
 
+	@Override
 	public long getGroupId() {
 		return _calendarBooking.getGroupId();
 	}
@@ -62,12 +73,32 @@ public class CalendarBookingAssetRenderer extends BaseAssetRenderer {
 		return themeDisplay.getPathThemeImages() + "/common/date.png";
 	}
 
-	public String getSummary(Locale locale) {
-		return _calendarBooking.getDescription(locale);
+	@Override
+	public String getPortletId() {
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+
+		return assetRendererFactory.getPortletId();
 	}
 
+	@Override
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		Locale locale = getLocale(portletRequest);
+
+		String summary = _calendarBooking.getDescription(locale);
+
+		return StringUtil.shorten(HtmlUtil.stripHtml(summary), 200);
+	}
+
+	@Override
 	public String getTitle(Locale locale) {
 		return _calendarBooking.getTitle(locale);
+	}
+
+	@Override
+	public String getType() {
+		return CalendarBookingAssetRendererFactory.TYPE;
 	}
 
 	@Override
@@ -88,14 +119,41 @@ public class CalendarBookingAssetRenderer extends BaseAssetRenderer {
 		return portletURL;
 	}
 
+	@Override
+	public String getURLViewInContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		String noSuchEntryRedirect) {
+
+		try {
+			PortletURL portletURL = liferayPortletResponse.createRenderURL(
+				PortletKeys.CALENDAR);
+
+			portletURL.setParameter("mvcPath", "/view_calendar_booking.jsp");
+			portletURL.setParameter(
+				"calendarBookingId",
+				String.valueOf(_calendarBooking.getCalendarBookingId()));
+			portletURL.setWindowState(WindowState.MAXIMIZED);
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	@Override
 	public long getUserId() {
 		return _calendarBooking.getUserId();
 	}
 
+	@Override
 	public String getUserName() {
 		return _calendarBooking.getUserName();
 	}
 
+	@Override
 	public String getUuid() {
 		return _calendarBooking.getUuid();
 	}
@@ -135,6 +193,7 @@ public class CalendarBookingAssetRenderer extends BaseAssetRenderer {
 		return true;
 	}
 
+	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)

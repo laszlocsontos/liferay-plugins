@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -36,9 +35,8 @@ public class KaleoInstanceTokenImpl extends KaleoInstanceTokenBaseImpl {
 	public KaleoInstanceTokenImpl() {
 	}
 
-	public List<KaleoInstanceToken> getChildrenKaleoInstanceTokens()
-		throws SystemException {
-
+	@Override
+	public List<KaleoInstanceToken> getChildrenKaleoInstanceTokens() {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(getCompanyId());
@@ -47,15 +45,13 @@ public class KaleoInstanceTokenImpl extends KaleoInstanceTokenBaseImpl {
 			getKaleoInstanceTokenId(), serviceContext);
 	}
 
-	public KaleoNode getCurrentKaleoNode()
-		throws PortalException, SystemException {
-
+	@Override
+	public KaleoNode getCurrentKaleoNode() throws PortalException {
 		return KaleoNodeLocalServiceUtil.getKaleoNode(getCurrentKaleoNodeId());
 	}
 
-	public List<KaleoInstanceToken> getIncompleteChildrenKaleoInstanceTokens()
-		throws SystemException {
-
+	@Override
+	public List<KaleoInstanceToken> getIncompleteChildrenKaleoInstanceTokens() {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(getCompanyId());
@@ -64,23 +60,22 @@ public class KaleoInstanceTokenImpl extends KaleoInstanceTokenBaseImpl {
 			getKaleoInstanceTokenId(), null, serviceContext);
 	}
 
-	public KaleoInstance getKaleoInstance()
-		throws PortalException, SystemException {
-
+	@Override
+	public KaleoInstance getKaleoInstance() throws PortalException {
 		return KaleoInstanceLocalServiceUtil.getKaleoInstance(
 			getKaleoInstanceId());
 	}
 
+	@Override
 	public KaleoInstanceToken getParentKaleoInstanceToken()
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return KaleoInstanceTokenLocalServiceUtil.getKaleoInstanceToken(
 			getParentKaleoInstanceTokenId());
 	}
 
-	public boolean hasIncompleteChildrenKaleoInstanceToken()
-		throws SystemException {
-
+	@Override
+	public boolean hasIncompleteChildrenKaleoInstanceToken() {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(getCompanyId());
@@ -97,8 +92,9 @@ public class KaleoInstanceTokenImpl extends KaleoInstanceTokenBaseImpl {
 		}
 	}
 
+	@Override
 	public void setCurrentKaleoNode(KaleoNode kaleoNode)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		setCurrentKaleoNodeId(kaleoNode.getKaleoNodeId());
 

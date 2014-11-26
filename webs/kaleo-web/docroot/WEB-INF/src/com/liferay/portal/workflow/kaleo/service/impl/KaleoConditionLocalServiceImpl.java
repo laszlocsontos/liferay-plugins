@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.Condition;
@@ -31,10 +30,11 @@ import java.util.Date;
 public class KaleoConditionLocalServiceImpl
 	extends KaleoConditionLocalServiceBaseImpl {
 
+	@Override
 	public KaleoCondition addKaleoCondition(
 			long kaleoDefinitionId, long kaleoNodeId, Condition condition,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(
 			serviceContext.getGuestOrUserId());
@@ -63,20 +63,19 @@ public class KaleoConditionLocalServiceImpl
 		return kaleoCondition;
 	}
 
-	public void deleteCompanyKaleoConditions(long companyId)
-		throws SystemException {
-
+	@Override
+	public void deleteCompanyKaleoConditions(long companyId) {
 		kaleoConditionPersistence.removeByCompanyId(companyId);
 	}
 
-	public void deleteKaleoDefinitionKaleoCondition(long kaleoDefinitionId)
-		throws SystemException {
-
+	@Override
+	public void deleteKaleoDefinitionKaleoCondition(long kaleoDefinitionId) {
 		kaleoConditionPersistence.removeByKaleoDefinitionId(kaleoDefinitionId);
 	}
 
+	@Override
 	public KaleoCondition getKaleoNodeKaleoCondition(long kaleoNodeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return kaleoConditionPersistence.findByKaleoNodeId(kaleoNodeId);
 	}

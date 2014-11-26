@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,13 +14,13 @@
 
 package com.liferay.knowledgebase.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.ResourcedModel;
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -43,8 +43,9 @@ import java.util.Date;
  * @see com.liferay.knowledgebase.model.impl.KBArticleModelImpl
  * @generated
  */
-public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
-	ResourcedModel, StagedModel, WorkflowedModel {
+@ProviderType
+public interface KBArticleModel extends BaseModel<KBArticle>, ResourcedModel,
+	StagedGroupedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -71,6 +72,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 * @return the uuid of this k b article
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -78,6 +80,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param uuid the uuid of this k b article
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -99,6 +102,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return the resource prim key of this k b article
 	 */
+	@Override
 	public long getResourcePrimKey();
 
 	/**
@@ -106,8 +110,10 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param resourcePrimKey the resource prim key of this k b article
 	 */
+	@Override
 	public void setResourcePrimKey(long resourcePrimKey);
 
+	@Override
 	public boolean isResourceMain();
 
 	/**
@@ -115,6 +121,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return the group ID of this k b article
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -122,6 +129,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param groupId the group ID of this k b article
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -129,6 +137,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return the company ID of this k b article
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -136,6 +145,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param companyId the company ID of this k b article
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -143,6 +153,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return the user ID of this k b article
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -150,21 +161,23 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param userId the user ID of this k b article
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
 	 * Returns the user uuid of this k b article.
 	 *
 	 * @return the user uuid of this k b article
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	@Override
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this k b article.
 	 *
 	 * @param userUuid the user uuid of this k b article
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -173,6 +186,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 * @return the user name of this k b article
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -180,6 +194,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param userName the user name of this k b article
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -187,6 +202,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return the create date of this k b article
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -194,6 +210,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param createDate the create date of this k b article
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -201,6 +218,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return the modified date of this k b article
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -208,6 +226,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param modifiedDate the modified date of this k b article
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -225,6 +244,20 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	public void setRootResourcePrimKey(long rootResourcePrimKey);
 
 	/**
+	 * Returns the parent resource class name ID of this k b article.
+	 *
+	 * @return the parent resource class name ID of this k b article
+	 */
+	public long getParentResourceClassNameId();
+
+	/**
+	 * Sets the parent resource class name ID of this k b article.
+	 *
+	 * @param parentResourceClassNameId the parent resource class name ID of this k b article
+	 */
+	public void setParentResourceClassNameId(long parentResourceClassNameId);
+
+	/**
 	 * Returns the parent resource prim key of this k b article.
 	 *
 	 * @return the parent resource prim key of this k b article
@@ -237,6 +270,20 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 * @param parentResourcePrimKey the parent resource prim key of this k b article
 	 */
 	public void setParentResourcePrimKey(long parentResourcePrimKey);
+
+	/**
+	 * Returns the kb folder ID of this k b article.
+	 *
+	 * @return the kb folder ID of this k b article
+	 */
+	public long getKbFolderId();
+
+	/**
+	 * Sets the kb folder ID of this k b article.
+	 *
+	 * @param kbFolderId the kb folder ID of this k b article
+	 */
+	public void setKbFolderId(long kbFolderId);
 
 	/**
 	 * Returns the version of this k b article.
@@ -266,6 +313,21 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 * @param title the title of this k b article
 	 */
 	public void setTitle(String title);
+
+	/**
+	 * Returns the url title of this k b article.
+	 *
+	 * @return the url title of this k b article
+	 */
+	@AutoEscape
+	public String getUrlTitle();
+
+	/**
+	 * Sets the url title of this k b article.
+	 *
+	 * @param urlTitle the url title of this k b article
+	 */
+	public void setUrlTitle(String urlTitle);
 
 	/**
 	 * Returns the content of this k b article.
@@ -383,10 +445,26 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	public void setMain(boolean main);
 
 	/**
+	 * Returns the source u r l of this k b article.
+	 *
+	 * @return the source u r l of this k b article
+	 */
+	@AutoEscape
+	public String getSourceURL();
+
+	/**
+	 * Sets the source u r l of this k b article.
+	 *
+	 * @param sourceURL the source u r l of this k b article
+	 */
+	public void setSourceURL(String sourceURL);
+
+	/**
 	 * Returns the status of this k b article.
 	 *
 	 * @return the status of this k b article
 	 */
+	@Override
 	public int getStatus();
 
 	/**
@@ -394,6 +472,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param status the status of this k b article
 	 */
+	@Override
 	public void setStatus(int status);
 
 	/**
@@ -401,6 +480,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return the status by user ID of this k b article
 	 */
+	@Override
 	public long getStatusByUserId();
 
 	/**
@@ -408,21 +488,23 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param statusByUserId the status by user ID of this k b article
 	 */
+	@Override
 	public void setStatusByUserId(long statusByUserId);
 
 	/**
 	 * Returns the status by user uuid of this k b article.
 	 *
 	 * @return the status by user uuid of this k b article
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getStatusByUserUuid() throws SystemException;
+	@Override
+	public String getStatusByUserUuid();
 
 	/**
 	 * Sets the status by user uuid of this k b article.
 	 *
 	 * @param statusByUserUuid the status by user uuid of this k b article
 	 */
+	@Override
 	public void setStatusByUserUuid(String statusByUserUuid);
 
 	/**
@@ -431,6 +513,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 * @return the status by user name of this k b article
 	 */
 	@AutoEscape
+	@Override
 	public String getStatusByUserName();
 
 	/**
@@ -438,6 +521,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param statusByUserName the status by user name of this k b article
 	 */
+	@Override
 	public void setStatusByUserName(String statusByUserName);
 
 	/**
@@ -445,6 +529,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return the status date of this k b article
 	 */
+	@Override
 	public Date getStatusDate();
 
 	/**
@@ -452,11 +537,14 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @param statusDate the status date of this k b article
 	 */
+	@Override
 	public void setStatusDate(Date statusDate);
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	 */
+	@Deprecated
+	@Override
 	public boolean getApproved();
 
 	/**
@@ -464,6 +552,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return <code>true</code> if this k b article is approved; <code>false</code> otherwise
 	 */
+	@Override
 	public boolean isApproved();
 
 	/**
@@ -471,6 +560,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return <code>true</code> if this k b article is denied; <code>false</code> otherwise
 	 */
+	@Override
 	public boolean isDenied();
 
 	/**
@@ -478,6 +568,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return <code>true</code> if this k b article is a draft; <code>false</code> otherwise
 	 */
+	@Override
 	public boolean isDraft();
 
 	/**
@@ -485,6 +576,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return <code>true</code> if this k b article is expired; <code>false</code> otherwise
 	 */
+	@Override
 	public boolean isExpired();
 
 	/**
@@ -492,6 +584,7 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return <code>true</code> if this k b article is inactive; <code>false</code> otherwise
 	 */
+	@Override
 	public boolean isInactive();
 
 	/**
@@ -499,20 +592,15 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return <code>true</code> if this k b article is incomplete; <code>false</code> otherwise
 	 */
+	@Override
 	public boolean isIncomplete();
-
-	/**
-	 * Returns <code>true</code> if this k b article is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if this k b article is in the Recycle Bin; <code>false</code> otherwise
-	 */
-	public boolean isInTrash();
 
 	/**
 	 * Returns <code>true</code> if this k b article is pending.
 	 *
 	 * @return <code>true</code> if this k b article is pending; <code>false</code> otherwise
 	 */
+	@Override
 	public boolean isPending();
 
 	/**
@@ -520,43 +608,63 @@ public interface KBArticleModel extends BaseModel<KBArticle>, GroupedModel,
 	 *
 	 * @return <code>true</code> if this k b article is scheduled; <code>false</code> otherwise
 	 */
+	@Override
 	public boolean isScheduled();
 
+	@Override
 	public boolean isNew();
 
+	@Override
 	public void setNew(boolean n);
 
+	@Override
 	public boolean isCachedModel();
 
+	@Override
 	public void setCachedModel(boolean cachedModel);
 
+	@Override
 	public boolean isEscapedModel();
 
+	@Override
 	public Serializable getPrimaryKeyObj();
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
+	@Override
 	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
 
+	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
 
+	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
 	public Object clone();
 
-	public int compareTo(KBArticle kbArticle);
+	@Override
+	public int compareTo(com.liferay.knowledgebase.model.KBArticle kbArticle);
 
+	@Override
 	public int hashCode();
 
-	public CacheModel<KBArticle> toCacheModel();
+	@Override
+	public CacheModel<com.liferay.knowledgebase.model.KBArticle> toCacheModel();
 
-	public KBArticle toEscapedModel();
+	@Override
+	public com.liferay.knowledgebase.model.KBArticle toEscapedModel();
 
-	public KBArticle toUnescapedModel();
+	@Override
+	public com.liferay.knowledgebase.model.KBArticle toUnescapedModel();
 
+	@Override
 	public String toString();
 
+	@Override
 	public String toXmlString();
 }

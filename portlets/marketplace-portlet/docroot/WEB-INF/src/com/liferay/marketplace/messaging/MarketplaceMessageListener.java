@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -28,6 +29,7 @@ import java.util.Properties;
 
 /**
  * @author Ryan Park
+ * @author Joan Kim
  */
 public class MarketplaceMessageListener extends BaseMessageListener {
 
@@ -50,19 +52,36 @@ public class MarketplaceMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		App app = AppLocalServiceUtil.fetchRemoteApp(remoteAppId);
+		String title = properties.getProperty("title");
+		String description = properties.getProperty("description");
+		String category = properties.getProperty("category");
+		String iconURL = properties.getProperty("icon-url");
 
-		if (app != null) {
-			return;
+		App app = AppLocalServiceUtil.updateApp(
+			0, remoteAppId, title, description, category, iconURL, version,
+			null);
+
+		String[] bundles = StringUtil.split(properties.getProperty("bundles"));
+
+		for (String bundle : bundles) {
+			String[] bundleParts = StringUtil.split(bundle, StringPool.POUND);
+
+			String bundleSymbolicName = bundleParts[0];
+			String bundleVersion = bundleParts[1];
+			String contextName = bundleParts[2];
+
+			ModuleLocalServiceUtil.addModule(
+				0, app.getAppId(), bundleSymbolicName, bundleVersion,
+				contextName);
 		}
-
-		app = AppLocalServiceUtil.addApp(0, remoteAppId, version, null);
 
 		String[] contextNames = StringUtil.split(
 			properties.getProperty("context-names"));
 
 		for (String contextName : contextNames) {
-			ModuleLocalServiceUtil.addModule(0, app.getAppId(), contextName);
+			ModuleLocalServiceUtil.addModule(
+				0, app.getAppId(), StringPool.BLANK, StringPool.BLANK,
+				contextName);
 		}
 
 		AppLocalServiceUtil.processMarketplaceProperties(properties);

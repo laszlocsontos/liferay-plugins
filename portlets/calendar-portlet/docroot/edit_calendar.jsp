@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,74 +17,41 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String tabs2 = ParamUtil.getString(request, "tabs2", "general");
+
 String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	redirect = PortalUtil.getCurrentURL(request);
+}
+
+String backURL = ParamUtil.getString(request, "backURL");
 
 Calendar calendar = (Calendar)request.getAttribute(WebKeys.CALENDAR);
 
 CalendarResource calendarResource = (CalendarResource)request.getAttribute(WebKeys.CALENDAR_RESOURCE);
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= (calendar != null) ? calendar.getName(locale) : LanguageUtil.format(pageContext, "add-new-calendar-for-x", calendarResource.getName(locale)) %>'
+<liferay-portlet:renderURL var="portletURL">
+	<portlet:param name="mvcPath" value="/edit_calendar.jsp" />
+	<portlet:param name="tabs2" value="<%= tabs2 %>" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
+	<portlet:param name="calendarId" value="<%= (calendar != null) ? String.valueOf(calendar.getCalendarId()) : StringPool.BLANK %>" />
+	<portlet:param name="calendarResourceId" value="<%= (calendarResource != null) ? String.valueOf(calendarResource.getCalendarResourceId()) : StringPool.BLANK %>" />
+</liferay-portlet:renderURL>
+
+<liferay-ui:tabs
+	names='<%= (calendar == null) ? "general" : "general,notification-templates" %>'
+	param="tabs2"
+	url="<%= portletURL %>"
 />
 
-<liferay-portlet:actionURL name="updateCalendar" var="updateCalendarURL" />
-
-<aui:form action="<%= updateCalendarURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCalendar();" %>'>
-	<aui:input name="mvcPath" type="hidden" value="/calendar/edit_calendar.jsp" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="calendarId" type="hidden" value="<%= (calendar != null) ? String.valueOf(calendar.getCalendarId()) : StringPool.BLANK %>" />
-	<aui:input name="calendarResourceId" type="hidden" value="<%= (calendarResource != null) ? String.valueOf(calendarResource.getCalendarResourceId()) : StringPool.BLANK %>" />
-
-	<aui:model-context bean="<%= calendar %>" model="<%= Calendar.class %>" />
-
-	<aui:fieldset>
-		<aui:input name="name" />
-
-		<aui:input name="description" />
-
-		<aui:input name="color" type="hidden" />
-
-		<aui:field-wrapper inlineLabel="left" label="color">
-			<div class="calendar-portlet-colors" id="<portlet:namespace />colorPicker"></div>
-		</aui:field-wrapper>
-
-		<aui:input disabled="<%= (calendar != null) ? calendar.isDefaultCalendar() : false %>" name="defaultCalendar" />
-
-		<c:if test="<%= calendar == null %>">
-			<aui:field-wrapper label="permissions">
-				<liferay-ui:input-permissions modelName="<%= Calendar.class.getName() %>" />
-			</aui:field-wrapper>
-		</c:if>
-
-		<aui:button-row>
-			<aui:button type="submit" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
-
-</aui:form>
-
-<aui:script>
-	function <portlet:namespace />updateCalendar() {
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
-</aui:script>
-
-<aui:script use="liferay-calendar-simple-color-picker">
-	window.<portlet:namespace />colorPicker = new Liferay.SimpleColorPicker(
-		{
-			color: '<%= ColorUtil.toHexString((calendar != null) ? calendar.getColor() : PortletPropsValues.CALENDAR_COLOR_DEFAULT) %>',
-			on: {
-				colorChange: function(event) {
-					A.one('#<portlet:namespace />color').val(parseInt(event.newVal.substring(1), 16));
-				}
-			},
-			render: '#<portlet:namespace />colorPicker'
-		}
-	);
-</aui:script>
+<c:choose>
+	<c:when test='<%= tabs2.equals("general") %>'>
+		<%@ include file="/edit_calendar_general.jspf" %>
+	</c:when>
+	<c:when test='<%= tabs2.equals("notification-templates") %>'>
+		<%@ include file="/edit_calendar_notification_templates.jspf" %>
+	</c:when>
+</c:choose>

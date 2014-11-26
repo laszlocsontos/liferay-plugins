@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,8 @@
 
 package com.liferay.wsrp.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -25,8 +27,8 @@ import java.util.Map;
  * This class is a wrapper for {@link WSRPProducer}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       WSRPProducer
+ * @author Brian Wing Shun Chan
+ * @see WSRPProducer
  * @generated
  */
 public class WSRPProducerWrapper implements WSRPProducer,
@@ -35,14 +37,17 @@ public class WSRPProducerWrapper implements WSRPProducer,
 		_wsrpProducer = wsrpProducer;
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return WSRPProducer.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return WSRPProducer.class.getName();
 	}
 
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -59,6 +64,7 @@ public class WSRPProducerWrapper implements WSRPProducer,
 		return attributes;
 	}
 
+	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		String uuid = (String)attributes.get("uuid");
 
@@ -115,76 +121,14 @@ public class WSRPProducerWrapper implements WSRPProducer,
 		}
 	}
 
-	/**
-	* Returns the primary key of this w s r p producer.
-	*
-	* @return the primary key of this w s r p producer
-	*/
-	public long getPrimaryKey() {
-		return _wsrpProducer.getPrimaryKey();
+	@Override
+	public java.lang.Object clone() {
+		return new WSRPProducerWrapper((WSRPProducer)_wsrpProducer.clone());
 	}
 
-	/**
-	* Sets the primary key of this w s r p producer.
-	*
-	* @param primaryKey the primary key of this w s r p producer
-	*/
-	public void setPrimaryKey(long primaryKey) {
-		_wsrpProducer.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the uuid of this w s r p producer.
-	*
-	* @return the uuid of this w s r p producer
-	*/
-	public java.lang.String getUuid() {
-		return _wsrpProducer.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this w s r p producer.
-	*
-	* @param uuid the uuid of this w s r p producer
-	*/
-	public void setUuid(java.lang.String uuid) {
-		_wsrpProducer.setUuid(uuid);
-	}
-
-	/**
-	* Returns the wsrp producer ID of this w s r p producer.
-	*
-	* @return the wsrp producer ID of this w s r p producer
-	*/
-	public long getWsrpProducerId() {
-		return _wsrpProducer.getWsrpProducerId();
-	}
-
-	/**
-	* Sets the wsrp producer ID of this w s r p producer.
-	*
-	* @param wsrpProducerId the wsrp producer ID of this w s r p producer
-	*/
-	public void setWsrpProducerId(long wsrpProducerId) {
-		_wsrpProducer.setWsrpProducerId(wsrpProducerId);
-	}
-
-	/**
-	* Returns the group ID of this w s r p producer.
-	*
-	* @return the group ID of this w s r p producer
-	*/
-	public long getGroupId() {
-		return _wsrpProducer.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this w s r p producer.
-	*
-	* @param groupId the group ID of this w s r p producer
-	*/
-	public void setGroupId(long groupId) {
-		_wsrpProducer.setGroupId(groupId);
+	@Override
+	public int compareTo(com.liferay.wsrp.model.WSRPProducer wsrpProducer) {
+		return _wsrpProducer.compareTo(wsrpProducer);
 	}
 
 	/**
@@ -192,17 +136,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	*
 	* @return the company ID of this w s r p producer
 	*/
+	@Override
 	public long getCompanyId() {
 		return _wsrpProducer.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this w s r p producer.
-	*
-	* @param companyId the company ID of this w s r p producer
-	*/
-	public void setCompanyId(long companyId) {
-		_wsrpProducer.setCompanyId(companyId);
 	}
 
 	/**
@@ -210,17 +146,24 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	*
 	* @return the create date of this w s r p producer
 	*/
+	@Override
 	public java.util.Date getCreateDate() {
 		return _wsrpProducer.getCreateDate();
 	}
 
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _wsrpProducer.getExpandoBridge();
+	}
+
 	/**
-	* Sets the create date of this w s r p producer.
+	* Returns the group ID of this w s r p producer.
 	*
-	* @param createDate the create date of this w s r p producer
+	* @return the group ID of this w s r p producer
 	*/
-	public void setCreateDate(java.util.Date createDate) {
-		_wsrpProducer.setCreateDate(createDate);
+	@Override
+	public long getGroupId() {
+		return _wsrpProducer.getGroupId();
 	}
 
 	/**
@@ -228,17 +171,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	*
 	* @return the modified date of this w s r p producer
 	*/
+	@Override
 	public java.util.Date getModifiedDate() {
 		return _wsrpProducer.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this w s r p producer.
-	*
-	* @param modifiedDate the modified date of this w s r p producer
-	*/
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_wsrpProducer.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -246,35 +181,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	*
 	* @return the name of this w s r p producer
 	*/
+	@Override
 	public java.lang.String getName() {
 		return _wsrpProducer.getName();
-	}
-
-	/**
-	* Sets the name of this w s r p producer.
-	*
-	* @param name the name of this w s r p producer
-	*/
-	public void setName(java.lang.String name) {
-		_wsrpProducer.setName(name);
-	}
-
-	/**
-	* Returns the version of this w s r p producer.
-	*
-	* @return the version of this w s r p producer
-	*/
-	public java.lang.String getVersion() {
-		return _wsrpProducer.getVersion();
-	}
-
-	/**
-	* Sets the version of this w s r p producer.
-	*
-	* @param version the version of this w s r p producer
-	*/
-	public void setVersion(java.lang.String version) {
-		_wsrpProducer.setVersion(version);
 	}
 
 	/**
@@ -282,73 +191,59 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	*
 	* @return the portlet IDs of this w s r p producer
 	*/
+	@Override
 	public java.lang.String getPortletIds() {
 		return _wsrpProducer.getPortletIds();
 	}
 
 	/**
-	* Sets the portlet IDs of this w s r p producer.
+	* Returns the primary key of this w s r p producer.
 	*
-	* @param portletIds the portlet IDs of this w s r p producer
+	* @return the primary key of this w s r p producer
 	*/
-	public void setPortletIds(java.lang.String portletIds) {
-		_wsrpProducer.setPortletIds(portletIds);
+	@Override
+	public long getPrimaryKey() {
+		return _wsrpProducer.getPrimaryKey();
 	}
 
-	public boolean isNew() {
-		return _wsrpProducer.isNew();
-	}
-
-	public void setNew(boolean n) {
-		_wsrpProducer.setNew(n);
-	}
-
-	public boolean isCachedModel() {
-		return _wsrpProducer.isCachedModel();
-	}
-
-	public void setCachedModel(boolean cachedModel) {
-		_wsrpProducer.setCachedModel(cachedModel);
-	}
-
-	public boolean isEscapedModel() {
-		return _wsrpProducer.isEscapedModel();
-	}
-
+	@Override
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _wsrpProducer.getPrimaryKeyObj();
 	}
 
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_wsrpProducer.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _wsrpProducer.getExpandoBridge();
-	}
-
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
-		_wsrpProducer.setExpandoBridgeAttributes(baseModel);
-	}
-
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
-		_wsrpProducer.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_wsrpProducer.setExpandoBridgeAttributes(serviceContext);
-	}
-
 	@Override
-	public java.lang.Object clone() {
-		return new WSRPProducerWrapper((WSRPProducer)_wsrpProducer.clone());
+	public java.lang.String getURL(java.lang.String portalURL) {
+		return _wsrpProducer.getURL(portalURL);
 	}
 
-	public int compareTo(com.liferay.wsrp.model.WSRPProducer wsrpProducer) {
-		return _wsrpProducer.compareTo(wsrpProducer);
+	/**
+	* Returns the uuid of this w s r p producer.
+	*
+	* @return the uuid of this w s r p producer
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _wsrpProducer.getUuid();
+	}
+
+	/**
+	* Returns the version of this w s r p producer.
+	*
+	* @return the version of this w s r p producer
+	*/
+	@Override
+	public java.lang.String getVersion() {
+		return _wsrpProducer.getVersion();
+	}
+
+	/**
+	* Returns the wsrp producer ID of this w s r p producer.
+	*
+	* @return the wsrp producer ID of this w s r p producer
+	*/
+	@Override
+	public long getWsrpProducerId() {
+		return _wsrpProducer.getWsrpProducerId();
 	}
 
 	@Override
@@ -356,16 +251,167 @@ public class WSRPProducerWrapper implements WSRPProducer,
 		return _wsrpProducer.hashCode();
 	}
 
+	@Override
+	public boolean isCachedModel() {
+		return _wsrpProducer.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _wsrpProducer.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _wsrpProducer.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_wsrpProducer.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_wsrpProducer.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this w s r p producer.
+	*
+	* @param companyId the company ID of this w s r p producer
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_wsrpProducer.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this w s r p producer.
+	*
+	* @param createDate the create date of this w s r p producer
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_wsrpProducer.setCreateDate(createDate);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_wsrpProducer.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_wsrpProducer.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_wsrpProducer.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the group ID of this w s r p producer.
+	*
+	* @param groupId the group ID of this w s r p producer
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_wsrpProducer.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the modified date of this w s r p producer.
+	*
+	* @param modifiedDate the modified date of this w s r p producer
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_wsrpProducer.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this w s r p producer.
+	*
+	* @param name the name of this w s r p producer
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_wsrpProducer.setName(name);
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_wsrpProducer.setNew(n);
+	}
+
+	/**
+	* Sets the portlet IDs of this w s r p producer.
+	*
+	* @param portletIds the portlet IDs of this w s r p producer
+	*/
+	@Override
+	public void setPortletIds(java.lang.String portletIds) {
+		_wsrpProducer.setPortletIds(portletIds);
+	}
+
+	/**
+	* Sets the primary key of this w s r p producer.
+	*
+	* @param primaryKey the primary key of this w s r p producer
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_wsrpProducer.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_wsrpProducer.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the uuid of this w s r p producer.
+	*
+	* @param uuid the uuid of this w s r p producer
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_wsrpProducer.setUuid(uuid);
+	}
+
+	/**
+	* Sets the version of this w s r p producer.
+	*
+	* @param version the version of this w s r p producer
+	*/
+	@Override
+	public void setVersion(java.lang.String version) {
+		_wsrpProducer.setVersion(version);
+	}
+
+	/**
+	* Sets the wsrp producer ID of this w s r p producer.
+	*
+	* @param wsrpProducerId the wsrp producer ID of this w s r p producer
+	*/
+	@Override
+	public void setWsrpProducerId(long wsrpProducerId) {
+		_wsrpProducer.setWsrpProducerId(wsrpProducerId);
+	}
+
+	@Override
 	public com.liferay.portal.model.CacheModel<com.liferay.wsrp.model.WSRPProducer> toCacheModel() {
 		return _wsrpProducer.toCacheModel();
 	}
 
+	@Override
 	public com.liferay.wsrp.model.WSRPProducer toEscapedModel() {
 		return new WSRPProducerWrapper(_wsrpProducer.toEscapedModel());
-	}
-
-	public com.liferay.wsrp.model.WSRPProducer toUnescapedModel() {
-		return new WSRPProducerWrapper(_wsrpProducer.toUnescapedModel());
 	}
 
 	@Override
@@ -373,30 +419,64 @@ public class WSRPProducerWrapper implements WSRPProducer,
 		return _wsrpProducer.toString();
 	}
 
+	@Override
+	public com.liferay.wsrp.model.WSRPProducer toUnescapedModel() {
+		return new WSRPProducerWrapper(_wsrpProducer.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _wsrpProducer.toXmlString();
 	}
 
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_wsrpProducer.persist();
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WSRPProducerWrapper)) {
+			return false;
+		}
+
+		WSRPProducerWrapper wsrpProducerWrapper = (WSRPProducerWrapper)obj;
+
+		if (Validator.equals(_wsrpProducer, wsrpProducerWrapper._wsrpProducer)) {
+			return true;
+		}
+
+		return false;
 	}
 
-	public java.lang.String getURL(java.lang.String portalURL) {
-		return _wsrpProducer.getURL(portalURL);
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _wsrpProducer.getStagedModelType();
 	}
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public WSRPProducer getWrappedWSRPProducer() {
 		return _wsrpProducer;
 	}
 
+	@Override
 	public WSRPProducer getWrappedModel() {
 		return _wsrpProducer;
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _wsrpProducer.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _wsrpProducer.isFinderCacheEnabled();
+	}
+
+	@Override
 	public void resetOriginalValues() {
 		_wsrpProducer.resetOriginalValues();
 	}

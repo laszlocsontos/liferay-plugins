@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -23,6 +23,8 @@ import com.liferay.knowledgebase.util.WebKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
@@ -30,6 +32,7 @@ import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -43,22 +46,36 @@ public class KBArticleAssetRenderer extends BaseAssetRenderer {
 		_kbArticle = kbArticle;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return KBArticleAssetRendererFactory.CLASS_NAME;
+	@Override
+	public String getClassName() {
+		return KBArticle.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _kbArticle.getClassPK();
 	}
 
+	@Override
 	public long getGroupId() {
 		return _kbArticle.getGroupId();
 	}
 
-	public String getSummary(Locale locale) {
-		return HtmlUtil.stripHtml(_kbArticle.getContent());
+	@Override
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		String summary = _kbArticle.getDescription();
+
+		if (Validator.isNull(summary)) {
+			summary = StringUtil.shorten(
+				HtmlUtil.extractText(_kbArticle.getContent()), 200);
+		}
+
+		return summary;
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		return _kbArticle.getTitle();
 	}
@@ -95,14 +112,17 @@ public class KBArticleAssetRenderer extends BaseAssetRenderer {
 			_kbArticle.getStatus(), themeDisplay.getPortalURL(), false);
 	}
 
+	@Override
 	public long getUserId() {
 		return _kbArticle.getUserId();
 	}
 
+	@Override
 	public String getUserName() {
 		return _kbArticle.getUserName();
 	}
 
+	@Override
 	public String getUuid() {
 		return _kbArticle.getUuid();
 	}
@@ -124,6 +144,7 @@ public class KBArticleAssetRenderer extends BaseAssetRenderer {
 		return true;
 	}
 
+	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		String template) {

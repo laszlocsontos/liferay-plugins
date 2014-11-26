@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
@@ -31,10 +30,11 @@ import java.util.Set;
  */
 public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 
+	@Override
 	public KaleoTask addKaleoTask(
 			long kaleoDefinitionId, long kaleoNodeId, Task task,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Kaleo task
 
@@ -70,7 +70,8 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 		return kaleoTask;
 	}
 
-	public void deleteCompanyKaleoTasks(long companyId) throws SystemException {
+	@Override
+	public void deleteCompanyKaleoTasks(long companyId) {
 
 		// Kaleo tasks
 
@@ -82,8 +83,8 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 			companyId);
 	}
 
-	public void deleteKaleoDefinitionKaleoTasks(long kaleoDefinitionId)
-		throws SystemException {
+	@Override
+	public void deleteKaleoDefinitionKaleoTasks(long kaleoDefinitionId) {
 
 		// Kaleo tasks
 
@@ -95,8 +96,9 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 			deleteKaleoDefinitionKaleoTaskAssignments(kaleoDefinitionId);
 	}
 
+	@Override
 	public KaleoTask getKaleoNodeKaleoTask(long kaleoNodeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return kaleoTaskPersistence.findByKaleoNodeId(kaleoNodeId);
 	}

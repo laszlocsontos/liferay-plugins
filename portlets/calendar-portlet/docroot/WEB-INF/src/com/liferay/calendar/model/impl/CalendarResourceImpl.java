@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,12 +17,16 @@ package com.liferay.calendar.model.impl;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * @author Eduardo Lundgren
@@ -30,7 +34,8 @@ import java.util.List;
  */
 public class CalendarResourceImpl extends CalendarResourceBaseImpl {
 
-	public List<Calendar> getCalendars() throws SystemException {
+	@Override
+	public List<Calendar> getCalendars() {
 		List<Calendar> calendars =
 			CalendarLocalServiceUtil.getCalendarResourceCalendars(
 				getGroupId(), getCalendarResourceId());
@@ -38,7 +43,8 @@ public class CalendarResourceImpl extends CalendarResourceBaseImpl {
 		return calendars;
 	}
 
-	public Calendar getDefaultCalendar() throws SystemException {
+	@Override
+	public Calendar getDefaultCalendar() {
 		List<Calendar> calendars =
 			CalendarLocalServiceUtil.getCalendarResourceCalendars(
 				getGroupId(), getCalendarResourceId(), true);
@@ -50,7 +56,8 @@ public class CalendarResourceImpl extends CalendarResourceBaseImpl {
 		return null;
 	}
 
-	public long getDefaultCalendarId() throws SystemException {
+	@Override
+	public long getDefaultCalendarId() {
 		Calendar calendar = getDefaultCalendar();
 
 		if (calendar != null) {
@@ -60,17 +67,31 @@ public class CalendarResourceImpl extends CalendarResourceBaseImpl {
 		return 0;
 	}
 
-	public boolean isGlobal() {
-		long calendarResourceClassNameId = PortalUtil.getClassNameId(
-			CalendarResource.class);
-
-		if (calendarResourceClassNameId == getClassNameId()) {
-			return false;
-		}
-
-		return true;
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(CalendarResource.class.getName()));
 	}
 
+	@Override
+	public TimeZone getTimeZone() throws PortalException {
+		if (isUser()) {
+			User user = UserServiceUtil.getUserById(getClassPK());
+
+			return user.getTimeZone();
+		}
+
+		return TimeZoneUtil.getDefault();
+	}
+
+	@Override
+	public String getTimeZoneId() throws PortalException {
+		TimeZone timeZone = getTimeZone();
+
+		return timeZone.getID();
+	}
+
+	@Override
 	public boolean isGroup() {
 		long groupClassNameId = PortalUtil.getClassNameId(Group.class);
 
@@ -81,6 +102,7 @@ public class CalendarResourceImpl extends CalendarResourceBaseImpl {
 		return false;
 	}
 
+	@Override
 	public boolean isUser() {
 		long userClassNameId = PortalUtil.getClassNameId(User.class);
 

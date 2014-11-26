@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,6 +13,8 @@
  */
 
 package com.liferay.calendar.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.calendar.model.CalendarBooking;
 
@@ -34,11 +36,12 @@ import java.util.Date;
  * @see CalendarBooking
  * @generated
  */
+@ProviderType
 public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -56,6 +59,8 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", resourceBlockId=");
+		sb.append(resourceBlockId);
 		sb.append(", calendarId=");
 		sb.append(calendarId);
 		sb.append(", calendarResourceId=");
@@ -97,6 +102,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		return sb.toString();
 	}
 
+	@Override
 	public CalendarBooking toEntityModel() {
 		CalendarBookingImpl calendarBookingImpl = new CalendarBookingImpl();
 
@@ -133,6 +139,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 			calendarBookingImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		calendarBookingImpl.setResourceBlockId(resourceBlockId);
 		calendarBookingImpl.setCalendarId(calendarId);
 		calendarBookingImpl.setCalendarResourceId(calendarResourceId);
 		calendarBookingImpl.setParentCalendarBookingId(parentCalendarBookingId);
@@ -209,6 +216,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		return calendarBookingImpl;
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		calendarBookingId = objectInput.readLong();
@@ -218,6 +226,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		resourceBlockId = objectInput.readLong();
 		calendarId = objectInput.readLong();
 		calendarResourceId = objectInput.readLong();
 		parentCalendarBookingId = objectInput.readLong();
@@ -238,6 +247,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		statusDate = objectInput.readLong();
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
@@ -261,6 +271,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+		objectOutput.writeLong(resourceBlockId);
 		objectOutput.writeLong(calendarId);
 		objectOutput.writeLong(calendarResourceId);
 		objectOutput.writeLong(parentCalendarBookingId);
@@ -336,6 +347,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long resourceBlockId;
 	public long calendarId;
 	public long calendarResourceId;
 	public long parentCalendarBookingId;

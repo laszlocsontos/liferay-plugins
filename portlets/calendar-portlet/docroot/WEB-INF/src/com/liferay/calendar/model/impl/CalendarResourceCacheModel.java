@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,6 +13,8 @@
  */
 
 package com.liferay.calendar.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.calendar.model.CalendarResource;
 
@@ -34,6 +36,7 @@ import java.util.Date;
  * @see CalendarResource
  * @generated
  */
+@ProviderType
 public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 	Externalizable {
 	@Override
@@ -77,6 +80,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		return sb.toString();
 	}
 
+	@Override
 	public CalendarResource toEntityModel() {
 		CalendarResourceImpl calendarResourceImpl = new CalendarResourceImpl();
 
@@ -152,6 +156,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		return calendarResourceImpl;
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		calendarResourceId = objectInput.readLong();
@@ -171,6 +176,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		active = objectInput.readBoolean();
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {

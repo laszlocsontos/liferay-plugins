@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,10 +24,11 @@ import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * @author Eduardo Lundgren
@@ -37,39 +38,46 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 	public CalendarBookingImpl() {
 	}
 
-	public Calendar getCalendar() throws PortalException, SystemException {
+	@Override
+	public Calendar getCalendar() throws PortalException {
 		return CalendarLocalServiceUtil.getCalendar(getCalendarId());
 	}
 
-	public CalendarResource getCalendarResource()
-		throws PortalException, SystemException {
-
+	@Override
+	public CalendarResource getCalendarResource() throws PortalException {
 		return CalendarResourceLocalServiceUtil.getCalendarResource(
 			getCalendarResourceId());
 	}
 
-	public List<CalendarBooking> getChildCalendarBookings()
-		throws SystemException {
-
+	@Override
+	public List<CalendarBooking> getChildCalendarBookings() {
 		return CalendarBookingLocalServiceUtil.getChildCalendarBookings(
 			getCalendarBookingId());
 	}
 
+	@Override
 	public long getDuration() {
 		return getEndTime() - getStartTime();
 	}
 
+	@Override
 	public NotificationType getFirstReminderNotificationType() {
 		return NotificationType.parse(getFirstReminderType());
 	}
 
-	public CalendarBooking getParentCalendarBooking()
-		throws PortalException, SystemException {
+	@JSON
+	@Override
+	public int getInstanceIndex() {
+		return _instanceIndex;
+	}
 
+	@Override
+	public CalendarBooking getParentCalendarBooking() throws PortalException {
 		return CalendarBookingLocalServiceUtil.getCalendarBooking(
 			getParentCalendarBookingId());
 	}
 
+	@Override
 	public Recurrence getRecurrenceObj() {
 		if ((_recurrenceObj == null) && isRecurring()) {
 			_recurrenceObj = RecurrenceSerializer.deserialize(getRecurrence());
@@ -78,10 +86,21 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 		return _recurrenceObj;
 	}
 
+	@Override
 	public NotificationType getSecondReminderNotificationType() {
 		return NotificationType.parse(getSecondReminderType());
 	}
 
+	@Override
+	public TimeZone getTimeZone() throws PortalException {
+		CalendarBooking parentCalendarBooking = getParentCalendarBooking();
+
+		Calendar calendar = parentCalendarBooking.getCalendar();
+
+		return calendar.getTimeZone();
+	}
+
+	@Override
 	public boolean isMasterBooking() {
 		if (getParentCalendarBookingId() == getCalendarBookingId()) {
 			return true;
@@ -90,6 +109,7 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 		return false;
 	}
 
+	@Override
 	public boolean isRecurring() {
 		if (Validator.isNotNull(getRecurrence())) {
 			return true;
@@ -98,6 +118,13 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 		return false;
 	}
 
+	@JSON
+	@Override
+	public void setInstanceIndex(int instanceIndex) {
+		_instanceIndex = instanceIndex;
+	}
+
+	private int _instanceIndex;
 	private Recurrence _recurrenceObj;
 
 }

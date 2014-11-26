@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,7 +17,8 @@ package com.liferay.chat.service.impl;
 import com.liferay.chat.jabber.JabberUtil;
 import com.liferay.chat.model.Entry;
 import com.liferay.chat.service.base.EntryLocalServiceBaseImpl;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -28,23 +29,35 @@ import java.util.List;
  */
 public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
+	@Override
 	public Entry addEntry(
-			long createDate, long fromUserId, long toUserId, String content)
-		throws SystemException {
+		long createDate, long fromUserId, long toUserId, String content) {
+
+		List<Entry> entries = entryFinder.findByEmptyContent(
+			fromUserId, toUserId, 0, 5);
+
+		for (Entry entry : entries) {
+			entryPersistence.remove(entry);
+		}
 
 		if (Validator.isNull(content)) {
 			content = StringPool.BLANK;
-
-			List<Entry> entries = entryFinder.findByEmptyContent(
-				fromUserId, toUserId, 0, 5);
-
-			for (Entry entry : entries) {
-				entryPersistence.remove(entry);
-			}
 		}
 		else {
-			if (content.length() > 500) {
-				content = content.substring(0, 500);
+			int contentMaxLength = 500;
+
+			DB db = DBFactoryUtil.getDB();
+
+			String dbType = db.getType();
+
+			// LPS-33975
+
+			if (dbType.equals(DB.TYPE_SQLSERVER)) {
+				contentMaxLength = 442;
+			}
+
+			if (content.length() > contentMaxLength) {
+				content = content.substring(0, contentMaxLength);
 			}
 		}
 
@@ -64,29 +77,28 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	public Entry addEntry(long fromUserId, long toUserId, String content)
-		throws SystemException {
-
+	@Override
+	public Entry addEntry(long fromUserId, long toUserId, String content) {
 		long createDate = System.currentTimeMillis();
 
 		return addEntry(createDate, fromUserId, toUserId, content);
 	}
 
-	public void deleteEntries(long userId) throws SystemException {
+	@Override
+	public void deleteEntries(long userId) {
 		entryPersistence.removeByFromUserId(userId);
 		entryPersistence.removeByToUserId(userId);
 	}
 
+	@Override
 	public List<Entry> getNewEntries(
-			long userId, long createDate, int start, int end)
-		throws SystemException {
+		long userId, long createDate, int start, int end) {
 
 		return entryFinder.findByNew(userId, createDate, start, end);
 	}
 
-	public List<Entry> getOldEntries(long createDate, int start, int end)
-		throws SystemException {
-
+	@Override
+	public List<Entry> getOldEntries(long createDate, int start, int end) {
 		return entryFinder.findByOld(createDate, start, end);
 	}
 

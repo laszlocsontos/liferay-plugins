@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -39,33 +39,32 @@ public class RSSUtil extends com.liferay.util.RSSUtil {
 			return StringUtil.shorten(
 				calendarBooking.getDescription(themeDisplay.getLocale()), 200);
 		}
-		else if (displayStyle.equals(DISPLAY_STYLE_TITLE)) {
+
+		if (displayStyle.equals(DISPLAY_STYLE_TITLE)) {
 			return calendarBooking.getTitle(themeDisplay.getLocale());
 		}
-		else {
-			String content = ContentUtil.get(
-				PortletProps.get(PortletPropsKeys.CALENDAR_RSS_TEMPLATE));
 
-			Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-				themeDisplay.getLocale(), themeDisplay.getTimeZone());
+		String content = ContentUtil.get(
+			PortletProps.get(PortletPropsKeys.CALENDAR_RSS_TEMPLATE));
 
-			content = StringUtil.replace(
-				content,
-				new String[] {
-					"[$BOOKING_DESCRIPTION$]", "[$BOOKING_END_DATE$]",
-					"[$BOOKING_LOCATION$]", "[$BOOKING_START_DATE$]",
-					"[$BOOKING_TITLE$]"
-				},
-				new String[] {
-					calendarBooking.getDescription(themeDisplay.getLocale()),
-					dateFormatDateTime.format(calendarBooking.getEndTime()),
-					calendarBooking.getLocation(),
-					dateFormatDateTime.format(calendarBooking.getStartTime()),
-					calendarBooking.getTitle(themeDisplay.getLocale())
-				});
+		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-			return content;
-		}
+		content = StringUtil.replace(
+			content,
+			new String[] {
+				"[$EVENT_DESCRIPTION$]", "[$EVENT_END_DATE$]",
+				"[$EVENT_LOCATION$]", "[$EVENT_START_DATE$]", "[$EVENT_TITLE$]"
+			},
+			new String[] {
+				calendarBooking.getDescription(themeDisplay.getLocale()),
+				dateFormatDateTime.format(calendarBooking.getEndTime()),
+				calendarBooking.getLocation(),
+				dateFormatDateTime.format(calendarBooking.getStartTime()),
+				calendarBooking.getTitle(themeDisplay.getLocale())
+			});
+
+		return content;
 	}
 
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -20,12 +20,16 @@ package com.liferay.privatemessaging.util;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -43,6 +47,7 @@ import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.privatemessaging.NoSuchUserThreadException;
 import com.liferay.privatemessaging.model.UserThread;
 import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
+import com.liferay.privatemessaging.service.UserThreadServiceUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -56,7 +61,7 @@ public class PrivateMessagingUtil {
 
 	public static JSONObject getJSONRecipients(
 			long userId, String type, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -68,8 +73,16 @@ public class PrivateMessagingUtil {
 		if (type.equals("site")) {
 			params.put("inherit", Boolean.TRUE);
 
-			List<Group> groups = GroupLocalServiceUtil.getUserGroups(
-				userId, true);
+			LinkedHashMap<String, Object> groupParams =
+				new LinkedHashMap<String, Object>();
+
+			groupParams.put("inherit", Boolean.FALSE);
+			groupParams.put("site", Boolean.TRUE);
+			groupParams.put("usersGroups", userId);
+
+			List<Group> groups = GroupLocalServiceUtil.search(
+				user.getCompanyId(), groupParams, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 			params.put(
 				"usersGroups",
@@ -90,21 +103,40 @@ public class PrivateMessagingUtil {
 				user.getCompanyId(), RoleConstants.SOCIAL_OFFICE_USER);
 
 			if (role != null) {
+				params.put("inherit", Boolean.TRUE);
 				params.put("usersRoles", new Long(role.getRoleId()));
 			}
 		}
 		catch (NoSuchRoleException nsre) {
 		}
 
-		int total = UserLocalServiceUtil.searchCount(
-			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
-			params);
+		List<User> users = new ArrayList<User>();
 
-		jsonObject.put("total", total);
+		if (_USERS_INDEXER_ENABLED && _USERS_SEARCH_WITH_INDEX) {
+			Sort sort = SortFactoryUtil.getSort(User.class, "firstName", "asc");
 
-		List<User> users = UserLocalServiceUtil.search(
-			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
-			params, start, end, new UserFirstNameComparator(true));
+			BaseModelSearchResult<User> baseModelSearchResult =
+				UserLocalServiceUtil.searchUsers(
+					user.getCompanyId(), keywords, keywords, keywords, keywords,
+					keywords, WorkflowConstants.STATUS_APPROVED, params, false,
+					start, end, sort);
+
+			jsonObject.put("total", baseModelSearchResult.getLength());
+
+			users = baseModelSearchResult.getBaseModels();
+		}
+		else {
+			int total = UserLocalServiceUtil.searchCount(
+				user.getCompanyId(), keywords,
+				WorkflowConstants.STATUS_APPROVED, params);
+
+			jsonObject.put("total", total);
+
+			users = UserLocalServiceUtil.search(
+				user.getCompanyId(), keywords,
+				WorkflowConstants.STATUS_APPROVED, params, start, end,
+				new UserFirstNameComparator(true));
+		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -129,73 +161,13 @@ public class PrivateMessagingUtil {
 		return jsonObject;
 	}
 
-	public static MBMessage getLastThreadMessage(long userId, long mbThreadId)
-		throws PortalException, SystemException {
-
-		List<MBMessage> mbMessages = getThreadMessages(
-			userId, mbThreadId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
-
-		MBMessage lastMBMessage = mbMessages.get(0);
-
-		return lastMBMessage;
-	}
-
-	public static List<MBMessage> getThreadMessages(
-			long userId, long mbThreadId, int start, int end, boolean ascending)
-		throws PortalException, SystemException {
-
-		UserThread userThread = UserThreadLocalServiceUtil.getUserThread(
-			userId, mbThreadId);
-
-		MBMessage topMBMessage = MBMessageLocalServiceUtil.getMBMessage(
-			userThread.getTopMBMessageId());
-
-		List<MBMessage> mbMessages =
-			MBMessageLocalServiceUtil.getThreadMessages(
-				mbThreadId, WorkflowConstants.STATUS_ANY,
-				new MessageCreateDateComparator(ascending));
-
-		List<MBMessage> filteredMBMessages = new ArrayList<MBMessage>();
-
-		for (MBMessage mbMessage : mbMessages) {
-			int compareTo = DateUtil.compareTo(
-				topMBMessage.getCreateDate(), mbMessage.getCreateDate());
-
-			if (compareTo <= 0) {
-				filteredMBMessages.add(mbMessage);
-			}
-		}
-
-		if (filteredMBMessages.isEmpty()) {
-			return filteredMBMessages;
-		}
-		else if ((start == QueryUtil.ALL_POS) || (end == QueryUtil.ALL_POS)) {
-			return filteredMBMessages;
-		}
-		else if (end > filteredMBMessages.size()) {
-			end = filteredMBMessages.size();
-		}
-
-		return filteredMBMessages.subList(start, end);
-	}
-
-	public static int getThreadMessagesCount(long userId, long mbThreadId)
-		throws PortalException, SystemException {
-
-		List<MBMessage> mbMessages = getThreadMessages(
-			userId, mbThreadId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, true);
-
-		return mbMessages.size();
-	}
-
 	/**
 	 * Each thread has a user that represents that thread. This person is either
 	 * the last user to post on that thread (exluding himself), or if he is the
 	 * only person to have posted on the thread, then he will the represenative.
 	 */
 	public static long getThreadRepresentativeUserId(
-			long userId, long mbThreadId)
-		throws SystemException {
+		long userId, long mbThreadId) {
 
 		List<MBMessage> mbMessages =
 			MBMessageLocalServiceUtil.getThreadMessages(
@@ -220,9 +192,7 @@ public class PrivateMessagingUtil {
 		return userId;
 	}
 
-	public static String getThreadSubject(long mbThreadId)
-		throws SystemException {
-
+	public static String getThreadSubject(long mbThreadId) {
 		List<MBMessage> mbMessages =
 			MBMessageLocalServiceUtil.getThreadMessages(
 				mbThreadId, WorkflowConstants.STATUS_ANY, 0, 1);
@@ -231,14 +201,14 @@ public class PrivateMessagingUtil {
 	}
 
 	public static List<User> getThreadUsers(long userId, long mbThreadId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<User> users = new ArrayList<User>();
 
 		// Users who have contributed to the thread
 
-		List<MBMessage> mbMessages = getThreadMessages(
-			userId, mbThreadId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
+		List<MBMessage> mbMessages = UserThreadServiceUtil.getThreadMessages(
+			mbThreadId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
 
 		for (MBMessage mbMessage : mbMessages) {
 			if (userId == mbMessage.getUserId()) {
@@ -287,7 +257,7 @@ public class PrivateMessagingUtil {
 	}
 
 	public static boolean isUserPartOfThread(long userId, long mbThreadId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			UserThreadLocalServiceUtil.getUserThread(userId, mbThreadId);
@@ -298,5 +268,11 @@ public class PrivateMessagingUtil {
 			return false;
 		}
 	}
+
+	private static final boolean _USERS_INDEXER_ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.USERS_INDEXER_ENABLED));
+
+	private static final boolean _USERS_SEARCH_WITH_INDEX =
+		GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_SEARCH_WITH_INDEX));
 
 }

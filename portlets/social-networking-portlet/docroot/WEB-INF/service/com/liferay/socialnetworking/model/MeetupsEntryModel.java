@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,6 @@
 package com.liferay.socialnetworking.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -80,6 +79,7 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 *
 	 * @return the company ID of this meetups entry
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -87,6 +87,7 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 *
 	 * @param companyId the company ID of this meetups entry
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -94,6 +95,7 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 *
 	 * @return the user ID of this meetups entry
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -101,21 +103,23 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 *
 	 * @param userId the user ID of this meetups entry
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
 	 * Returns the user uuid of this meetups entry.
 	 *
 	 * @return the user uuid of this meetups entry
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	@Override
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this meetups entry.
 	 *
 	 * @param userUuid the user uuid of this meetups entry
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -124,6 +128,7 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 * @return the user name of this meetups entry
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -131,6 +136,7 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 *
 	 * @param userName the user name of this meetups entry
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -138,6 +144,7 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 *
 	 * @return the create date of this meetups entry
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -145,6 +152,7 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 *
 	 * @param createDate the create date of this meetups entry
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -152,6 +160,7 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 *
 	 * @return the modified date of this meetups entry
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -159,6 +168,7 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 *
 	 * @param modifiedDate the modified date of this meetups entry
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -275,41 +285,60 @@ public interface MeetupsEntryModel extends AuditedModel, BaseModel<MeetupsEntry>
 	 */
 	public void setThumbnailId(long thumbnailId);
 
+	@Override
 	public boolean isNew();
 
+	@Override
 	public void setNew(boolean n);
 
+	@Override
 	public boolean isCachedModel();
 
+	@Override
 	public void setCachedModel(boolean cachedModel);
 
+	@Override
 	public boolean isEscapedModel();
 
+	@Override
 	public Serializable getPrimaryKeyObj();
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
+	@Override
 	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
 
+	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
 
+	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
 	public Object clone();
 
+	@Override
 	public int compareTo(MeetupsEntry meetupsEntry);
 
+	@Override
 	public int hashCode();
 
+	@Override
 	public CacheModel<MeetupsEntry> toCacheModel();
 
+	@Override
 	public MeetupsEntry toEscapedModel();
 
+	@Override
 	public MeetupsEntry toUnescapedModel();
 
+	@Override
 	public String toString();
 
+	@Override
 	public String toXmlString();
 }

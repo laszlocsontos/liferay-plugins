@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-soffice-invitemembers',
+	'liferay-so-invite-members',
 	function(A) {
 		var InviteMembers = function() {
 			InviteMembers.superclass.constructor.apply(this, arguments);
@@ -24,7 +24,7 @@ AUI.add(
 				initializer: function(params) {
 					var instance = this;
 
-					instance._inviteMembersContainer = A.one('#so-invitemembers-container');
+					instance._inviteMembersContainer = A.one('#' + instance.get('portletNamespace') + 'inviteMembersContainer');
 
 					if (!instance._inviteMembersContainer) {
 						return;
@@ -50,7 +50,13 @@ AUI.add(
 
 							event.halt();
 
-							dialog.io.set('form', {id: form.getDOM()});
+							dialog.io.set(
+								'form',
+								{
+									id: form.getDOM()
+								}
+							);
+
 							dialog.io.set('uri', form.getAttribute('action'));
 
 							dialog.io.start();
@@ -99,13 +105,6 @@ AUI.add(
 						},
 						'#so-add-email-address'
 					);
-
-					new A.LiveSearch(
-						{
-							input: '#invite-user-search',
-							nodes: '#so-invitemembers-container .search .user'
-						}
-					);
 				},
 
 				_addMemberEmail: function() {
@@ -151,14 +150,14 @@ AUI.add(
 					var emailAddresses = [];
 
 					instance._invitedMembersList.all('.user').each(
-						function(user, index, collection) {
-							userIds.push(user.attr('data-userId'));
+						function(item, index) {
+							userIds.push(item.attr('data-userId'));
 						}
 					);
 
 					instance._invitedEmailList.all('.user').each(
-						function(emailAddress, index, collection) {
-							emailAddresses.push(emailAddress.attr('data-emailAddress'));
+						function(item, index) {
+							emailAddresses.push(item.attr('data-emailAddress'));
 						}
 					);
 
@@ -179,6 +178,33 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-dialog', 'aui-io', 'aui-live-search']
+		requires: ['aui-base', 'aui-io-deprecated', 'liferay-util-window']
+	}
+);
+
+AUI.add(
+	'liferay-so-invite-members-list',
+	function(A) {
+		var InviteMembersList = A.Base.create(
+			'inviteMembersList',
+			A.Base,
+			[A.AutoCompleteBase],
+			{
+				initializer: function(config) {
+					this._listNode = A.one(config.listNode);
+
+					this._bindUIACBase();
+					this._syncUIACBase();
+				}
+			}
+		);
+
+		Liferay.namespace('SO');
+
+		Liferay.SO.InviteMembersList = InviteMembersList;
+	},
+	'',
+	{
+		requires: ['aui-base', 'autocomplete-base', 'node-core']
 	}
 );

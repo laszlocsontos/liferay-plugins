@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.Action;
@@ -28,6 +27,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoNodeLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,9 +35,10 @@ import java.util.Set;
  */
 public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 
+	@Override
 	public KaleoNode addKaleoNode(
 			long kaleoDefinitionId, Node node, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Kaleo node
 
@@ -100,6 +101,7 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 		// Kaleo timers
 
 		Set<Timer> timers = node.getTimers();
+
 		for (Timer timer : timers) {
 			kaleoTimerLocalService.addKaleoTimer(
 				KaleoNode.class.getName(), kaleoNodeId, kaleoDefinitionId,
@@ -109,7 +111,8 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 		return kaleoNode;
 	}
 
-	public void deleteCompanyKaleoNodes(long companyId) throws SystemException {
+	@Override
+	public void deleteCompanyKaleoNodes(long companyId) {
 
 		// Kaleo nodes
 
@@ -125,8 +128,8 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 			companyId);
 	}
 
-	public void deleteKaleoDefinitionKaleoNodes(long kaleoDefinitionId)
-		throws SystemException {
+	@Override
+	public void deleteKaleoDefinitionKaleoNodes(long kaleoDefinitionId) {
 
 		// Kaleo nodes
 
@@ -141,6 +144,13 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 
 		kaleoNotificationLocalService.deleteKaleoDefinitionKaleoNotifications(
 			kaleoDefinitionId);
+	}
+
+	@Override
+	public List<KaleoNode> getKaleoDefinitionKaleoNodes(
+		long kaleoDefinitionId) {
+
+		return kaleoNodePersistence.findByKaleoDefinitionId(kaleoDefinitionId);
 	}
 
 }

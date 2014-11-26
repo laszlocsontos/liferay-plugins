@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,8 @@
 
 package com.liferay.knowledgebase.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.knowledgebase.service.KBTemplateServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -22,13 +24,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.rmi.RemoteException;
 
 /**
- * <p>
- * This class provides a SOAP utility for the
+ * Provides the SOAP utility for the
  * {@link com.liferay.knowledgebase.service.KBTemplateServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
- * </p>
  *
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
@@ -57,12 +57,13 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       KBTemplateServiceHttp
- * @see       com.liferay.knowledgebase.model.KBTemplateSoap
- * @see       com.liferay.knowledgebase.service.KBTemplateServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see KBTemplateServiceHttp
+ * @see com.liferay.knowledgebase.model.KBTemplateSoap
+ * @see com.liferay.knowledgebase.service.KBTemplateServiceUtil
  * @generated
  */
+@ProviderType
 public class KBTemplateServiceSoap {
 	public static com.liferay.knowledgebase.model.KBTemplateSoap addKBTemplate(
 		java.lang.String portletId, java.lang.String title,
@@ -110,7 +111,7 @@ public class KBTemplateServiceSoap {
 
 	public static com.liferay.knowledgebase.model.KBTemplateSoap[] getGroupKBTemplates(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledgebase.model.KBTemplate> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.knowledgebase.model.KBTemplate> returnValue =
@@ -158,7 +159,7 @@ public class KBTemplateServiceSoap {
 		long groupId, java.lang.String title, java.lang.String content,
 		java.util.Date startDate, java.util.Date endDate, boolean andOperator,
 		int[] curStartValues, int cur, int delta,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledgebase.model.KBTemplate> orderByComparator)
 		throws RemoteException {
 		try {
 			com.liferay.knowledgebase.model.KBTemplateSearchDisplay returnValue = KBTemplateServiceUtil.getKBTemplateSearchDisplay(groupId,

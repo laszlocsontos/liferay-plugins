@@ -11,10 +11,12 @@
 			<param>
 				<name>ids</name>
 				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ActionException</name>
 				<type>com.liferay.portal.kernel.events.ActionException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -22,16 +24,18 @@
 			<param>
 				<name>ids</name>
 				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>ExpandoColumnListener</name>
-		<type>com.liferay.mongodb.hook.listeners.ExpandoColumnListener</type>
+		<name>ExpandoColumnModelListener</name>
+		<type>com.liferay.mongodb.hook.listeners.ExpandoColumnModelListener</type>
 		<author><![CDATA[Raymond Augé]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
@@ -39,10 +43,12 @@
 			<param>
 				<name>expandoColumn</name>
 				<type>com.liferay.portlet.expando.model.ExpandoColumn</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
 				<type>com.liferay.portal.ModelListenerException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -50,16 +56,18 @@
 			<param>
 				<name>expandoColumn</name>
 				<type>com.liferay.portlet.expando.model.ExpandoColumn</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>ExpandoTableListener</name>
-		<type>com.liferay.mongodb.hook.listeners.ExpandoTableListener</type>
+		<name>ExpandoTableModelListener</name>
+		<type>com.liferay.mongodb.hook.listeners.ExpandoTableModelListener</type>
 		<author><![CDATA[Raymond Augé]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
@@ -67,6 +75,7 @@
 			<param>
 				<name>expandoTable</name>
 				<type>com.liferay.portlet.expando.model.ExpandoTable</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -74,6 +83,7 @@
 			<param>
 				<name>expandoTable</name>
 				<type>com.liferay.portlet.expando.model.ExpandoTable</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 	</javadoc>
@@ -87,6 +97,7 @@
 			<param>
 				<name>expandoColumnLocalService</name>
 				<type>com.liferay.portlet.expando.service.ExpandoColumnLocalService</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -94,26 +105,30 @@
 			<param>
 				<name>columnId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>type</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>defaultData</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -121,18 +136,20 @@
 			<param>
 				<name>columnId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>typeSettings</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -146,6 +163,7 @@
 			<param>
 				<name>expandoRowLocalService</name>
 				<type>com.liferay.portlet.expando.service.ExpandoRowLocalService</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -153,17 +171,23 @@
 			<param>
 				<name>tableId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>deleteRow</name>
 			<param>
 				<name>rowId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -171,18 +195,17 @@
 			<param>
 				<name>tableId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -190,25 +213,31 @@
 			<param>
 				<name>rowId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRow</name>
 			<param>
 				<name>tableId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -216,132 +245,163 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRows</name>
 			<param>
 				<name>tableId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRows</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRowsCount</name>
 			<param>
 				<name>tableId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRowsCount</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRow</name>
 			<param>
 				<name>expandoTable</name>
 				<type>com.liferay.portlet.expando.model.ExpandoTable</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRows</name>
 			<param>
 				<name>expandoTable</name>
 				<type>com.liferay.portlet.expando.model.ExpandoTable</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>toExpandoRow</name>
 			<param>
 				<name>expandoRowDBObject</name>
 				<type>com.mongodb.DBObject</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>expandoTable</name>
 				<type>com.liferay.portlet.expando.model.ExpandoTable</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 	</javadoc>
 	<javadoc>
@@ -354,6 +414,7 @@
 			<param>
 				<name>expandoTableLocalService</name>
 				<type>com.liferay.portlet.expando.service.ExpandoTableLocalService</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -361,18 +422,20 @@
 			<param>
 				<name>tableId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -386,6 +449,7 @@
 			<param>
 				<name>expandoValueLocalService</name>
 				<type>com.liferay.portlet.expando.service.ExpandoValueLocalService</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -393,30 +457,35 @@
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>columnId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>data</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -424,30 +493,32 @@
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>expandoColumns</name>
 				<type>java.util.List</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>data</name>
 				<type>java.util.Map</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -455,17 +526,15 @@
 			<param>
 				<name>columnId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
 		</method>
 		<method>
 			<name>deleteRowValues</name>
 			<param>
 				<name>rowId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -473,17 +542,15 @@
 			<param>
 				<name>tableId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
 		</method>
 		<method>
 			<name>deleteValue</name>
 			<param>
 				<name>valueId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -491,18 +558,17 @@
 			<param>
 				<name>columnId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>rowId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -510,30 +576,32 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>columnName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -541,215 +609,253 @@
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
 		</method>
 		<method>
 			<name>getColumnValues</name>
 			<param>
 				<name>columnId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getColumnValues</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>columnName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>data</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getColumnValuesCount</name>
 			<param>
 				<name>columnId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getColumnValuesCount</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>columnName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>data</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRowValues</name>
 			<param>
 				<name>rowId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRowValues</name>
 			<param>
 				<name>rowId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRowValues</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRowValuesCount</name>
 			<param>
 				<name>rowId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getRowValuesCount</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getValue</name>
 			<param>
 				<name>valueId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getValue</name>
 			<param>
 				<name>columnId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>rowId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -757,64 +863,72 @@
 			<param>
 				<name>tableId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>columnId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getValue</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>columnName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getData</name>
 			<param>
 				<name>expandoColumn</name>
 				<type>com.liferay.portlet.expando.model.ExpandoColumn</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>expandoValue</name>
 				<type>com.liferay.portlet.expando.model.ExpandoValue</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -822,18 +936,20 @@
 			<param>
 				<name>expandoValueDBObject</name>
 				<type>com.mongodb.BasicDBObject</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>expandoColumn</name>
 				<type>com.liferay.portlet.expando.model.ExpandoColumn</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -841,26 +957,27 @@
 			<param>
 				<name>expandoValueDBObject</name>
 				<type>com.mongodb.DBObject</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>expandoColumns</name>
 				<type>java.util.List</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>data</name>
 				<type>java.util.Map</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>expandoValue</name>
 				<type>com.liferay.portlet.expando.model.ExpandoValue</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -964,6 +1081,7 @@
 			<param>
 				<name>servletContextEvent</name>
 				<type>javax.servlet.ServletContextEvent</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -971,6 +1089,7 @@
 			<param>
 				<name>servletContextEvent</name>
 				<type>javax.servlet.ServletContextEvent</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -978,6 +1097,7 @@
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -994,65 +1114,97 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getCollection</name>
 			<param>
 				<name>expandoTable</name>
 				<type>com.liferay.portlet.expando.model.ExpandoTable</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getCollection</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getCollection</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>className</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getCollectionName</name>
 			<param>
 				<name>className</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getDB</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getMongo</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>MongoDBUtil</name>
@@ -1062,71 +1214,107 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>_getCollection</name>
 			<param>
 				<name>expandoTable</name>
 				<type>com.liferay.portlet.expando.model.ExpandoTable</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>_getCollection</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classNameId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>_getCollection</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>className</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>_getCollectionName</name>
 			<param>
 				<name>className</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tableName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>_getDB</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>_getMongoOptions</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>_getServerAddresses</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>

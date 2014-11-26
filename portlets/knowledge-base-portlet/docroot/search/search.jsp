@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -33,44 +33,49 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 </liferay-portlet:renderURL>
 
 <liferay-ui:search-container
-	emptyResultsMessage='<%= LanguageUtil.format(pageContext, "no-articles-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>'
+	emptyResultsMessage='<%= LanguageUtil.format(request, "no-articles-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>'
 	iteratorURL="<%= iteratorURL %>"
 	orderByCol="<%= orderByCol %>"
 	orderByType="<%= orderByType %>"
 >
-	<liferay-ui:search-container-results>
 
-		<%
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
+	<%
+	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-		searchContext.setEnd(searchContainer.getEnd());
-		searchContext.setKeywords(keywords);
-		searchContext.setStart(searchContainer.getStart());
-		searchContext.setSorts(KnowledgeBaseUtil.getKBArticleSorts(orderByCol, orderByType));
+	searchContext.setAttribute("paginationType", "regular");
+	searchContext.setEnd(searchContainer.getEnd());
+	searchContext.setKeywords(keywords);
+	searchContext.setStart(searchContainer.getStart());
+	searchContext.setSorts(KnowledgeBaseUtil.getKBArticleSorts(orderByCol, orderByType));
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(KBArticle.class);
+	Indexer indexer = IndexerRegistryUtil.getIndexer(KBArticle.class);
 
-		Hits hits = indexer.search(searchContext);
+	Hits hits = indexer.search(searchContext);
 
-		List<Tuple> tuples = new ArrayList<Tuple>();
+	List<Tuple> tuples = new ArrayList<Tuple>();
 
-		for (int i = 0; i < hits.getDocs().length; i++) {
-			Object[] array = new Object[5];
+	for (int i = 0; i < hits.getDocs().length; i++) {
+		Object[] array = new Object[5];
 
-			array[0] = hits.doc(i).get(Field.ENTRY_CLASS_PK);
-			array[1] = hits.doc(i).get(Field.TITLE);
-			array[2] = hits.doc(i).get(Field.USER_NAME);
-			array[3] = hits.doc(i).getDate(Field.CREATE_DATE);
-			array[4] = hits.doc(i).getDate(Field.MODIFIED_DATE);
+		Document document = hits.doc(i);
 
-			tuples.add(new Tuple(array));
-		}
+		array[0] = document.get(Field.ENTRY_CLASS_PK);
+		array[1] = document.get(Field.TITLE);
 
-		pageContext.setAttribute("results", tuples);
-		pageContext.setAttribute("total", hits.getLength());
-		%>
+		long userId = GetterUtil.getLong(document.get(Field.USER_ID));
+		String userName = document.get(Field.USER_NAME);
 
-	</liferay-ui:search-container-results>
+		array[2] = PortalUtil.getUserName(userId, userName);
+
+		array[3] = document.getDate(Field.CREATE_DATE);
+		array[4] = document.getDate(Field.MODIFIED_DATE);
+
+		tuples.add(new Tuple(array));
+	}
+
+	searchContainer.setResults(tuples);
+	searchContainer.setTotal(hits.getLength());
+	%>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.util.Tuple"
@@ -78,6 +83,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 	>
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="mvcPath" value="/search/view_article.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="resourcePrimKey" value="<%= (String)tuple.getObject(0) %>" />
 		</liferay-portlet:renderURL>
 
@@ -85,7 +91,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			href="<%= rowURL %>"
 			name="title"
 			orderable="<%= true %>"
-			value="<%= (String)tuple.getObject(1) %>"
+			value="<%= HtmlUtil.escape((String)tuple.getObject(1)) %>"
 		/>
 
 		<c:if test="<%= showKBArticleAuthorColumn %>">
@@ -94,27 +100,27 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 				name="author"
 				orderable="<%= true %>"
 				orderableProperty="user-name"
-				value="<%= (String)tuple.getObject(2) %>"
+				value="<%= HtmlUtil.escape((String)tuple.getObject(2)) %>"
 			/>
 		</c:if>
 
 		<c:if test="<%= showKBArticleCreateDateColumn %>">
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-date
 				cssClass="kb-column-no-wrap"
 				href="<%= rowURL %>"
 				name="create-date"
 				orderable="<%= true %>"
-				value='<%= dateFormatDate.format(tuple.getObject(3)) + "<br />" + dateFormatTime.format(tuple.getObject(3)) %>'
+				value="<%= (Date)tuple.getObject(3) %>"
 			/>
 		</c:if>
 
 		<c:if test="<%= showKBArticleModifiedDateColumn %>">
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-date
 				cssClass="kb-column-no-wrap"
 				href="<%= rowURL %>"
 				name="modified-date"
 				orderable="<%= true %>"
-				value='<%= dateFormatDate.format(tuple.getObject(4)) + "<br />" + dateFormatTime.format(tuple.getObject(4)) %>'
+				value="<%= (Date)tuple.getObject(4) %>"
 			/>
 		</c:if>
 
@@ -138,7 +144,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
 				buffer.append(viewCount);
 				buffer.append(StringPool.SPACE);
-				buffer.append((viewCount == 1) ? LanguageUtil.get(pageContext, "view") : LanguageUtil.get(pageContext, "views"));
+				buffer.append((viewCount == 1) ? LanguageUtil.get(request, "view") : LanguageUtil.get(request, "views"));
 				%>
 
 			</liferay-ui:search-container-column-text>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -18,7 +18,6 @@ import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.base.AppServiceBaseImpl;
 import com.liferay.marketplace.service.permission.MarketplacePermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.io.File;
 
@@ -27,42 +26,35 @@ import java.io.File;
  */
 public class AppServiceImpl extends AppServiceBaseImpl {
 
-	public App addApp(long remoteAppId, String version, File file)
-		throws PortalException, SystemException {
-
-		MarketplacePermission.check(getPermissionChecker());
-
-		return appLocalService.addApp(getUserId(), remoteAppId, version, file);
-	}
-
-	public App deleteApp(long appId) throws PortalException, SystemException {
+	@Override
+	public App deleteApp(long appId) throws PortalException {
 		MarketplacePermission.check(getPermissionChecker());
 
 		return appLocalService.deleteApp(appId);
 	}
 
-	public void installApp(long remoteAppId)
-		throws PortalException, SystemException {
-
+	@Override
+	public void installApp(long remoteAppId) throws PortalException {
 		MarketplacePermission.check(getPermissionChecker());
 
 		appLocalService.installApp(remoteAppId);
 	}
 
-	public void uninstallApp(long remoteAppId)
-		throws PortalException, SystemException {
-
+	@Override
+	public void uninstallApp(long remoteAppId) throws PortalException {
 		MarketplacePermission.check(getPermissionChecker());
 
 		appLocalService.uninstallApp(remoteAppId);
 	}
 
-	public App updateApp(long appId, String version, File file)
-		throws PortalException, SystemException {
+	@Override
+	public App updateApp(long remoteAppId, String version, File file)
+		throws PortalException {
 
 		MarketplacePermission.check(getPermissionChecker());
 
-		return appLocalService.updateApp(appId, version, file);
+		return appLocalService.updateApp(
+			getUserId(), remoteAppId, version, file);
 	}
 
 }

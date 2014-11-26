@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,17 +14,23 @@
 
 package com.liferay.ams.model;
 
+import com.liferay.ams.service.ClpSerializer;
 import com.liferay.ams.service.DefinitionLocalServiceUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Method;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -38,26 +44,32 @@ public class DefinitionClp extends BaseModelImpl<Definition>
 	public DefinitionClp() {
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return Definition.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return Definition.class.getName();
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _definitionId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setDefinitionId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _definitionId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
@@ -79,6 +91,9 @@ public class DefinitionClp extends BaseModelImpl<Definition>
 		attributes.put("orderDate", getOrderDate());
 		attributes.put("quantity", getQuantity());
 		attributes.put("price", getPrice());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -162,118 +177,324 @@ public class DefinitionClp extends BaseModelImpl<Definition>
 		if (price != null) {
 			setPrice(price);
 		}
+
+		_entityCacheEnabled = GetterUtil.getBoolean("entityCacheEnabled");
+		_finderCacheEnabled = GetterUtil.getBoolean("finderCacheEnabled");
 	}
 
+	@Override
 	public long getDefinitionId() {
 		return _definitionId;
 	}
 
+	@Override
 	public void setDefinitionId(long definitionId) {
 		_definitionId = definitionId;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDefinitionId", long.class);
+
+				method.invoke(_definitionRemoteModel, definitionId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
 
+	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setGroupId", long.class);
+
+				method.invoke(_definitionRemoteModel, groupId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompanyId", long.class);
+
+				method.invoke(_definitionRemoteModel, companyId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUserId", long.class);
+
+				method.invoke(_definitionRemoteModel, userId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
+	@Override
 	public String getUserName() {
 		return _userName;
 	}
 
+	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUserName", String.class);
+
+				method.invoke(_definitionRemoteModel, userName);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCreateDate", Date.class);
+
+				method.invoke(_definitionRemoteModel, createDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setModifiedDate", Date.class);
+
+				method.invoke(_definitionRemoteModel, modifiedDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public long getTypeId() {
 		return _typeId;
 	}
 
+	@Override
 	public void setTypeId(long typeId) {
 		_typeId = typeId;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setTypeId", long.class);
+
+				method.invoke(_definitionRemoteModel, typeId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public String getManufacturer() {
 		return _manufacturer;
 	}
 
+	@Override
 	public void setManufacturer(String manufacturer) {
 		_manufacturer = manufacturer;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setManufacturer", String.class);
+
+				method.invoke(_definitionRemoteModel, manufacturer);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public String getModel() {
 		return _model;
 	}
 
+	@Override
 	public void setModel(String model) {
 		_model = model;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setModel", String.class);
+
+				method.invoke(_definitionRemoteModel, model);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public Date getOrderDate() {
 		return _orderDate;
 	}
 
+	@Override
 	public void setOrderDate(Date orderDate) {
 		_orderDate = orderDate;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setOrderDate", Date.class);
+
+				method.invoke(_definitionRemoteModel, orderDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public int getQuantity() {
 		return _quantity;
 	}
 
+	@Override
 	public void setQuantity(int quantity) {
 		_quantity = quantity;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setQuantity", int.class);
+
+				method.invoke(_definitionRemoteModel, quantity);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public double getPrice() {
 		return _price;
 	}
 
+	@Override
 	public void setPrice(double price) {
 		_price = price;
+
+		if (_definitionRemoteModel != null) {
+			try {
+				Class<?> clazz = _definitionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setPrice", double.class);
+
+				method.invoke(_definitionRemoteModel, price);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public BaseModel<?> getDefinitionRemoteModel() {
@@ -284,7 +505,49 @@ public class DefinitionClp extends BaseModelImpl<Definition>
 		_definitionRemoteModel = definitionRemoteModel;
 	}
 
-	public void persist() throws SystemException {
+	public Object invokeOnRemoteModel(String methodName,
+		Class<?>[] parameterTypes, Object[] parameterValues)
+		throws Exception {
+		Object[] remoteParameterValues = new Object[parameterValues.length];
+
+		for (int i = 0; i < parameterValues.length; i++) {
+			if (parameterValues[i] != null) {
+				remoteParameterValues[i] = ClpSerializer.translateInput(parameterValues[i]);
+			}
+		}
+
+		Class<?> remoteModelClass = _definitionRemoteModel.getClass();
+
+		ClassLoader remoteModelClassLoader = remoteModelClass.getClassLoader();
+
+		Class<?>[] remoteParameterTypes = new Class[parameterTypes.length];
+
+		for (int i = 0; i < parameterTypes.length; i++) {
+			if (parameterTypes[i].isPrimitive()) {
+				remoteParameterTypes[i] = parameterTypes[i];
+			}
+			else {
+				String parameterTypeName = parameterTypes[i].getName();
+
+				remoteParameterTypes[i] = remoteModelClassLoader.loadClass(parameterTypeName);
+			}
+		}
+
+		Method method = remoteModelClass.getMethod(methodName,
+				remoteParameterTypes);
+
+		Object returnValue = method.invoke(_definitionRemoteModel,
+				remoteParameterValues);
+
+		if (returnValue != null) {
+			returnValue = ClpSerializer.translateOutput(returnValue);
+		}
+
+		return returnValue;
+	}
+
+	@Override
+	public void persist() {
 		if (this.isNew()) {
 			DefinitionLocalServiceUtil.addDefinition(this);
 		}
@@ -320,6 +583,7 @@ public class DefinitionClp extends BaseModelImpl<Definition>
 		return clone;
 	}
 
+	@Override
 	public int compareTo(Definition definition) {
 		long primaryKey = definition.getPrimaryKey();
 
@@ -336,18 +600,15 @@ public class DefinitionClp extends BaseModelImpl<Definition>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DefinitionClp)) {
 			return false;
 		}
 
-		DefinitionClp definition = null;
-
-		try {
-			definition = (DefinitionClp)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DefinitionClp definition = (DefinitionClp)obj;
 
 		long primaryKey = definition.getPrimaryKey();
 
@@ -359,9 +620,23 @@ public class DefinitionClp extends BaseModelImpl<Definition>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _entityCacheEnabled;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -399,6 +674,7 @@ public class DefinitionClp extends BaseModelImpl<Definition>
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(43);
 
@@ -468,7 +744,6 @@ public class DefinitionClp extends BaseModelImpl<Definition>
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -479,4 +754,7 @@ public class DefinitionClp extends BaseModelImpl<Definition>
 	private int _quantity;
 	private double _price;
 	private BaseModel<?> _definitionRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.ams.service.ClpSerializer.class;
+	private boolean _entityCacheEnabled;
+	private boolean _finderCacheEnabled;
 }

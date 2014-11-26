@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,12 +17,10 @@ package com.liferay.portal.workflow.kaleo.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link KaleoNodeLocalService}.
- * </p>
+ * Provides a wrapper for {@link KaleoNodeLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       KaleoNodeLocalService
+ * @author Brian Wing Shun Chan
+ * @see KaleoNodeLocalService
  * @generated
  */
 public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
@@ -32,16 +30,25 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 		_kaleoNodeLocalService = kaleoNodeLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoNode addKaleoNode(
+		long kaleoDefinitionId,
+		com.liferay.portal.workflow.kaleo.definition.Node node,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoNodeLocalService.addKaleoNode(kaleoDefinitionId, node,
+			serviceContext);
+	}
+
 	/**
 	* Adds the kaleo node to the database. Also notifies the appropriate model listeners.
 	*
 	* @param kaleoNode the kaleo node
 	* @return the kaleo node that was added
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoNode addKaleoNode(
-		com.liferay.portal.workflow.kaleo.model.KaleoNode kaleoNode)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.workflow.kaleo.model.KaleoNode kaleoNode) {
 		return _kaleoNodeLocalService.addKaleoNode(kaleoNode);
 	}
 
@@ -51,9 +58,32 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	* @param kaleoNodeId the primary key for the new kaleo node
 	* @return the new kaleo node
 	*/
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoNode createKaleoNode(
 		long kaleoNodeId) {
 		return _kaleoNodeLocalService.createKaleoNode(kaleoNodeId);
+	}
+
+	@Override
+	public void deleteCompanyKaleoNodes(long companyId) {
+		_kaleoNodeLocalService.deleteCompanyKaleoNodes(companyId);
+	}
+
+	@Override
+	public void deleteKaleoDefinitionKaleoNodes(long kaleoDefinitionId) {
+		_kaleoNodeLocalService.deleteKaleoDefinitionKaleoNodes(kaleoDefinitionId);
+	}
+
+	/**
+	* Deletes the kaleo node from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoNode the kaleo node
+	* @return the kaleo node that was removed
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoNode deleteKaleoNode(
+		com.liferay.portal.workflow.kaleo.model.KaleoNode kaleoNode) {
+		return _kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	/**
@@ -62,28 +92,25 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	* @param kaleoNodeId the primary key of the kaleo node
 	* @return the kaleo node that was removed
 	* @throws PortalException if a kaleo node with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoNode deleteKaleoNode(
 		long kaleoNodeId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoNodeLocalService.deleteKaleoNode(kaleoNodeId);
 	}
 
 	/**
-	* Deletes the kaleo node from the database. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoNode the kaleo node
-	* @return the kaleo node that was removed
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode deleteKaleoNode(
-		com.liferay.portal.workflow.kaleo.model.KaleoNode kaleoNode)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoNodeLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _kaleoNodeLocalService.dynamicQuery();
 	}
@@ -93,12 +120,10 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _kaleoNodeLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -113,12 +138,11 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _kaleoNodeLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -134,14 +158,12 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _kaleoNodeLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -151,18 +173,52 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _kaleoNodeLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _kaleoNodeLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoNode fetchKaleoNode(
-		long kaleoNodeId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long kaleoNodeId) {
 		return _kaleoNodeLocalService.fetchKaleoNode(kaleoNodeId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _kaleoNodeLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _kaleoNodeLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoNode> getKaleoDefinitionKaleoNodes(
+		long kaleoDefinitionId) {
+		return _kaleoNodeLocalService.getKaleoDefinitionKaleoNodes(kaleoDefinitionId);
 	}
 
 	/**
@@ -171,20 +227,12 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	* @param kaleoNodeId the primary key of the kaleo node
 	* @return the kaleo node
 	* @throws PortalException if a kaleo node with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoNode getKaleoNode(
 		long kaleoNodeId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoNodeLocalService.getKaleoNode(kaleoNodeId);
-	}
-
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoNodeLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -197,11 +245,10 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	* @param start the lower bound of the range of kaleo nodes
 	* @param end the upper bound of the range of kaleo nodes (not inclusive)
 	* @return the range of kaleo nodes
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoNode> getKaleoNodes(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _kaleoNodeLocalService.getKaleoNodes(start, end);
 	}
 
@@ -209,44 +256,20 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	* Returns the number of kaleo nodes.
 	*
 	* @return the number of kaleo nodes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int getKaleoNodesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public int getKaleoNodesCount() {
 		return _kaleoNodeLocalService.getKaleoNodesCount();
 	}
 
-	/**
-	* Updates the kaleo node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoNode the kaleo node
-	* @return the kaleo node that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode updateKaleoNode(
-		com.liferay.portal.workflow.kaleo.model.KaleoNode kaleoNode)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoNodeLocalService.updateKaleoNode(kaleoNode);
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoNodeLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoNodeLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoNodeLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
+	@Override
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
@@ -254,29 +277,32 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 			arguments);
 	}
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode addKaleoNode(
-		long kaleoDefinitionId,
-		com.liferay.portal.workflow.kaleo.definition.Node node,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoNodeLocalService.addKaleoNode(kaleoDefinitionId, node,
-			serviceContext);
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_kaleoNodeLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	public void deleteCompanyKaleoNodes(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_kaleoNodeLocalService.deleteCompanyKaleoNodes(companyId);
-	}
-
-	public void deleteKaleoDefinitionKaleoNodes(long kaleoDefinitionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_kaleoNodeLocalService.deleteKaleoDefinitionKaleoNodes(kaleoDefinitionId);
+	/**
+	* Updates the kaleo node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoNode the kaleo node
+	* @return the kaleo node that was updated
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoNode updateKaleoNode(
+		com.liferay.portal.workflow.kaleo.model.KaleoNode kaleoNode) {
+		return _kaleoNodeLocalService.updateKaleoNode(kaleoNode);
 	}
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public KaleoNodeLocalService getWrappedKaleoNodeLocalService() {
 		return _kaleoNodeLocalService;
 	}
@@ -284,15 +310,18 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedKaleoNodeLocalService(
 		KaleoNodeLocalService kaleoNodeLocalService) {
 		_kaleoNodeLocalService = kaleoNodeLocalService;
 	}
 
+	@Override
 	public KaleoNodeLocalService getWrappedService() {
 		return _kaleoNodeLocalService;
 	}
 
+	@Override
 	public void setWrappedService(KaleoNodeLocalService kaleoNodeLocalService) {
 		_kaleoNodeLocalService = kaleoNodeLocalService;
 	}

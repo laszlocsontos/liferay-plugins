@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -18,15 +18,16 @@ import com.liferay.ams.model.Asset;
 import com.liferay.ams.model.AssetModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -91,26 +92,32 @@ public class AssetModelImpl extends BaseModelImpl<Asset> implements AssetModel {
 	public AssetModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _assetId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setAssetId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _assetId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return Asset.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return Asset.class.getName();
 	}
@@ -129,6 +136,9 @@ public class AssetModelImpl extends BaseModelImpl<Asset> implements AssetModel {
 		attributes.put("serialNumber", getSerialNumber());
 		attributes.put("inactiveDate", getInactiveDate());
 		attributes.put("active", getActive());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -196,38 +206,53 @@ public class AssetModelImpl extends BaseModelImpl<Asset> implements AssetModel {
 		}
 	}
 
+	@Override
 	public long getAssetId() {
 		return _assetId;
 	}
 
+	@Override
 	public void setAssetId(long assetId) {
 		_assetId = assetId;
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
 
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -237,34 +262,42 @@ public class AssetModelImpl extends BaseModelImpl<Asset> implements AssetModel {
 		}
 	}
 
+	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
+	@Override
 	public long getDefinitionId() {
 		return _definitionId;
 	}
 
+	@Override
 	public void setDefinitionId(long definitionId) {
 		_definitionId = definitionId;
 	}
 
+	@Override
 	public String getSerialNumber() {
 		if (_serialNumber == null) {
 			return StringPool.BLANK;
@@ -274,26 +307,32 @@ public class AssetModelImpl extends BaseModelImpl<Asset> implements AssetModel {
 		}
 	}
 
+	@Override
 	public void setSerialNumber(String serialNumber) {
 		_serialNumber = serialNumber;
 	}
 
+	@Override
 	public Date getInactiveDate() {
 		return _inactiveDate;
 	}
 
+	@Override
 	public void setInactiveDate(Date inactiveDate) {
 		_inactiveDate = inactiveDate;
 	}
 
+	@Override
 	public boolean getActive() {
 		return _active;
 	}
 
+	@Override
 	public boolean isActive() {
 		return _active;
 	}
 
+	@Override
 	public void setActive(boolean active) {
 		_active = active;
 	}
@@ -341,6 +380,7 @@ public class AssetModelImpl extends BaseModelImpl<Asset> implements AssetModel {
 		return assetImpl;
 	}
 
+	@Override
 	public int compareTo(Asset asset) {
 		long primaryKey = asset.getPrimaryKey();
 
@@ -357,18 +397,15 @@ public class AssetModelImpl extends BaseModelImpl<Asset> implements AssetModel {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Asset)) {
 			return false;
 		}
 
-		Asset asset = null;
-
-		try {
-			asset = (Asset)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Asset asset = (Asset)obj;
 
 		long primaryKey = asset.getPrimaryKey();
 
@@ -383,6 +420,16 @@ public class AssetModelImpl extends BaseModelImpl<Asset> implements AssetModel {
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -478,6 +525,7 @@ public class AssetModelImpl extends BaseModelImpl<Asset> implements AssetModel {
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(34);
 
@@ -536,7 +584,6 @@ public class AssetModelImpl extends BaseModelImpl<Asset> implements AssetModel {
 	private long _assetId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;

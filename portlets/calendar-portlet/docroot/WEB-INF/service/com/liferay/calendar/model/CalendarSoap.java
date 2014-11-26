@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,8 @@
 
 package com.liferay.calendar.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -23,10 +25,11 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.calendar.service.http.CalendarServiceSoap}.
  *
- * @author    Eduardo Lundgren
- * @see       com.liferay.calendar.service.http.CalendarServiceSoap
+ * @author Eduardo Lundgren
+ * @see com.liferay.calendar.service.http.CalendarServiceSoap
  * @generated
  */
+@ProviderType
 public class CalendarSoap implements Serializable {
 	public static CalendarSoap toSoapModel(Calendar model) {
 		CalendarSoap soapModel = new CalendarSoap();
@@ -43,8 +46,11 @@ public class CalendarSoap implements Serializable {
 		soapModel.setCalendarResourceId(model.getCalendarResourceId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setTimeZoneId(model.getTimeZoneId());
 		soapModel.setColor(model.getColor());
 		soapModel.setDefaultCalendar(model.getDefaultCalendar());
+		soapModel.setEnableComments(model.getEnableComments());
+		soapModel.setEnableRatings(model.getEnableRatings());
 
 		return soapModel;
 	}
@@ -193,6 +199,14 @@ public class CalendarSoap implements Serializable {
 		_description = description;
 	}
 
+	public String getTimeZoneId() {
+		return _timeZoneId;
+	}
+
+	public void setTimeZoneId(String timeZoneId) {
+		_timeZoneId = timeZoneId;
+	}
+
 	public int getColor() {
 		return _color;
 	}
@@ -213,6 +227,30 @@ public class CalendarSoap implements Serializable {
 		_defaultCalendar = defaultCalendar;
 	}
 
+	public boolean getEnableComments() {
+		return _enableComments;
+	}
+
+	public boolean isEnableComments() {
+		return _enableComments;
+	}
+
+	public void setEnableComments(boolean enableComments) {
+		_enableComments = enableComments;
+	}
+
+	public boolean getEnableRatings() {
+		return _enableRatings;
+	}
+
+	public boolean isEnableRatings() {
+		return _enableRatings;
+	}
+
+	public void setEnableRatings(boolean enableRatings) {
+		_enableRatings = enableRatings;
+	}
+
 	private String _uuid;
 	private long _calendarId;
 	private long _groupId;
@@ -225,6 +263,9 @@ public class CalendarSoap implements Serializable {
 	private long _calendarResourceId;
 	private String _name;
 	private String _description;
+	private String _timeZoneId;
 	private int _color;
 	private boolean _defaultCalendar;
+	private boolean _enableComments;
+	private boolean _enableRatings;
 }

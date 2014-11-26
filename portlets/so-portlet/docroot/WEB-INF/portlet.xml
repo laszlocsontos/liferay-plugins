@@ -4,7 +4,7 @@
 	<portlet>
 		<portlet-name>1</portlet-name>
 		<display-name>Activities</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.so.activities.portlet.ActivitiesPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/activities/view.jsp</value>
@@ -67,7 +67,7 @@
 	<portlet>
 		<portlet-name>4</portlet-name>
 		<display-name>Projects</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -95,6 +95,10 @@
 		<portlet-name>5</portlet-name>
 		<display-name>Sites</display-name>
 		<portlet-class>com.liferay.so.sites.portlet.SitesPortlet</portlet-class>
+		<init-param>
+			<name>add-process-action-success-action</name>
+			<value>false</value>
+		</init-param>
 		<init-param>
 			<name>config-template</name>
 			<value>/sites/configuration.jsp</value>
@@ -127,12 +131,12 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>6</portlet-name>
-		<display-name>Notification</display-name>
-		<portlet-class>com.liferay.so.notifications.portlet.NotificationsPortlet</portlet-class>
+		<portlet-name>7</portlet-name>
+		<display-name>Dockbar Notification</display-name>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
-			<value>/notifications/view.jsp</value>
+			<value>/dockbar_notifications/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -140,9 +144,9 @@
 		</supports>
 		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
-			<title>Notifications</title>
-			<short-title>Notifications</short-title>
-			<keywords>Notifications</keywords>
+			<title>Dockbar Notifications</title>
+			<short-title>Dockbar Notifications</short-title>
+			<keywords>Dockbar Notifications</keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>administrator</role-name>
@@ -158,12 +162,12 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>7</portlet-name>
-		<display-name>Dockbar Notification</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-name>8</portlet-name>
+		<display-name>User Bar</display-name>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
-			<value>/dockbar_notifications/view.jsp</value>
+			<value>/user_bar/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -171,9 +175,9 @@
 		</supports>
 		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
-			<title>Dockbar Notifications</title>
-			<short-title>Dockbar Notifications</short-title>
-			<keywords>Dockbar Notifications</keywords>
+			<title>User Bar</title>
+			<short-title>User Bar</short-title>
+			<keywords>User Bar</keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>administrator</role-name>

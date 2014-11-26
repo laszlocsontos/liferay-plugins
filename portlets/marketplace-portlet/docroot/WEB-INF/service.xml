@@ -21,6 +21,10 @@
 		<!-- Other fields -->
 
 		<column name="remoteAppId" type="long" />
+		<column name="title" type="String" />
+		<column name="description" type="String" />
+		<column name="category" type="String" />
+		<column name="iconURL" type="String" />
 		<column name="version" type="String" />
 
 		<!-- Finder methods -->
@@ -30,6 +34,9 @@
 		</finder>
 		<finder name="RemoteAppId" return-type="App">
 			<finder-column name="remoteAppId" />
+		</finder>
+		<finder name="Category" return-type="Collection">
+			<finder-column name="category" />
 		</finder>
 	</entity>
 	<entity name="Module" uuid="true" local-service="true" remote-service="false">
@@ -41,6 +48,8 @@
 		<!-- Other fields -->
 
 		<column name="appId" type="long" />
+		<column name="bundleSymbolicName" type="String" />
+		<column name="bundleVersion" type="String" />
 		<column name="contextName" type="String" />
 
 		<!-- Finder methods -->
@@ -48,16 +57,27 @@
 		<finder name="AppId" return-type="Collection">
 			<finder-column name="appId" />
 		</finder>
+		<finder name="BundleSymbolicName" return-type="Collection">
+			<finder-column name="bundleSymbolicName" />
+		</finder>
 		<finder name="ContextName" return-type="Collection">
 			<finder-column name="contextName" />
 		</finder>
-		<finder name="A_C" return-type="Module">
+		<finder name="A_CN" return-type="Module">
 			<finder-column name="appId" />
 			<finder-column name="contextName" />
 		</finder>
+		<finder name="A_BSN_BV" return-type="Module">
+			<finder-column name="appId" />
+			<finder-column name="bundleSymbolicName" />
+			<finder-column name="bundleVersion" />
+		</finder>
 	</entity>
 	<exceptions>
+		<exception>AppProperties</exception>
+		<exception>AppTitle</exception>
 		<exception>AppVersion</exception>
 		<exception>DuplicateApp</exception>
+		<exception>ModuleNamespace</exception>
 	</exceptions>
 </service-builder>

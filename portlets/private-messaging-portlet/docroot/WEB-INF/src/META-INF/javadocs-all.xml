@@ -2,14 +2,15 @@
 
 <javadocs>
 	<javadoc>
-		<name>UserListener</name>
-		<type>com.liferay.privatemessaging.hook.listeners.UserListener</type>
+		<name>UserModelListener</name>
+		<type>com.liferay.privatemessaging.hook.listeners.UserModelListener</type>
 		<author><![CDATA[Scott Lee]]></author>
 		<method>
 			<name>onAfterUpdate</name>
 			<param>
 				<name>user</name>
 				<type>com.liferay.portal.model.User</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -17,6 +18,7 @@
 			<param>
 				<name>user</name>
 				<type>com.liferay.portal.model.User</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<field>
@@ -29,12 +31,35 @@
 		<author><![CDATA[Scott Lee]]></author>
 		<method>
 			<name>getThreshold</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>doUpgrade</name>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+	</javadoc>
+	<javadoc>
+		<name>UpgradeProcess_1_0_1</name>
+		<type>com.liferay.privatemessaging.hook.upgrade.UpgradeProcess_1_0_1</type>
+		<author><![CDATA[Sherry Yang]]></author>
+		<method>
+			<name>getThreshold</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+		</method>
+		<method>
+			<name>doUpgrade</name>
+			<throws>
+				<name>Exception</name>
+				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -47,8 +72,61 @@
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
+	</javadoc>
+	<javadoc>
+		<name>UpgradeResourcePermission</name>
+		<type>com.liferay.privatemessaging.hook.upgrade.v1_0_1.UpgradeResourcePermission</type>
+		<author><![CDATA[Sherry Yang]]></author>
+		<method>
+			<name>doUpgrade</name>
+			<throws>
+				<name>Exception</name>
+				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>upgradeDLFolderResourcePermission</name>
+			<param>
+				<name>company</name>
+				<type>com.liferay.portal.model.Company</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>group</name>
+				<type>com.liferay.portal.model.Group</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>upgradeDLResourcePermission</name>
+			<param>
+				<name>company</name>
+				<type>com.liferay.portal.model.Company</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>group</name>
+				<type>com.liferay.portal.model.Group</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<field>
+			<name>_DL_RESOURCE_NAME</name>
+		</field>
 	</javadoc>
 	<javadoc>
 		<name>UserThreadImpl</name>
@@ -56,6 +134,56 @@
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>UserThreadImpl</name>
+		</method>
+	</javadoc>
+	<javadoc>
+		<name>PrivateMessagingUserNotificationHandler</name>
+		<type>com.liferay.privatemessaging.notifications.PrivateMessagingUserNotificationHandler</type>
+		<author><![CDATA[Jonathan Lee]]></author>
+		<method>
+			<name>PrivateMessagingUserNotificationHandler</name>
+		</method>
+		<method>
+			<name>getBody</name>
+			<param>
+				<name>userNotificationEvent</name>
+				<type>com.liferay.portal.model.UserNotificationEvent</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>serviceContext</name>
+				<type>com.liferay.portal.service.ServiceContext</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>Exception</name>
+				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getLink</name>
+			<param>
+				<name>userNotificationEvent</name>
+				<type>com.liferay.portal.model.UserNotificationEvent</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>serviceContext</name>
+				<type>com.liferay.portal.service.ServiceContext</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>Exception</name>
+				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 	</javadoc>
 	<javadoc>
@@ -68,33 +196,35 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
 			<name>getMessageAttachment</name>
 			<param>
-				<name>actionRequest</name>
-				<type>javax.portlet.ActionRequest</type>
+				<name>resourceRequest</name>
+				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>actionResponse</name>
-				<type>javax.portlet.ActionResponse</type>
+				<name>resourceResponse</name>
+				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -102,18 +232,17 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -121,18 +250,35 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
+		</method>
+		<method>
+			<name>processAction</name>
+			<param>
+				<name>actionRequest</name>
+				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>actionResponse</name>
+				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
+			</param>
 			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<name>PortletException</name>
+				<type>javax.portlet.PortletException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -140,18 +286,17 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<name>Exception</name>
+				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -159,29 +304,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortletException</name>
 				<type>javax.portlet.PortletException</type>
-			</throws>
-		</method>
-		<method>
-			<name>checkData</name>
-			<param>
-				<name>resourceRequest</name>
-				<type>javax.portlet.ResourceRequest</type>
-			</param>
-			<param>
-				<name>resourceResponse</name>
-				<type>javax.portlet.ResourceResponse</type>
-			</param>
-			<throws>
-				<name>Exception</name>
-				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -189,14 +322,20 @@
 			<param>
 				<name>portletRequest</name>
 				<type>javax.portlet.PortletRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>key</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -204,14 +343,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -219,40 +361,28 @@
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-		</method>
-		<method>
-			<name>removeNotification</name>
-			<param>
-				<name>companyId</name>
-				<type>long</type>
-			</param>
-			<param>
-				<name>userId</name>
-				<type>long</type>
-			</param>
-			<param>
-				<name>mbThreadId</name>
-				<type>long</type>
-			</param>
-			<throws>
-				<name>ChannelException</name>
-				<type>com.liferay.portal.kernel.notifications.ChannelException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>validateAttachment</name>
 			<param>
 				<name>fileName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>inputStream</name>
 				<type>java.io.InputStream</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -260,243 +390,44 @@
 			<param>
 				<name>to</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>themeDisplay</name>
 				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>writeJSON</name>
+			<param>
+				<name>portletRequest</name>
+				<type>javax.portlet.PortletRequest</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>mimeResponse</name>
+				<type>javax.portlet.MimeResponse</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>json</name>
+				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>IOException</name>
+				<type>java.io.IOException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
 			<name>_log</name>
-		</field>
-	</javadoc>
-	<javadoc>
-		<name>UserThreadLocalServiceClpInvoker</name>
-		<type>com.liferay.privatemessaging.service.base.UserThreadLocalServiceClpInvoker</type>
-		<author><![CDATA[Brian Wing Shun Chan]]></author>
-		<method>
-			<name>UserThreadLocalServiceClpInvoker</name>
-		</method>
-		<method>
-			<name>invokeMethod</name>
-			<param>
-				<name>name</name>
-				<type>java.lang.String</type>
-			</param>
-			<param>
-				<name>parameterTypes</name>
-				<type>java.lang.String[]</type>
-			</param>
-			<param>
-				<name>arguments</name>
-				<type>java.lang.Object[]</type>
-			</param>
-			<throws>
-				<name>Throwable</name>
-				<type>java.lang.Throwable</type>
-			</throws>
-		</method>
-		<field>
-			<name>_methodName0</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes0</name>
-		</field>
-		<field>
-			<name>_methodName1</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes1</name>
-		</field>
-		<field>
-			<name>_methodName2</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes2</name>
-		</field>
-		<field>
-			<name>_methodName3</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes3</name>
-		</field>
-		<field>
-			<name>_methodName4</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes4</name>
-		</field>
-		<field>
-			<name>_methodName5</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes5</name>
-		</field>
-		<field>
-			<name>_methodName6</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes6</name>
-		</field>
-		<field>
-			<name>_methodName7</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes7</name>
-		</field>
-		<field>
-			<name>_methodName8</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes8</name>
-		</field>
-		<field>
-			<name>_methodName9</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes9</name>
-		</field>
-		<field>
-			<name>_methodName10</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes10</name>
-		</field>
-		<field>
-			<name>_methodName11</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes11</name>
-		</field>
-		<field>
-			<name>_methodName12</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes12</name>
-		</field>
-		<field>
-			<name>_methodName13</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes13</name>
-		</field>
-		<field>
-			<name>_methodName14</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes14</name>
-		</field>
-		<field>
-			<name>_methodName15</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes15</name>
-		</field>
-		<field>
-			<name>_methodName32</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes32</name>
-		</field>
-		<field>
-			<name>_methodName33</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes33</name>
-		</field>
-		<field>
-			<name>_methodName38</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes38</name>
-		</field>
-		<field>
-			<name>_methodName39</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes39</name>
-		</field>
-		<field>
-			<name>_methodName40</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes40</name>
-		</field>
-		<field>
-			<name>_methodName41</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes41</name>
-		</field>
-		<field>
-			<name>_methodName42</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes42</name>
-		</field>
-		<field>
-			<name>_methodName43</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes43</name>
-		</field>
-		<field>
-			<name>_methodName44</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes44</name>
-		</field>
-		<field>
-			<name>_methodName45</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes45</name>
-		</field>
-		<field>
-			<name>_methodName46</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes46</name>
-		</field>
-		<field>
-			<name>_methodName47</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes47</name>
-		</field>
-		<field>
-			<name>_methodName48</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes48</name>
-		</field>
-		<field>
-			<name>_methodName49</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes49</name>
-		</field>
-		<field>
-			<name>_methodName50</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes50</name>
-		</field>
-		<field>
-			<name>_methodName51</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes51</name>
-		</field>
-		<field>
-			<name>_methodName52</name>
-		</field>
-		<field>
-			<name>_methodParameterTypes52</name>
 		</field>
 	</javadoc>
 	<javadoc>
@@ -509,38 +440,45 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>to</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>subject</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>body</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>inputStreamOVPs</name>
 				<type>java.util.List</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>themeDisplay</name>
 				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -548,30 +486,35 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>parentMBMessageId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>body</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>inputStreamOVPs</name>
 				<type>java.util.List</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>themeDisplay</name>
 				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -579,30 +522,32 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>topMBMessageId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>read</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>deleted</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -610,14 +555,12 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -625,18 +568,38 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
+		</method>
+		<method>
+			<name>fetchUserThread</name>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>mbThreadId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -644,29 +607,31 @@
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getUserThread</name>
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -674,109 +639,117 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>deleted</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getUserUserThreadCount</name>
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>read</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>deleted</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getUserUserThreads</name>
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>deleted</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getUserUserThreads</name>
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>read</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>deleted</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getUserUserThreads</name>
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>deleted</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>markUserThreadAsRead</name>
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -784,18 +757,17 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -803,53 +775,58 @@
 			<param>
 				<name>user</name>
 				<type>com.liferay.portal.model.User</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
 		</method>
 		<method>
 			<name>addPrivateMessage</name>
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>parentMBMessageId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>recipients</name>
 				<type>java.util.List</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>subject</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>body</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>inputStreamOVPs</name>
 				<type>java.util.List</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>themeDisplay</name>
 				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -857,18 +834,25 @@
 			<param>
 				<name>user</name>
 				<type>com.liferay.portal.model.User</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>threadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>themeDisplay</name>
 				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -876,18 +860,20 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>to</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -895,14 +881,17 @@
 			<param>
 				<name>mbMessageId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>themeDisplay</name>
 				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -910,24 +899,98 @@
 			<param>
 				<name>mbMessage</name>
 				<type>com.liferay.portlet.messageboards.model.MBMessage</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>PortletKeys</name>
-		<type>com.liferay.privatemessaging.util.PortletKeys</type>
-		<author><![CDATA[Eudaldo Alonso]]></author>
-		<field>
-			<name>PRIVATE_MESSAGING</name>
-		</field>
+		<name>UserThreadServiceImpl</name>
+		<type>com.liferay.privatemessaging.service.impl.UserThreadServiceImpl</type>
+		<author><![CDATA[Bruno Farache]]></author>
+		<method>
+			<name>getLastThreadMessage</name>
+			<param>
+				<name>mbThreadId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getThreadMessages</name>
+			<param>
+				<name>mbThreadId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>start</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>end</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>ascending</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getThreadMessagesCount</name>
+			<param>
+				<name>mbThreadId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getUserUserThreads</name>
+			<param>
+				<name>deleted</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+			<throws>
+				<name>PrincipalException</name>
+				<type>com.liferay.portal.security.auth.PrincipalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
 	</javadoc>
 	<javadoc>
 		<name>PortletPropsKeys</name>
@@ -935,6 +998,9 @@
 		<author><![CDATA[Jonathan Lee]]></author>
 		<field>
 			<name>AUTOCOMPLETE_RECIPIENT_MAX</name>
+		</field>
+		<field>
+			<name>AUTOCOMPLETE_RECIPIENT_SITE_EXCLUDES</name>
 		</field>
 		<field>
 			<name>AUTOCOMPLETE_RECIPIENT_TYPE</name>
@@ -948,6 +1014,9 @@
 			<name>AUTOCOMPLETE_RECIPIENT_MAX</name>
 		</field>
 		<field>
+			<name>AUTOCOMPLETE_RECIPIENT_SITE_EXCLUDES</name>
+		</field>
+		<field>
 			<name>AUTOCOMPLETE_RECIPIENT_TYPE</name>
 		</field>
 	</javadoc>
@@ -955,6 +1024,9 @@
 		<name>PrivateMessagingConstants</name>
 		<type>com.liferay.privatemessaging.util.PrivateMessagingConstants</type>
 		<author><![CDATA[Scott Lee]]></author>
+		<field>
+			<name>NEW_MESSAGE</name>
+		</field>
 		<field>
 			<name>PRIVATE_MESSAGING_CATEGORY_ID</name>
 		</field>
@@ -969,99 +1041,35 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>type</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>keywords</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
-		</method>
-		<method>
-			<name>getLastThreadMessage</name>
-			<param>
-				<name>userId</name>
-				<type>long</type>
-			</param>
-			<param>
-				<name>mbThreadId</name>
-				<type>long</type>
-			</param>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
-		</method>
-		<method>
-			<name>getThreadMessages</name>
-			<param>
-				<name>userId</name>
-				<type>long</type>
-			</param>
-			<param>
-				<name>mbThreadId</name>
-				<type>long</type>
-			</param>
-			<param>
-				<name>start</name>
-				<type>int</type>
-			</param>
-			<param>
-				<name>end</name>
-				<type>int</type>
-			</param>
-			<param>
-				<name>ascending</name>
-				<type>boolean</type>
-			</param>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
-		</method>
-		<method>
-			<name>getThreadMessagesCount</name>
-			<param>
-				<name>userId</name>
-				<type>long</type>
-			</param>
-			<param>
-				<name>mbThreadId</name>
-				<type>long</type>
-			</param>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1070,44 +1078,47 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getThreadSubject</name>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getThreadUsers</name>
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1115,18 +1126,20 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mbThreadId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,17 +14,23 @@
 
 package com.liferay.mail.model;
 
+import com.liferay.mail.service.ClpSerializer;
 import com.liferay.mail.service.FolderLocalServiceUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Method;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -37,26 +43,32 @@ public class FolderClp extends BaseModelImpl<Folder> implements Folder {
 	public FolderClp() {
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return Folder.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return Folder.class.getName();
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _folderId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setFolderId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _folderId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
@@ -75,6 +87,9 @@ public class FolderClp extends BaseModelImpl<Folder> implements Folder {
 		attributes.put("fullName", getFullName());
 		attributes.put("displayName", getDisplayName());
 		attributes.put("remoteMessageCount", getRemoteMessageCount());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -141,94 +156,256 @@ public class FolderClp extends BaseModelImpl<Folder> implements Folder {
 		if (remoteMessageCount != null) {
 			setRemoteMessageCount(remoteMessageCount);
 		}
+
+		_entityCacheEnabled = GetterUtil.getBoolean("entityCacheEnabled");
+		_finderCacheEnabled = GetterUtil.getBoolean("finderCacheEnabled");
 	}
 
+	@Override
 	public long getFolderId() {
 		return _folderId;
 	}
 
+	@Override
 	public void setFolderId(long folderId) {
 		_folderId = folderId;
+
+		if (_folderRemoteModel != null) {
+			try {
+				Class<?> clazz = _folderRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setFolderId", long.class);
+
+				method.invoke(_folderRemoteModel, folderId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		if (_folderRemoteModel != null) {
+			try {
+				Class<?> clazz = _folderRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompanyId", long.class);
+
+				method.invoke(_folderRemoteModel, companyId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		if (_folderRemoteModel != null) {
+			try {
+				Class<?> clazz = _folderRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUserId", long.class);
+
+				method.invoke(_folderRemoteModel, userId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
+	@Override
 	public String getUserName() {
 		return _userName;
 	}
 
+	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		if (_folderRemoteModel != null) {
+			try {
+				Class<?> clazz = _folderRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUserName", String.class);
+
+				method.invoke(_folderRemoteModel, userName);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		if (_folderRemoteModel != null) {
+			try {
+				Class<?> clazz = _folderRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCreateDate", Date.class);
+
+				method.invoke(_folderRemoteModel, createDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		if (_folderRemoteModel != null) {
+			try {
+				Class<?> clazz = _folderRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setModifiedDate", Date.class);
+
+				method.invoke(_folderRemoteModel, modifiedDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public long getAccountId() {
 		return _accountId;
 	}
 
+	@Override
 	public void setAccountId(long accountId) {
 		_accountId = accountId;
+
+		if (_folderRemoteModel != null) {
+			try {
+				Class<?> clazz = _folderRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setAccountId", long.class);
+
+				method.invoke(_folderRemoteModel, accountId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public String getFullName() {
 		return _fullName;
 	}
 
+	@Override
 	public void setFullName(String fullName) {
 		_fullName = fullName;
+
+		if (_folderRemoteModel != null) {
+			try {
+				Class<?> clazz = _folderRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setFullName", String.class);
+
+				method.invoke(_folderRemoteModel, fullName);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public String getDisplayName() {
 		return _displayName;
 	}
 
+	@Override
 	public void setDisplayName(String displayName) {
 		_displayName = displayName;
+
+		if (_folderRemoteModel != null) {
+			try {
+				Class<?> clazz = _folderRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDisplayName", String.class);
+
+				method.invoke(_folderRemoteModel, displayName);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
+	@Override
 	public int getRemoteMessageCount() {
 		return _remoteMessageCount;
 	}
 
+	@Override
 	public void setRemoteMessageCount(int remoteMessageCount) {
 		_remoteMessageCount = remoteMessageCount;
+
+		if (_folderRemoteModel != null) {
+			try {
+				Class<?> clazz = _folderRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setRemoteMessageCount",
+						int.class);
+
+				method.invoke(_folderRemoteModel, remoteMessageCount);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public BaseModel<?> getFolderRemoteModel() {
@@ -239,7 +416,49 @@ public class FolderClp extends BaseModelImpl<Folder> implements Folder {
 		_folderRemoteModel = folderRemoteModel;
 	}
 
-	public void persist() throws SystemException {
+	public Object invokeOnRemoteModel(String methodName,
+		Class<?>[] parameterTypes, Object[] parameterValues)
+		throws Exception {
+		Object[] remoteParameterValues = new Object[parameterValues.length];
+
+		for (int i = 0; i < parameterValues.length; i++) {
+			if (parameterValues[i] != null) {
+				remoteParameterValues[i] = ClpSerializer.translateInput(parameterValues[i]);
+			}
+		}
+
+		Class<?> remoteModelClass = _folderRemoteModel.getClass();
+
+		ClassLoader remoteModelClassLoader = remoteModelClass.getClassLoader();
+
+		Class<?>[] remoteParameterTypes = new Class[parameterTypes.length];
+
+		for (int i = 0; i < parameterTypes.length; i++) {
+			if (parameterTypes[i].isPrimitive()) {
+				remoteParameterTypes[i] = parameterTypes[i];
+			}
+			else {
+				String parameterTypeName = parameterTypes[i].getName();
+
+				remoteParameterTypes[i] = remoteModelClassLoader.loadClass(parameterTypeName);
+			}
+		}
+
+		Method method = remoteModelClass.getMethod(methodName,
+				remoteParameterTypes);
+
+		Object returnValue = method.invoke(_folderRemoteModel,
+				remoteParameterValues);
+
+		if (returnValue != null) {
+			returnValue = ClpSerializer.translateOutput(returnValue);
+		}
+
+		return returnValue;
+	}
+
+	@Override
+	public void persist() {
 		if (this.isNew()) {
 			FolderLocalServiceUtil.addFolder(this);
 		}
@@ -272,6 +491,7 @@ public class FolderClp extends BaseModelImpl<Folder> implements Folder {
 		return clone;
 	}
 
+	@Override
 	public int compareTo(Folder folder) {
 		int value = 0;
 
@@ -286,18 +506,15 @@ public class FolderClp extends BaseModelImpl<Folder> implements Folder {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof FolderClp)) {
 			return false;
 		}
 
-		FolderClp folder = null;
-
-		try {
-			folder = (FolderClp)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		FolderClp folder = (FolderClp)obj;
 
 		long primaryKey = folder.getPrimaryKey();
 
@@ -309,9 +526,23 @@ public class FolderClp extends BaseModelImpl<Folder> implements Folder {
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _entityCacheEnabled;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -343,6 +574,7 @@ public class FolderClp extends BaseModelImpl<Folder> implements Folder {
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(34);
 
@@ -399,7 +631,6 @@ public class FolderClp extends BaseModelImpl<Folder> implements Folder {
 	private long _folderId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -408,4 +639,7 @@ public class FolderClp extends BaseModelImpl<Folder> implements Folder {
 	private String _displayName;
 	private int _remoteMessageCount;
 	private BaseModel<?> _folderRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.mail.service.ClpSerializer.class;
+	private boolean _entityCacheEnabled;
+	private boolean _finderCacheEnabled;
 }

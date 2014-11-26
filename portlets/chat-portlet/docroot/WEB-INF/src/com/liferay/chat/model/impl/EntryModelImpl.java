@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -18,15 +18,16 @@ import com.liferay.chat.model.Entry;
 import com.liferay.chat.model.EntryModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -63,9 +64,10 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			{ "createDate", Types.BIGINT },
 			{ "fromUserId", Types.BIGINT },
 			{ "toUserId", Types.BIGINT },
-			{ "content", Types.VARCHAR }
+			{ "content", Types.VARCHAR },
+			{ "flag", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Chat_Entry (entryId LONG not null primary key,createDate LONG,fromUserId LONG,toUserId LONG,content VARCHAR(1000) null)";
+	public static final String TABLE_SQL_CREATE = "create table Chat_Entry (entryId LONG not null primary key,createDate LONG,fromUserId LONG,toUserId LONG,content VARCHAR(1000) null,flag INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Chat_Entry";
 	public static final String ORDER_BY_JPQL = " ORDER BY entry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Chat_Entry.createDate DESC";
@@ -91,26 +93,32 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	public EntryModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _entryId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setEntryId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _entryId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return Entry.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return Entry.class.getName();
 	}
@@ -124,6 +132,10 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		attributes.put("fromUserId", getFromUserId());
 		attributes.put("toUserId", getToUserId());
 		attributes.put("content", getContent());
+		attributes.put("flag", getFlag());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -159,20 +171,30 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		if (content != null) {
 			setContent(content);
 		}
+
+		Integer flag = (Integer)attributes.get("flag");
+
+		if (flag != null) {
+			setFlag(flag);
+		}
 	}
 
+	@Override
 	public long getEntryId() {
 		return _entryId;
 	}
 
+	@Override
 	public void setEntryId(long entryId) {
 		_entryId = entryId;
 	}
 
+	@Override
 	public long getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(long createDate) {
 		_columnBitmask = -1L;
 
@@ -189,10 +211,12 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		return _originalCreateDate;
 	}
 
+	@Override
 	public long getFromUserId() {
 		return _fromUserId;
 	}
 
+	@Override
 	public void setFromUserId(long fromUserId) {
 		_columnBitmask |= FROMUSERID_COLUMN_BITMASK;
 
@@ -205,22 +229,32 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		_fromUserId = fromUserId;
 	}
 
-	public String getFromUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getFromUserId(), "uuid", _fromUserUuid);
+	@Override
+	public String getFromUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getFromUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setFromUserUuid(String fromUserUuid) {
-		_fromUserUuid = fromUserUuid;
 	}
 
 	public long getOriginalFromUserId() {
 		return _originalFromUserId;
 	}
 
+	@Override
 	public long getToUserId() {
 		return _toUserId;
 	}
 
+	@Override
 	public void setToUserId(long toUserId) {
 		_columnBitmask |= TOUSERID_COLUMN_BITMASK;
 
@@ -233,18 +267,27 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		_toUserId = toUserId;
 	}
 
-	public String getToUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getToUserId(), "uuid", _toUserUuid);
+	@Override
+	public String getToUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getToUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setToUserUuid(String toUserUuid) {
-		_toUserUuid = toUserUuid;
 	}
 
 	public long getOriginalToUserId() {
 		return _originalToUserId;
 	}
 
+	@Override
 	public String getContent() {
 		if (_content == null) {
 			return StringPool.BLANK;
@@ -254,6 +297,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		}
 	}
 
+	@Override
 	public void setContent(String content) {
 		_columnBitmask |= CONTENT_COLUMN_BITMASK;
 
@@ -266,6 +310,16 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	public String getOriginalContent() {
 		return GetterUtil.getString(_originalContent);
+	}
+
+	@Override
+	public int getFlag() {
+		return _flag;
+	}
+
+	@Override
+	public void setFlag(int flag) {
+		_flag = flag;
 	}
 
 	public long getColumnBitmask() {
@@ -304,12 +358,14 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		entryImpl.setFromUserId(getFromUserId());
 		entryImpl.setToUserId(getToUserId());
 		entryImpl.setContent(getContent());
+		entryImpl.setFlag(getFlag());
 
 		entryImpl.resetOriginalValues();
 
 		return entryImpl;
 	}
 
+	@Override
 	public int compareTo(Entry entry) {
 		int value = 0;
 
@@ -334,18 +390,15 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Entry)) {
 			return false;
 		}
 
-		Entry entry = null;
-
-		try {
-			entry = (Entry)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Entry entry = (Entry)obj;
 
 		long primaryKey = entry.getPrimaryKey();
 
@@ -360,6 +413,16 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -403,12 +466,14 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			entryCacheModel.content = null;
 		}
 
+		entryCacheModel.flag = getFlag();
+
 		return entryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{entryId=");
 		sb.append(getEntryId());
@@ -420,13 +485,16 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		sb.append(getToUserId());
 		sb.append(", content=");
 		sb.append(getContent());
+		sb.append(", flag=");
+		sb.append(getFlag());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.chat.model.Entry");
@@ -452,6 +520,10 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			"<column><column-name>content</column-name><column-value><![CDATA[");
 		sb.append(getContent());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>flag</column-name><column-value><![CDATA[");
+		sb.append(getFlag());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -465,15 +537,14 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	private long _originalCreateDate;
 	private boolean _setOriginalCreateDate;
 	private long _fromUserId;
-	private String _fromUserUuid;
 	private long _originalFromUserId;
 	private boolean _setOriginalFromUserId;
 	private long _toUserId;
-	private String _toUserUuid;
 	private long _originalToUserId;
 	private boolean _setOriginalToUserId;
 	private String _content;
 	private String _originalContent;
+	private int _flag;
 	private long _columnBitmask;
 	private Entry _escapedModel;
 }

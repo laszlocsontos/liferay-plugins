@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,16 +15,17 @@
 package com.liferay.so.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -98,26 +99,32 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 	public ProjectsEntryModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _projectsEntryId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setProjectsEntryId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _projectsEntryId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return ProjectsEntry.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return ProjectsEntry.class.getName();
 	}
@@ -137,6 +144,9 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 		attributes.put("data", getData());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -210,26 +220,32 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 		}
 	}
 
+	@Override
 	public long getProjectsEntryId() {
 		return _projectsEntryId;
 	}
 
+	@Override
 	public void setProjectsEntryId(long projectsEntryId) {
 		_projectsEntryId = projectsEntryId;
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_columnBitmask |= USERID_COLUMN_BITMASK;
 
@@ -242,18 +258,27 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 		_userId = userId;
 	}
 
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	public long getOriginalUserId() {
 		return _originalUserId;
 	}
 
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -263,26 +288,32 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 		}
 	}
 
+	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -292,10 +323,12 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 		}
 	}
 
+	@Override
 	public void setTitle(String title) {
 		_title = title;
 	}
 
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -305,28 +338,34 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 		}
 	}
 
+	@Override
 	public void setDescription(String description) {
 		_description = description;
 	}
 
+	@Override
 	public Date getStartDate() {
 		return _startDate;
 	}
 
+	@Override
 	public void setStartDate(Date startDate) {
 		_startDate = startDate;
 	}
 
+	@Override
 	public Date getEndDate() {
 		return _endDate;
 	}
 
+	@Override
 	public void setEndDate(Date endDate) {
 		_columnBitmask = -1L;
 
 		_endDate = endDate;
 	}
 
+	@Override
 	public String getData() {
 		if (_data == null) {
 			return StringPool.BLANK;
@@ -336,6 +375,7 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 		}
 	}
 
+	@Override
 	public void setData(String data) {
 		_data = data;
 	}
@@ -388,6 +428,7 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 		return projectsEntryImpl;
 	}
 
+	@Override
 	public int compareTo(ProjectsEntry projectsEntry) {
 		int value = 0;
 
@@ -402,18 +443,15 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ProjectsEntry)) {
 			return false;
 		}
 
-		ProjectsEntry projectsEntry = null;
-
-		try {
-			projectsEntry = (ProjectsEntry)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ProjectsEntry projectsEntry = (ProjectsEntry)obj;
 
 		long primaryKey = projectsEntry.getPrimaryKey();
 
@@ -428,6 +466,16 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -553,6 +601,7 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(37);
 
@@ -617,7 +666,6 @@ public class ProjectsEntryModelImpl extends BaseModelImpl<ProjectsEntry>
 	private long _projectsEntryId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private String _userName;

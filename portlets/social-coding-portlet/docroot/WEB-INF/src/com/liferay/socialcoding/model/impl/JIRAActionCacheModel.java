@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,6 +13,8 @@
  */
 
 package com.liferay.socialcoding.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,6 +36,7 @@ import java.util.Date;
  * @see JIRAAction
  * @generated
  */
+@ProviderType
 public class JIRAActionCacheModel implements CacheModel<JIRAAction>,
 	Externalizable {
 	@Override
@@ -61,6 +64,7 @@ public class JIRAActionCacheModel implements CacheModel<JIRAAction>,
 		return sb.toString();
 	}
 
+	@Override
 	public JIRAAction toEntityModel() {
 		JIRAActionImpl jiraActionImpl = new JIRAActionImpl();
 
@@ -115,6 +119,7 @@ public class JIRAActionCacheModel implements CacheModel<JIRAAction>,
 		return jiraActionImpl;
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		jiraActionId = objectInput.readLong();
 		jiraUserId = objectInput.readUTF();
@@ -126,6 +131,7 @@ public class JIRAActionCacheModel implements CacheModel<JIRAAction>,
 		jiraGroupName = objectInput.readUTF();
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(jiraActionId);

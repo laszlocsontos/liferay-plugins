@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,14 +15,16 @@
 package com.liferay.so.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -89,26 +91,32 @@ public class FavoriteSiteModelImpl extends BaseModelImpl<FavoriteSite>
 	public FavoriteSiteModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _favoriteSiteId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setFavoriteSiteId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _favoriteSiteId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return FavoriteSite.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return FavoriteSite.class.getName();
 	}
@@ -121,6 +129,9 @@ public class FavoriteSiteModelImpl extends BaseModelImpl<FavoriteSite>
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -152,18 +163,22 @@ public class FavoriteSiteModelImpl extends BaseModelImpl<FavoriteSite>
 		}
 	}
 
+	@Override
 	public long getFavoriteSiteId() {
 		return _favoriteSiteId;
 	}
 
+	@Override
 	public void setFavoriteSiteId(long favoriteSiteId) {
 		_favoriteSiteId = favoriteSiteId;
 	}
 
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
 
+	@Override
 	public void setGroupId(long groupId) {
 		_columnBitmask |= GROUPID_COLUMN_BITMASK;
 
@@ -180,18 +195,22 @@ public class FavoriteSiteModelImpl extends BaseModelImpl<FavoriteSite>
 		return _originalGroupId;
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_columnBitmask |= USERID_COLUMN_BITMASK;
 
@@ -204,12 +223,20 @@ public class FavoriteSiteModelImpl extends BaseModelImpl<FavoriteSite>
 		_userId = userId;
 	}
 
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	public long getOriginalUserId() {
@@ -257,6 +284,7 @@ public class FavoriteSiteModelImpl extends BaseModelImpl<FavoriteSite>
 		return favoriteSiteImpl;
 	}
 
+	@Override
 	public int compareTo(FavoriteSite favoriteSite) {
 		long primaryKey = favoriteSite.getPrimaryKey();
 
@@ -273,18 +301,15 @@ public class FavoriteSiteModelImpl extends BaseModelImpl<FavoriteSite>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof FavoriteSite)) {
 			return false;
 		}
 
-		FavoriteSite favoriteSite = null;
-
-		try {
-			favoriteSite = (FavoriteSite)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		FavoriteSite favoriteSite = (FavoriteSite)obj;
 
 		long primaryKey = favoriteSite.getPrimaryKey();
 
@@ -299,6 +324,16 @@ public class FavoriteSiteModelImpl extends BaseModelImpl<FavoriteSite>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -348,6 +383,7 @@ public class FavoriteSiteModelImpl extends BaseModelImpl<FavoriteSite>
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(16);
 
@@ -387,7 +423,6 @@ public class FavoriteSiteModelImpl extends BaseModelImpl<FavoriteSite>
 	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private long _columnBitmask;

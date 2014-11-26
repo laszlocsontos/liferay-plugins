@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -16,7 +16,6 @@ package com.liferay.twitter.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -61,16 +60,14 @@ public class FeedUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<Feed> findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static List<Feed> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -78,7 +75,7 @@ public class FeedUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Feed> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -86,8 +83,7 @@ public class FeedUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Feed> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator<Feed> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -96,165 +92,80 @@ public class FeedUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Feed update(Feed feed) throws SystemException {
+	public static Feed update(Feed feed) {
 		return getPersistence().update(feed);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Feed update(Feed feed, ServiceContext serviceContext)
-		throws SystemException {
+	public static Feed update(Feed feed, ServiceContext serviceContext) {
 		return getPersistence().update(feed, serviceContext);
 	}
 
 	/**
-	* Returns the feed where companyId = &#63; and twitterUserId = &#63; or throws a {@link com.liferay.twitter.NoSuchFeedException} if it could not be found.
+	* Returns the feed where userId = &#63; and twitterScreenName = &#63; or throws a {@link com.liferay.twitter.NoSuchFeedException} if it could not be found.
 	*
-	* @param companyId the company ID
-	* @param twitterUserId the twitter user ID
-	* @return the matching feed
-	* @throws com.liferay.twitter.NoSuchFeedException if a matching feed could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.twitter.model.Feed findByC_TWUI(long companyId,
-		long twitterUserId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.twitter.NoSuchFeedException {
-		return getPersistence().findByC_TWUI(companyId, twitterUserId);
-	}
-
-	/**
-	* Returns the feed where companyId = &#63; and twitterUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param companyId the company ID
-	* @param twitterUserId the twitter user ID
-	* @return the matching feed, or <code>null</code> if a matching feed could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.twitter.model.Feed fetchByC_TWUI(long companyId,
-		long twitterUserId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByC_TWUI(companyId, twitterUserId);
-	}
-
-	/**
-	* Returns the feed where companyId = &#63; and twitterUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param companyId the company ID
-	* @param twitterUserId the twitter user ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching feed, or <code>null</code> if a matching feed could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.twitter.model.Feed fetchByC_TWUI(long companyId,
-		long twitterUserId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByC_TWUI(companyId, twitterUserId, retrieveFromCache);
-	}
-
-	/**
-	* Removes the feed where companyId = &#63; and twitterUserId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param twitterUserId the twitter user ID
-	* @return the feed that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.twitter.model.Feed removeByC_TWUI(
-		long companyId, long twitterUserId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.twitter.NoSuchFeedException {
-		return getPersistence().removeByC_TWUI(companyId, twitterUserId);
-	}
-
-	/**
-	* Returns the number of feeds where companyId = &#63; and twitterUserId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param twitterUserId the twitter user ID
-	* @return the number of matching feeds
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_TWUI(long companyId, long twitterUserId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_TWUI(companyId, twitterUserId);
-	}
-
-	/**
-	* Returns the feed where companyId = &#63; and twitterScreenName = &#63; or throws a {@link com.liferay.twitter.NoSuchFeedException} if it could not be found.
-	*
-	* @param companyId the company ID
+	* @param userId the user ID
 	* @param twitterScreenName the twitter screen name
 	* @return the matching feed
 	* @throws com.liferay.twitter.NoSuchFeedException if a matching feed could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.twitter.model.Feed findByC_TSN(long companyId,
+	public static com.liferay.twitter.model.Feed findByU_TSN(long userId,
 		java.lang.String twitterScreenName)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.twitter.NoSuchFeedException {
-		return getPersistence().findByC_TSN(companyId, twitterScreenName);
+		throws com.liferay.twitter.NoSuchFeedException {
+		return getPersistence().findByU_TSN(userId, twitterScreenName);
 	}
 
 	/**
-	* Returns the feed where companyId = &#63; and twitterScreenName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the feed where userId = &#63; and twitterScreenName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param companyId the company ID
+	* @param userId the user ID
 	* @param twitterScreenName the twitter screen name
 	* @return the matching feed, or <code>null</code> if a matching feed could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.twitter.model.Feed fetchByC_TSN(long companyId,
-		java.lang.String twitterScreenName)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByC_TSN(companyId, twitterScreenName);
+	public static com.liferay.twitter.model.Feed fetchByU_TSN(long userId,
+		java.lang.String twitterScreenName) {
+		return getPersistence().fetchByU_TSN(userId, twitterScreenName);
 	}
 
 	/**
-	* Returns the feed where companyId = &#63; and twitterScreenName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the feed where userId = &#63; and twitterScreenName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param companyId the company ID
+	* @param userId the user ID
 	* @param twitterScreenName the twitter screen name
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching feed, or <code>null</code> if a matching feed could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.twitter.model.Feed fetchByC_TSN(long companyId,
-		java.lang.String twitterScreenName, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.twitter.model.Feed fetchByU_TSN(long userId,
+		java.lang.String twitterScreenName, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByC_TSN(companyId, twitterScreenName, retrieveFromCache);
+				   .fetchByU_TSN(userId, twitterScreenName, retrieveFromCache);
 	}
 
 	/**
-	* Removes the feed where companyId = &#63; and twitterScreenName = &#63; from the database.
+	* Removes the feed where userId = &#63; and twitterScreenName = &#63; from the database.
 	*
-	* @param companyId the company ID
+	* @param userId the user ID
 	* @param twitterScreenName the twitter screen name
 	* @return the feed that was removed
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.twitter.model.Feed removeByC_TSN(long companyId,
+	public static com.liferay.twitter.model.Feed removeByU_TSN(long userId,
 		java.lang.String twitterScreenName)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.twitter.NoSuchFeedException {
-		return getPersistence().removeByC_TSN(companyId, twitterScreenName);
+		throws com.liferay.twitter.NoSuchFeedException {
+		return getPersistence().removeByU_TSN(userId, twitterScreenName);
 	}
 
 	/**
-	* Returns the number of feeds where companyId = &#63; and twitterScreenName = &#63;.
+	* Returns the number of feeds where userId = &#63; and twitterScreenName = &#63;.
 	*
-	* @param companyId the company ID
+	* @param userId the user ID
 	* @param twitterScreenName the twitter screen name
 	* @return the number of matching feeds
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_TSN(long companyId,
-		java.lang.String twitterScreenName)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_TSN(companyId, twitterScreenName);
+	public static int countByU_TSN(long userId,
+		java.lang.String twitterScreenName) {
+		return getPersistence().countByU_TSN(userId, twitterScreenName);
 	}
 
 	/**
@@ -292,17 +203,14 @@ public class FeedUtil {
 	* @param feedId the primary key of the feed
 	* @return the feed that was removed
 	* @throws com.liferay.twitter.NoSuchFeedException if a feed with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.twitter.model.Feed remove(long feedId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.twitter.NoSuchFeedException {
+		throws com.liferay.twitter.NoSuchFeedException {
 		return getPersistence().remove(feedId);
 	}
 
 	public static com.liferay.twitter.model.Feed updateImpl(
-		com.liferay.twitter.model.Feed feed)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.twitter.model.Feed feed) {
 		return getPersistence().updateImpl(feed);
 	}
 
@@ -312,11 +220,9 @@ public class FeedUtil {
 	* @param feedId the primary key of the feed
 	* @return the feed
 	* @throws com.liferay.twitter.NoSuchFeedException if a feed with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.twitter.model.Feed findByPrimaryKey(long feedId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.twitter.NoSuchFeedException {
+		throws com.liferay.twitter.NoSuchFeedException {
 		return getPersistence().findByPrimaryKey(feedId);
 	}
 
@@ -325,21 +231,22 @@ public class FeedUtil {
 	*
 	* @param feedId the primary key of the feed
 	* @return the feed, or <code>null</code> if a feed with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.twitter.model.Feed fetchByPrimaryKey(long feedId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.twitter.model.Feed fetchByPrimaryKey(long feedId) {
 		return getPersistence().fetchByPrimaryKey(feedId);
+	}
+
+	public static java.util.Map<java.io.Serializable, com.liferay.twitter.model.Feed> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
 	* Returns all the feeds.
 	*
 	* @return the feeds
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.twitter.model.Feed> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.twitter.model.Feed> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -353,11 +260,9 @@ public class FeedUtil {
 	* @param start the lower bound of the range of feeds
 	* @param end the upper bound of the range of feeds (not inclusive)
 	* @return the range of feeds
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.twitter.model.Feed> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -372,22 +277,17 @@ public class FeedUtil {
 	* @param end the upper bound of the range of feeds (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of feeds
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.twitter.model.Feed> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.twitter.model.Feed> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the feeds from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -395,10 +295,8 @@ public class FeedUtil {
 	* Returns the number of feeds.
 	*
 	* @return the number of feeds
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 
@@ -416,6 +314,7 @@ public class FeedUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(FeedPersistence persistence) {
 	}
 

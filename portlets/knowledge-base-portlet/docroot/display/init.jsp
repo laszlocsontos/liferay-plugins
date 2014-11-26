@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -16,38 +16,28 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.knowledgebase.display.search.KBArticleSearch" %>
-
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
+long resourceClassNameId = GetterUtil.getLong(portletPreferences.getValue("resourceClassNameId", null), PortalUtil.getClassNameId(KBFolderConstants.getClassName()));
+long resourcePrimKey = GetterUtil.getLong(portletPreferences.getValue("resourcePrimKey", null));
 
-String kbArticlesOrderByCol = preferences.getValue("kbArticlesOrderByCol", StringPool.BLANK);
-String kbArticlesOrderByType = preferences.getValue("kbArticlesOrderByType", StringPool.BLANK);
-boolean showKBArticlePriorityColumn = GetterUtil.getBoolean(preferences.getValue("showKBArticlePriorityColumn", null));
-boolean showKBArticleAuthorColumn = GetterUtil.getBoolean(preferences.getValue("showKBArticleAuthorColumn", null));
-boolean showKBArticleCreateDateColumn = GetterUtil.getBoolean(preferences.getValue("showKBArticleCreateDateColumn", null));
-boolean showKBArticleModifiedDateColumn = GetterUtil.getBoolean(preferences.getValue("showKBArticleModifiedDateColumn", null));
-boolean showKBArticleStatusColumn = GetterUtil.getBoolean(preferences.getValue("showKBArticleStatusColumn", null));
-boolean showKBArticleViewsColumn = GetterUtil.getBoolean(preferences.getValue("showKBArticleViewsColumn", null));
+boolean enableKBArticleDescription = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleDescription", null));
+boolean enableKBArticleRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleRatings", null));
+String kbArticleRatingsType = GetterUtil.getString(portletPreferences.getValue("kbArticleRatingsType", null), "thumbs");
+boolean showKBArticleAssetEntries = GetterUtil.getBoolean(portletPreferences.getValue("showKBArticleAssetEntries", null));
+boolean enableKBArticleAssetLinks = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleAssetLinks", null), true);
+boolean enableKBArticleViewCountIncrement = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleViewCountIncrement", null));
+boolean enableKBArticleSubscriptions = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleSubscriptions", null), true);
+boolean enableKBArticleHistory = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleHistory", null), true);
+boolean enableKBArticlePrint = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticlePrint", null), true);
+boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), false);
+String contentRootPrefix = GetterUtil.getString(portletPreferences.getValue("contentRootPrefix", null));
 
-boolean enableKBArticleDescription = GetterUtil.getBoolean(preferences.getValue("enableKBArticleDescription", null));
-boolean enableKBArticleRatings = GetterUtil.getBoolean(preferences.getValue("enableKBArticleRatings", null));
-boolean showKBArticleAssetEntries = GetterUtil.getBoolean(preferences.getValue("showKBArticleAssetEntries", null));
-boolean enableKBArticleKBComments = GetterUtil.getBoolean(preferences.getValue("enableKBArticleKBComments", null));
-boolean showKBArticleKBComments = GetterUtil.getBoolean(preferences.getValue("showKBArticleKBComments", null));
-boolean enableKBArticleViewCountIncrement = GetterUtil.getBoolean(preferences.getValue("enableKBArticleViewCountIncrement", null));
-
-boolean enableKBTemplateKBComments = GetterUtil.getBoolean(preferences.getValue("enableKBTemplateKBComments", null));
-boolean showKBTemplateKBComments = GetterUtil.getBoolean(preferences.getValue("showKBTemplateKBComments", null));
-
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(preferences.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = preferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
+int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 %>

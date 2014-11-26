@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -40,11 +39,12 @@ import java.util.Map;
 public class KaleoTaskAssignmentInstanceLocalServiceImpl
 	extends KaleoTaskAssignmentInstanceLocalServiceBaseImpl {
 
+	@Override
 	public KaleoTaskAssignmentInstance addKaleoTaskAssignmentInstance(
 			long groupId, KaleoTaskInstanceToken kaleoTaskInstanceToken,
 			String assigneeClassName, long assigneeClassPK,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(
 			serviceContext.getGuestOrUserId());
@@ -96,12 +96,13 @@ public class KaleoTaskAssignmentInstanceLocalServiceImpl
 		return kaleoTaskAssignmentInstance;
 	}
 
+	@Override
 	public List<KaleoTaskAssignmentInstance> addTaskAssignmentInstances(
 			KaleoTaskInstanceToken kaleoTaskInstanceToken,
 			Collection<KaleoTaskAssignment> kaleoTaskAssignments,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
 			new ArrayList<KaleoTaskAssignmentInstance>(
@@ -126,11 +127,12 @@ public class KaleoTaskAssignmentInstanceLocalServiceImpl
 		return kaleoTaskAssignmentInstances;
 	}
 
+	@Override
 	public KaleoTaskAssignmentInstance assignKaleoTaskAssignmentInstance(
 			KaleoTaskInstanceToken kaleoTaskInstanceToken,
 			String assigneeClassName, long assigneeClassPK,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		deleteKaleoTaskAssignmentInstances(kaleoTaskInstanceToken);
 
@@ -142,9 +144,10 @@ public class KaleoTaskAssignmentInstanceLocalServiceImpl
 		return kaleoTaskAssignmentInstance;
 	}
 
+	@Override
 	public KaleoTaskAssignmentInstance completeKaleoTaskInstanceToken(
 			long kaleoTaskInstanceTokenId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
 			kaleoTaskAssignmentInstancePersistence.
@@ -168,31 +171,30 @@ public class KaleoTaskAssignmentInstanceLocalServiceImpl
 		return kaleoTaskAssignmentInstance;
 	}
 
-	public void deleteCompanyKaleoTaskAssignmentInstances(long companyId)
-		throws SystemException {
-
+	@Override
+	public void deleteCompanyKaleoTaskAssignmentInstances(long companyId) {
 		kaleoTaskAssignmentInstancePersistence.removeByCompanyId(companyId);
 	}
 
+	@Override
 	public void deleteKaleoDefinitionKaleoTaskAssignmentInstances(
-			long kaleoDefintionId)
-		throws SystemException {
+		long kaleoDefintionId) {
 
 		kaleoTaskAssignmentInstancePersistence.removeByKaleoDefinitionId(
 			kaleoDefintionId);
 	}
 
+	@Override
 	public void deleteKaleoInstanceKaleoTaskAssignmentInstances(
-			long kaleoInstanceId)
-		throws SystemException {
+		long kaleoInstanceId) {
 
 		kaleoTaskAssignmentInstancePersistence.removeByKaleoInstanceId(
 			kaleoInstanceId);
 	}
 
+	@Override
 	public void deleteKaleoTaskAssignmentInstances(
-			KaleoTaskInstanceToken kaleoTaskInstanceToken)
-		throws SystemException {
+		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 
 		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
 			kaleoTaskAssignmentInstancePersistence.
@@ -207,9 +209,9 @@ public class KaleoTaskAssignmentInstanceLocalServiceImpl
 		}
 	}
 
+	@Override
 	public List<KaleoTaskAssignmentInstance> getKaleoTaskAssignmentInstances(
-			long kaleoTaskInstanceTokenId)
-		throws SystemException {
+		long kaleoTaskInstanceTokenId) {
 
 		return kaleoTaskAssignmentInstancePersistence.
 			findBykaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);

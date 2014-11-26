@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,20 +14,25 @@
 
 package com.liferay.marketplace.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.model.AppModel;
 import com.liferay.marketplace.model.AppSoap;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -57,6 +62,7 @@ import java.util.Map;
  * @generated
  */
 @JSON(strict = true)
+@ProviderType
 public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -73,9 +79,13 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "remoteAppId", Types.BIGINT },
+			{ "title", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "category", Types.VARCHAR },
+			{ "iconURL", Types.VARCHAR },
 			{ "version", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Marketplace_App (uuid_ VARCHAR(75) null,appId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,remoteAppId LONG,version VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Marketplace_App (uuid_ VARCHAR(75) null,appId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,remoteAppId LONG,title VARCHAR(75) null,description STRING null,category VARCHAR(75) null,iconURL STRING null,version VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_App";
 	public static final String ORDER_BY_JPQL = " ORDER BY app.appId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Marketplace_App.appId ASC";
@@ -91,10 +101,11 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.marketplace.model.App"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long REMOTEAPPID_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
-	public static long APPID_COLUMN_BITMASK = 8L;
+	public static final long CATEGORY_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long REMOTEAPPID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long APPID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -117,6 +128,10 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setRemoteAppId(soapModel.getRemoteAppId());
+		model.setTitle(soapModel.getTitle());
+		model.setDescription(soapModel.getDescription());
+		model.setCategory(soapModel.getCategory());
+		model.setIconURL(soapModel.getIconURL());
 		model.setVersion(soapModel.getVersion());
 
 		return model;
@@ -148,26 +163,32 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public AppModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _appId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setAppId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _appId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return App.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return App.class.getName();
 	}
@@ -184,7 +205,14 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("remoteAppId", getRemoteAppId());
+		attributes.put("title", getTitle());
+		attributes.put("description", getDescription());
+		attributes.put("category", getCategory());
+		attributes.put("iconURL", getIconURL());
 		attributes.put("version", getVersion());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -239,6 +267,30 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 			setRemoteAppId(remoteAppId);
 		}
 
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String category = (String)attributes.get("category");
+
+		if (category != null) {
+			setCategory(category);
+		}
+
+		String iconURL = (String)attributes.get("iconURL");
+
+		if (iconURL != null) {
+			setIconURL(iconURL);
+		}
+
 		String version = (String)attributes.get("version");
 
 		if (version != null) {
@@ -247,6 +299,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	}
 
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -256,6 +309,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		}
 	}
 
+	@Override
 	public void setUuid(String uuid) {
 		if (_originalUuid == null) {
 			_originalUuid = _uuid;
@@ -269,19 +323,23 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	}
 
 	@JSON
+	@Override
 	public long getAppId() {
 		return _appId;
 	}
 
+	@Override
 	public void setAppId(long appId) {
 		_appId = appId;
 	}
 
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
@@ -299,23 +357,34 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	}
 
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
 
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -325,33 +394,40 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		}
 	}
 
+	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
 	}
 
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
 
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
 	@JSON
+	@Override
 	public long getRemoteAppId() {
 		return _remoteAppId;
 	}
 
+	@Override
 	public void setRemoteAppId(long remoteAppId) {
 		_columnBitmask |= REMOTEAPPID_COLUMN_BITMASK;
 
@@ -369,6 +445,81 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	}
 
 	@JSON
+	@Override
+	public String getTitle() {
+		if (_title == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _title;
+		}
+	}
+
+	@Override
+	public void setTitle(String title) {
+		_title = title;
+	}
+
+	@JSON
+	@Override
+	public String getDescription() {
+		if (_description == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _description;
+		}
+	}
+
+	@Override
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	@JSON
+	@Override
+	public String getCategory() {
+		if (_category == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _category;
+		}
+	}
+
+	@Override
+	public void setCategory(String category) {
+		_columnBitmask |= CATEGORY_COLUMN_BITMASK;
+
+		if (_originalCategory == null) {
+			_originalCategory = _category;
+		}
+
+		_category = category;
+	}
+
+	public String getOriginalCategory() {
+		return GetterUtil.getString(_originalCategory);
+	}
+
+	@JSON
+	@Override
+	public String getIconURL() {
+		if (_iconURL == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _iconURL;
+		}
+	}
+
+	@Override
+	public void setIconURL(String iconURL) {
+		_iconURL = iconURL;
+	}
+
+	@JSON
+	@Override
 	public String getVersion() {
 		if (_version == null) {
 			return StringPool.BLANK;
@@ -378,8 +529,15 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		}
 	}
 
+	@Override
 	public void setVersion(String version) {
 		_version = version;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				App.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -421,6 +579,10 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		appImpl.setCreateDate(getCreateDate());
 		appImpl.setModifiedDate(getModifiedDate());
 		appImpl.setRemoteAppId(getRemoteAppId());
+		appImpl.setTitle(getTitle());
+		appImpl.setDescription(getDescription());
+		appImpl.setCategory(getCategory());
+		appImpl.setIconURL(getIconURL());
 		appImpl.setVersion(getVersion());
 
 		appImpl.resetOriginalValues();
@@ -428,6 +590,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		return appImpl;
 	}
 
+	@Override
 	public int compareTo(App app) {
 		long primaryKey = app.getPrimaryKey();
 
@@ -444,18 +607,15 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof App)) {
 			return false;
 		}
 
-		App app = null;
-
-		try {
-			app = (App)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		App app = (App)obj;
 
 		long primaryKey = app.getPrimaryKey();
 
@@ -473,6 +633,16 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
+	}
+
+	@Override
 	public void resetOriginalValues() {
 		AppModelImpl appModelImpl = this;
 
@@ -485,6 +655,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		appModelImpl._originalRemoteAppId = appModelImpl._remoteAppId;
 
 		appModelImpl._setOriginalRemoteAppId = false;
+
+		appModelImpl._originalCategory = appModelImpl._category;
 
 		appModelImpl._columnBitmask = 0;
 	}
@@ -535,6 +707,38 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 		appCacheModel.remoteAppId = getRemoteAppId();
 
+		appCacheModel.title = getTitle();
+
+		String title = appCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			appCacheModel.title = null;
+		}
+
+		appCacheModel.description = getDescription();
+
+		String description = appCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			appCacheModel.description = null;
+		}
+
+		appCacheModel.category = getCategory();
+
+		String category = appCacheModel.category;
+
+		if ((category != null) && (category.length() == 0)) {
+			appCacheModel.category = null;
+		}
+
+		appCacheModel.iconURL = getIconURL();
+
+		String iconURL = appCacheModel.iconURL;
+
+		if ((iconURL != null) && (iconURL.length() == 0)) {
+			appCacheModel.iconURL = null;
+		}
+
 		appCacheModel.version = getVersion();
 
 		String version = appCacheModel.version;
@@ -548,7 +752,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -566,6 +770,14 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		sb.append(getModifiedDate());
 		sb.append(", remoteAppId=");
 		sb.append(getRemoteAppId());
+		sb.append(", title=");
+		sb.append(getTitle());
+		sb.append(", description=");
+		sb.append(getDescription());
+		sb.append(", category=");
+		sb.append(getCategory());
+		sb.append(", iconURL=");
+		sb.append(getIconURL());
 		sb.append(", version=");
 		sb.append(getVersion());
 		sb.append("}");
@@ -573,8 +785,9 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.marketplace.model.App");
@@ -613,6 +826,22 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		sb.append(getRemoteAppId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>title</column-name><column-value><![CDATA[");
+		sb.append(getTitle());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>description</column-name><column-value><![CDATA[");
+		sb.append(getDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>category</column-name><column-value><![CDATA[");
+		sb.append(getCategory());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>iconURL</column-name><column-value><![CDATA[");
+		sb.append(getIconURL());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>version</column-name><column-value><![CDATA[");
 		sb.append(getVersion());
 		sb.append("]]></column-value></column>");
@@ -622,8 +851,10 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = App.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] { App.class };
+	private static final ClassLoader _classLoader = App.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+			App.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _appId;
@@ -631,13 +862,17 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _remoteAppId;
 	private long _originalRemoteAppId;
 	private boolean _setOriginalRemoteAppId;
+	private String _title;
+	private String _description;
+	private String _category;
+	private String _originalCategory;
+	private String _iconURL;
 	private String _version;
 	private long _columnBitmask;
 	private App _escapedModel;

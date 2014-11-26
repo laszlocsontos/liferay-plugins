@@ -1,5 +1,6 @@
 {
-	"layouts": [
+	"layoutTemplateId": "1_3_1_columns",
+	"privatePages": [
 		{
 			"columns": [
 				[
@@ -13,6 +14,9 @@
 				],
 				[
 					"Our Achievements.xml"
+				],
+				[
+					"Banner 1.xml"
 				]
 			],
 			"friendlyURL": "/home",
@@ -51,6 +55,5 @@
 			"name": "Contact",
 			"title": "Contact"
 		}
-	],
-	"layoutTemplateId": "1_3_1_columns"
+	]
 }

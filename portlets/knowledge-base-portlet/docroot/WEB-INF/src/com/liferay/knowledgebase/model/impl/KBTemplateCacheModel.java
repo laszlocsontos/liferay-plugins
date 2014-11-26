@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,6 +13,8 @@
  */
 
 package com.liferay.knowledgebase.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.knowledgebase.model.KBTemplate;
 
@@ -34,6 +36,7 @@ import java.util.Date;
  * @see KBTemplate
  * @generated
  */
+@ProviderType
 public class KBTemplateCacheModel implements CacheModel<KBTemplate>,
 	Externalizable {
 	@Override
@@ -65,6 +68,7 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate>,
 		return sb.toString();
 	}
 
+	@Override
 	public KBTemplate toEntityModel() {
 		KBTemplateImpl kbTemplateImpl = new KBTemplateImpl();
 
@@ -120,6 +124,7 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate>,
 		return kbTemplateImpl;
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		kbTemplateId = objectInput.readLong();
@@ -133,6 +138,7 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate>,
 		content = objectInput.readUTF();
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {

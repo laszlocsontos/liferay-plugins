@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,15 +15,16 @@
 package com.liferay.portal.workflow.kaleo.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceTokenModel;
 
@@ -107,26 +108,32 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 	public KaleoTaskInstanceTokenModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _kaleoTaskInstanceTokenId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setKaleoTaskInstanceTokenId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _kaleoTaskInstanceTokenId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return KaleoTaskInstanceToken.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return KaleoTaskInstanceToken.class.getName();
 	}
@@ -154,6 +161,9 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("dueDate", getDueDate());
 		attributes.put("workflowContext", getWorkflowContext());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -276,28 +286,34 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		}
 	}
 
+	@Override
 	public long getKaleoTaskInstanceTokenId() {
 		return _kaleoTaskInstanceTokenId;
 	}
 
+	@Override
 	public void setKaleoTaskInstanceTokenId(long kaleoTaskInstanceTokenId) {
 		_columnBitmask = -1L;
 
 		_kaleoTaskInstanceTokenId = kaleoTaskInstanceTokenId;
 	}
 
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
 
+	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
@@ -314,22 +330,33 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		return _originalCompanyId;
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
 
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -339,30 +366,37 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		}
 	}
 
+	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
+	@Override
 	public long getKaleoDefinitionId() {
 		return _kaleoDefinitionId;
 	}
 
+	@Override
 	public void setKaleoDefinitionId(long kaleoDefinitionId) {
 		_columnBitmask |= KALEODEFINITIONID_COLUMN_BITMASK;
 
@@ -379,10 +413,12 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		return _originalKaleoDefinitionId;
 	}
 
+	@Override
 	public long getKaleoInstanceId() {
 		return _kaleoInstanceId;
 	}
 
+	@Override
 	public void setKaleoInstanceId(long kaleoInstanceId) {
 		_columnBitmask |= KALEOINSTANCEID_COLUMN_BITMASK;
 
@@ -399,18 +435,22 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		return _originalKaleoInstanceId;
 	}
 
+	@Override
 	public long getKaleoInstanceTokenId() {
 		return _kaleoInstanceTokenId;
 	}
 
+	@Override
 	public void setKaleoInstanceTokenId(long kaleoInstanceTokenId) {
 		_kaleoInstanceTokenId = kaleoInstanceTokenId;
 	}
 
+	@Override
 	public long getKaleoTaskId() {
 		return _kaleoTaskId;
 	}
 
+	@Override
 	public void setKaleoTaskId(long kaleoTaskId) {
 		_columnBitmask |= KALEOTASKID_COLUMN_BITMASK;
 
@@ -427,6 +467,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		return _originalKaleoTaskId;
 	}
 
+	@Override
 	public String getKaleoTaskName() {
 		if (_kaleoTaskName == null) {
 			return StringPool.BLANK;
@@ -436,10 +477,12 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		}
 	}
 
+	@Override
 	public void setKaleoTaskName(String kaleoTaskName) {
 		_kaleoTaskName = kaleoTaskName;
 	}
 
+	@Override
 	public String getClassName() {
 		if (_className == null) {
 			return StringPool.BLANK;
@@ -449,63 +492,83 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		}
 	}
 
+	@Override
 	public void setClassName(String className) {
 		_className = className;
 	}
 
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
 
+	@Override
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
 	}
 
+	@Override
 	public long getCompletionUserId() {
 		return _completionUserId;
 	}
 
+	@Override
 	public void setCompletionUserId(long completionUserId) {
 		_completionUserId = completionUserId;
 	}
 
-	public String getCompletionUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getCompletionUserId(), "uuid",
-			_completionUserUuid);
+	@Override
+	public String getCompletionUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getCompletionUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setCompletionUserUuid(String completionUserUuid) {
-		_completionUserUuid = completionUserUuid;
 	}
 
+	@Override
 	public boolean getCompleted() {
 		return _completed;
 	}
 
+	@Override
 	public boolean isCompleted() {
 		return _completed;
 	}
 
+	@Override
 	public void setCompleted(boolean completed) {
 		_completed = completed;
 	}
 
+	@Override
 	public Date getCompletionDate() {
 		return _completionDate;
 	}
 
+	@Override
 	public void setCompletionDate(Date completionDate) {
 		_completionDate = completionDate;
 	}
 
+	@Override
 	public Date getDueDate() {
 		return _dueDate;
 	}
 
+	@Override
 	public void setDueDate(Date dueDate) {
 		_dueDate = dueDate;
 	}
 
+	@Override
 	public String getWorkflowContext() {
 		if (_workflowContext == null) {
 			return StringPool.BLANK;
@@ -515,6 +578,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		}
 	}
 
+	@Override
 	public void setWorkflowContext(String workflowContext) {
 		_workflowContext = workflowContext;
 	}
@@ -575,6 +639,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		return kaleoTaskInstanceTokenImpl;
 	}
 
+	@Override
 	public int compareTo(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		int value = 0;
 
@@ -597,18 +662,15 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof KaleoTaskInstanceToken)) {
 			return false;
 		}
 
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = null;
-
-		try {
-			kaleoTaskInstanceToken = (KaleoTaskInstanceToken)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		KaleoTaskInstanceToken kaleoTaskInstanceToken = (KaleoTaskInstanceToken)obj;
 
 		long primaryKey = kaleoTaskInstanceToken.getPrimaryKey();
 
@@ -623,6 +685,16 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -792,6 +864,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(61);
 
@@ -892,7 +965,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -910,7 +982,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 	private String _className;
 	private long _classPK;
 	private long _completionUserId;
-	private String _completionUserUuid;
 	private boolean _completed;
 	private Date _completionDate;
 	private Date _dueDate;

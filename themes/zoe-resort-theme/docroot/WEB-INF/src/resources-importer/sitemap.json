@@ -1,9 +1,10 @@
 {
-	"layouts": [
+	"layoutTemplateId": "2_columns_ii",
+	"privatePages": [
 		{
 			"columns": [
 				[
-					"Home Content.html"
+					"Home Content.xml"
 				],
 				[
 					"Home Carousel.xml"
@@ -18,7 +19,7 @@
 					{
 						"portletId": "56",
 						"portletPreferences": {
-							"articleId": "Welcome.html",
+							"articleId": "Welcome.xml",
 							"groupId": "${groupId}",
 							"portletSetupShowBorders": "true",
 							"portletSetupUseCustomTitle": "true",
@@ -30,7 +31,7 @@
 					{
 						"portletId": "56",
 						"portletPreferences": {
-							"articleId": "Luxurious Suites.html",
+							"articleId": "Luxurious Suites.xml",
 							"groupId": "${groupId}",
 							"portletSetupShowBorders": "true",
 							"portletSetupUseCustomTitle": "true",
@@ -42,7 +43,7 @@
 					{
 						"portletId": "56",
 						"portletPreferences": {
-							"articleId": "Every Room Has.html",
+							"articleId": "Every Room Has.xml",
 							"groupId": "${groupId}",
 							"portletSetupShowBorders": "true",
 							"portletSetupUseCustomTitle": "true",
@@ -51,13 +52,13 @@
 					}
 				],
 				[
-					"Starting At.html"
+					"Starting At.xml"
 				],
 				[
-					"Image Gallery.html"
+					"Image Gallery.xml"
 				],
 				[
-					"Reserve Your Own Luxury Suite.html"
+					"Reserve Your Own Luxury Suite.xml"
 				]
 			],
 			"friendlyURL": "/reservations",
@@ -80,6 +81,5 @@
 			"friendlyURL": "/contact-us",
 			"name": "Contact Us"
 		}
-	],
-	"layoutTemplateId": "2_columns_ii"
+	]
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,13 +14,14 @@
 
 package com.liferay.calendar.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.GroupedModel;
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -44,8 +45,9 @@ import java.util.Map;
  * @see com.liferay.calendar.model.impl.CalendarModelImpl
  * @generated
  */
-public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
-	StagedModel {
+@ProviderType
+public interface CalendarModel extends BaseModel<Calendar>, LocalizedModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -72,6 +74,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 * @return the uuid of this calendar
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -79,6 +82,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @param uuid the uuid of this calendar
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -100,6 +104,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @return the group ID of this calendar
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -107,6 +112,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @param groupId the group ID of this calendar
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -114,6 +120,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @return the company ID of this calendar
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -121,6 +128,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @param companyId the company ID of this calendar
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -128,6 +136,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @return the user ID of this calendar
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -135,21 +144,23 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @param userId the user ID of this calendar
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
 	 * Returns the user uuid of this calendar.
 	 *
 	 * @return the user uuid of this calendar
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	@Override
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this calendar.
 	 *
 	 * @param userUuid the user uuid of this calendar
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -158,6 +169,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 * @return the user name of this calendar
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -165,6 +177,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @param userName the user name of this calendar
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -172,6 +185,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @return the create date of this calendar
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -179,6 +193,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @param createDate the create date of this calendar
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -186,6 +201,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @return the modified date of this calendar
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -193,6 +209,7 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 *
 	 * @param modifiedDate the modified date of this calendar
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -424,6 +441,21 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 		Locale defaultLocale);
 
 	/**
+	 * Returns the time zone ID of this calendar.
+	 *
+	 * @return the time zone ID of this calendar
+	 */
+	@AutoEscape
+	public String getTimeZoneId();
+
+	/**
+	 * Sets the time zone ID of this calendar.
+	 *
+	 * @param timeZoneId the time zone ID of this calendar
+	 */
+	public void setTimeZoneId(String timeZoneId);
+
+	/**
 	 * Returns the color of this calendar.
 	 *
 	 * @return the color of this calendar
@@ -458,44 +490,115 @@ public interface CalendarModel extends BaseModel<Calendar>, GroupedModel,
 	 */
 	public void setDefaultCalendar(boolean defaultCalendar);
 
+	/**
+	 * Returns the enable comments of this calendar.
+	 *
+	 * @return the enable comments of this calendar
+	 */
+	public boolean getEnableComments();
+
+	/**
+	 * Returns <code>true</code> if this calendar is enable comments.
+	 *
+	 * @return <code>true</code> if this calendar is enable comments; <code>false</code> otherwise
+	 */
+	public boolean isEnableComments();
+
+	/**
+	 * Sets whether this calendar is enable comments.
+	 *
+	 * @param enableComments the enable comments of this calendar
+	 */
+	public void setEnableComments(boolean enableComments);
+
+	/**
+	 * Returns the enable ratings of this calendar.
+	 *
+	 * @return the enable ratings of this calendar
+	 */
+	public boolean getEnableRatings();
+
+	/**
+	 * Returns <code>true</code> if this calendar is enable ratings.
+	 *
+	 * @return <code>true</code> if this calendar is enable ratings; <code>false</code> otherwise
+	 */
+	public boolean isEnableRatings();
+
+	/**
+	 * Sets whether this calendar is enable ratings.
+	 *
+	 * @param enableRatings the enable ratings of this calendar
+	 */
+	public void setEnableRatings(boolean enableRatings);
+
+	@Override
 	public boolean isNew();
 
+	@Override
 	public void setNew(boolean n);
 
+	@Override
 	public boolean isCachedModel();
 
+	@Override
 	public void setCachedModel(boolean cachedModel);
 
+	@Override
 	public boolean isEscapedModel();
 
+	@Override
 	public Serializable getPrimaryKeyObj();
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
+	@Override
 	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
 
+	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
 
+	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
+	public String[] getAvailableLanguageIds();
+
+	@Override
+	public String getDefaultLanguageId();
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
 	public Object clone();
 
-	public int compareTo(Calendar calendar);
+	@Override
+	public int compareTo(com.liferay.calendar.model.Calendar calendar);
 
+	@Override
 	public int hashCode();
 
-	public CacheModel<Calendar> toCacheModel();
+	@Override
+	public CacheModel<com.liferay.calendar.model.Calendar> toCacheModel();
 
-	public Calendar toEscapedModel();
+	@Override
+	public com.liferay.calendar.model.Calendar toEscapedModel();
 
-	public Calendar toUnescapedModel();
+	@Override
+	public com.liferay.calendar.model.Calendar toUnescapedModel();
 
+	@Override
 	public String toString();
 
+	@Override
 	public String toXmlString();
 }

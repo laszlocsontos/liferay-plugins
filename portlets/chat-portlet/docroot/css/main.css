@@ -5,7 +5,7 @@ html body {
 	padding-bottom: 24px;
 }
 
-/* ---------- Bottom Dock ---------- */
+/* ---------- Bottom dock ---------- */
 
 .chat-bar {
 	background: #E5E5E5 url(../images/btm-dock_bg.png) repeat-x;
@@ -31,7 +31,7 @@ html body {
 	float: left;
 }
 
-/* ---------- Bottom Dock Tabs ---------- */
+/* ---------- Bottom dock tabs ---------- */
 .chat-bar {
 	div ul {
 		&, li {
@@ -96,7 +96,7 @@ html body {
 		float: right;
 	}
 
-	/* ---------- Bottom Dock Popups ---------- */
+	/* ---------- Bottom dock popups ---------- */
 
 	.chat-panel {
 		bottom: 24px;
@@ -132,17 +132,11 @@ html body {
 	display: block;
 }
 
-/* ---------- Online Users ---------- */
+/* ---------- Online users ---------- */
 
 .buddy-list {
-	.search-buddies .aui-field-content {
-		padding: 2px;
-	}
-
-	.search-buddies-field {
-		background: url(@theme_image_path@/common/search.png) no-repeat 5px 50%;
-		padding-left: 25px;
-		width: 100%;
+	.field.search-buddies {
+		padding-right: 2px;
 	}
 
 	&.loading.selected {
@@ -220,7 +214,7 @@ html body {
 	}
 }
 
-/* ---------- Popup Window ---------- */
+/* ---------- Popup window ---------- */
 
 .chat-portlet .chat-settings {
 	.settings {
@@ -265,12 +259,13 @@ html body {
 .panel-window {
 	background: #FFF;
 	border: 1px solid #262626;
-	font: 11px Tahoma, Geneva, sans-serif;
+	font: 12px Tahoma, Geneva, sans-serif;
 	min-width: 226px;
+	max-width: 452px;
 	position: relative;
 }
 
-.panel-icon {
+img.panel-icon {
 	background: #333;
 	border: 1px solid #000;
 	display: block;
@@ -342,28 +337,33 @@ html body {
 	height: 192px;
 	overflow-y: scroll;
 	padding: 2px;
+	overflow-x: auto;
+	word-wrap: break-word;
 
 	.blurb {
 		margin: 0;
 		position: relative;
 	}
 
+	.date, .name {
+		line-height: 11px;
+		padding: 2px 4px 3px;
+	}
+
 	.name {
 		background: #828F95;
 		color: #FFF;
 		display: block;
-		line-height: 11px;
-		padding: 2px 50px 3px 4px;
+		padding-right: 4.8em;
 	}
 
 	.date {
 		color: #EEE;
 		font-size: 10px;
 		font-style: normal;
-		margin-top: -2em;
 		position: absolute;
-		right: 8px;
-		top: 50%;
+		right: 0;
+		top: 0;
 	}
 
 	.incoming {
@@ -389,22 +389,28 @@ html body {
 	height: 19px;
 	position: relative;
 
-	textarea {
+	textarea.message-input {
 		background: none;
 		border-width: 0;
 		bottom: 0;
 		display: block;
 		float: left;
 		height: 14px;
+		margin: 0;
 		overflow: hidden;
-		padding: 2px;
+		padding: 2px 0 2px 0;
 		position: absolute;
-		width: 222px;
+		width: 100%;
 	}
 }
 
+pre.chat-height-monitor {
+	margin: 0;
+	padding: 0;
+}
+
 .chat-height-monitor, .panel-input textarea {
-	font: 11px/14px Tahoma, Geneva, sans-serif;
+	font: 14px/16px Tahoma, Geneva, sans-serif;
 }
 
 .panel-input textarea.focus {

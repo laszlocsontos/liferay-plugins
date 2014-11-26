@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,16 +15,17 @@
 package com.liferay.socialnetworking.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -102,26 +103,32 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 	public MeetupsEntryModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _meetupsEntryId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setMeetupsEntryId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _meetupsEntryId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return MeetupsEntry.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return MeetupsEntry.class.getName();
 	}
@@ -144,6 +151,9 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		attributes.put("maxAttendees", getMaxAttendees());
 		attributes.put("price", getPrice());
 		attributes.put("thumbnailId", getThumbnailId());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -235,18 +245,22 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		}
 	}
 
+	@Override
 	public long getMeetupsEntryId() {
 		return _meetupsEntryId;
 	}
 
+	@Override
 	public void setMeetupsEntryId(long meetupsEntryId) {
 		_meetupsEntryId = meetupsEntryId;
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
@@ -263,10 +277,12 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		return _originalCompanyId;
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_columnBitmask |= USERID_COLUMN_BITMASK;
 
@@ -279,18 +295,27 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		_userId = userId;
 	}
 
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	public long getOriginalUserId() {
 		return _originalUserId;
 	}
 
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -300,26 +325,32 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		}
 	}
 
+	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -329,10 +360,12 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		}
 	}
 
+	@Override
 	public void setTitle(String title) {
 		_title = title;
 	}
 
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -342,56 +375,69 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		}
 	}
 
+	@Override
 	public void setDescription(String description) {
 		_description = description;
 	}
 
+	@Override
 	public Date getStartDate() {
 		return _startDate;
 	}
 
+	@Override
 	public void setStartDate(Date startDate) {
 		_columnBitmask = -1L;
 
 		_startDate = startDate;
 	}
 
+	@Override
 	public Date getEndDate() {
 		return _endDate;
 	}
 
+	@Override
 	public void setEndDate(Date endDate) {
 		_endDate = endDate;
 	}
 
+	@Override
 	public int getTotalAttendees() {
 		return _totalAttendees;
 	}
 
+	@Override
 	public void setTotalAttendees(int totalAttendees) {
 		_totalAttendees = totalAttendees;
 	}
 
+	@Override
 	public int getMaxAttendees() {
 		return _maxAttendees;
 	}
 
+	@Override
 	public void setMaxAttendees(int maxAttendees) {
 		_maxAttendees = maxAttendees;
 	}
 
+	@Override
 	public double getPrice() {
 		return _price;
 	}
 
+	@Override
 	public void setPrice(double price) {
 		_price = price;
 	}
 
+	@Override
 	public long getThumbnailId() {
 		return _thumbnailId;
 	}
 
+	@Override
 	public void setThumbnailId(long thumbnailId) {
 		_thumbnailId = thumbnailId;
 	}
@@ -447,6 +493,7 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		return meetupsEntryImpl;
 	}
 
+	@Override
 	public int compareTo(MeetupsEntry meetupsEntry) {
 		int value = 0;
 
@@ -463,18 +510,15 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MeetupsEntry)) {
 			return false;
 		}
 
-		MeetupsEntry meetupsEntry = null;
-
-		try {
-			meetupsEntry = (MeetupsEntry)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MeetupsEntry meetupsEntry = (MeetupsEntry)obj;
 
 		long primaryKey = meetupsEntry.getPrimaryKey();
 
@@ -489,6 +533,16 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -624,6 +678,7 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(46);
 
@@ -702,7 +757,6 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private String _userUuid;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private String _userName;

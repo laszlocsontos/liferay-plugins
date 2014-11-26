@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,12 +17,10 @@ package com.liferay.portal.workflow.kaleo.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link KaleoInstanceLocalService}.
- * </p>
+ * Provides a wrapper for {@link KaleoInstanceLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       KaleoInstanceLocalService
+ * @author Brian Wing Shun Chan
+ * @see KaleoInstanceLocalService
  * @generated
  */
 public class KaleoInstanceLocalServiceWrapper
@@ -33,17 +31,35 @@ public class KaleoInstanceLocalServiceWrapper
 		_kaleoInstanceLocalService = kaleoInstanceLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstance addKaleoInstance(
+		long kaleoDefinitionId, java.lang.String kaleoDefinitionName,
+		int kaleoDefinitionVersion,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceLocalService.addKaleoInstance(kaleoDefinitionId,
+			kaleoDefinitionName, kaleoDefinitionVersion, workflowContext,
+			serviceContext);
+	}
+
 	/**
 	* Adds the kaleo instance to the database. Also notifies the appropriate model listeners.
 	*
 	* @param kaleoInstance the kaleo instance
 	* @return the kaleo instance that was added
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstance addKaleoInstance(
-		com.liferay.portal.workflow.kaleo.model.KaleoInstance kaleoInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.workflow.kaleo.model.KaleoInstance kaleoInstance) {
 		return _kaleoInstanceLocalService.addKaleoInstance(kaleoInstance);
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstance completeKaleoInstance(
+		long kaleoInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceLocalService.completeKaleoInstance(kaleoInstanceId);
 	}
 
 	/**
@@ -52,9 +68,32 @@ public class KaleoInstanceLocalServiceWrapper
 	* @param kaleoInstanceId the primary key for the new kaleo instance
 	* @return the new kaleo instance
 	*/
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstance createKaleoInstance(
 		long kaleoInstanceId) {
 		return _kaleoInstanceLocalService.createKaleoInstance(kaleoInstanceId);
+	}
+
+	@Override
+	public void deleteCompanyKaleoInstances(long companyId) {
+		_kaleoInstanceLocalService.deleteCompanyKaleoInstances(companyId);
+	}
+
+	@Override
+	public void deleteKaleoDefinitionKaleoInstances(long kaleoDefinitionId) {
+		_kaleoInstanceLocalService.deleteKaleoDefinitionKaleoInstances(kaleoDefinitionId);
+	}
+
+	/**
+	* Deletes the kaleo instance from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoInstance the kaleo instance
+	* @return the kaleo instance that was removed
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstance deleteKaleoInstance(
+		com.liferay.portal.workflow.kaleo.model.KaleoInstance kaleoInstance) {
+		return _kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
 	}
 
 	/**
@@ -63,28 +102,25 @@ public class KaleoInstanceLocalServiceWrapper
 	* @param kaleoInstanceId the primary key of the kaleo instance
 	* @return the kaleo instance that was removed
 	* @throws PortalException if a kaleo instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstance deleteKaleoInstance(
 		long kaleoInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstanceId);
 	}
 
 	/**
-	* Deletes the kaleo instance from the database. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoInstance the kaleo instance
-	* @return the kaleo instance that was removed
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstance deleteKaleoInstance(
-		com.liferay.portal.workflow.kaleo.model.KaleoInstance kaleoInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _kaleoInstanceLocalService.dynamicQuery();
 	}
@@ -94,12 +130,10 @@ public class KaleoInstanceLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _kaleoInstanceLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -114,12 +148,11 @@ public class KaleoInstanceLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _kaleoInstanceLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -135,14 +168,12 @@ public class KaleoInstanceLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _kaleoInstanceLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -152,18 +183,47 @@ public class KaleoInstanceLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _kaleoInstanceLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _kaleoInstanceLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstance fetchKaleoInstance(
-		long kaleoInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long kaleoInstanceId) {
 		return _kaleoInstanceLocalService.fetchKaleoInstance(kaleoInstanceId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _kaleoInstanceLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _kaleoInstanceLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -172,20 +232,23 @@ public class KaleoInstanceLocalServiceWrapper
 	* @param kaleoInstanceId the primary key of the kaleo instance
 	* @return the kaleo instance
 	* @throws PortalException if a kaleo instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstance getKaleoInstance(
 		long kaleoInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoInstanceLocalService.getKaleoInstance(kaleoInstanceId);
 	}
 
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.getPersistedModel(primaryKeyObj);
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> getKaleoInstances(
+		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
+		boolean completed, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoInstance> orderByComparator,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _kaleoInstanceLocalService.getKaleoInstances(kaleoDefinitionName,
+			kaleoDefinitionVersion, completed, start, end, orderByComparator,
+			serviceContext);
 	}
 
 	/**
@@ -198,56 +261,85 @@ public class KaleoInstanceLocalServiceWrapper
 	* @param start the lower bound of the range of kaleo instances
 	* @param end the upper bound of the range of kaleo instances (not inclusive)
 	* @return the range of kaleo instances
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> getKaleoInstances(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _kaleoInstanceLocalService.getKaleoInstances(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> getKaleoInstances(
+		java.lang.Long userId, java.lang.String assetClassName,
+		java.lang.Long assetClassPK, java.lang.Boolean completed, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoInstance> orderByComparator,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _kaleoInstanceLocalService.getKaleoInstances(userId,
+			assetClassName, assetClassPK, completed, start, end,
+			orderByComparator, serviceContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> getKaleoInstances(
+		java.lang.Long userId, java.lang.String[] assetClassNames,
+		java.lang.Boolean completed, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoInstance> orderByComparator,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _kaleoInstanceLocalService.getKaleoInstances(userId,
+			assetClassNames, completed, start, end, orderByComparator,
+			serviceContext);
 	}
 
 	/**
 	* Returns the number of kaleo instances.
 	*
 	* @return the number of kaleo instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public int getKaleoInstancesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public int getKaleoInstancesCount() {
 		return _kaleoInstanceLocalService.getKaleoInstancesCount();
 	}
 
-	/**
-	* Updates the kaleo instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoInstance the kaleo instance
-	* @return the kaleo instance that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstance updateKaleoInstance(
-		com.liferay.portal.workflow.kaleo.model.KaleoInstance kaleoInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.updateKaleoInstance(kaleoInstance);
+	@Override
+	public int getKaleoInstancesCount(long kaleoDefinitionId, boolean completed) {
+		return _kaleoInstanceLocalService.getKaleoInstancesCount(kaleoDefinitionId,
+			completed);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoInstanceLocalService.getBeanIdentifier();
+	@Override
+	public int getKaleoInstancesCount(java.lang.String kaleoDefinitionName,
+		int kaleoDefinitionVersion, boolean completed,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _kaleoInstanceLocalService.getKaleoInstancesCount(kaleoDefinitionName,
+			kaleoDefinitionVersion, completed, serviceContext);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoInstanceLocalService.setBeanIdentifier(beanIdentifier);
+	@Override
+	public int getKaleoInstancesCount(java.lang.Long userId,
+		java.lang.String assetClassName, java.lang.Long assetClassPK,
+		java.lang.Boolean completed,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _kaleoInstanceLocalService.getKaleoInstancesCount(userId,
+			assetClassName, assetClassPK, completed, serviceContext);
 	}
 
+	@Override
+	public int getKaleoInstancesCount(java.lang.Long userId,
+		java.lang.String[] assetClassNames, java.lang.Boolean completed,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _kaleoInstanceLocalService.getKaleoInstancesCount(userId,
+			assetClassNames, completed, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
@@ -255,106 +347,34 @@ public class KaleoInstanceLocalServiceWrapper
 			arguments);
 	}
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstance addKaleoInstance(
-		long kaleoDefinitionId, java.lang.String kaleoDefinitionName,
-		int kaleoDefinitionVersion,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.addKaleoInstance(kaleoDefinitionId,
-			kaleoDefinitionName, kaleoDefinitionVersion, workflowContext,
-			serviceContext);
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_kaleoInstanceLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstance completeKaleoInstance(
-		long kaleoInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.completeKaleoInstance(kaleoInstanceId);
+	/**
+	* Updates the kaleo instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoInstance the kaleo instance
+	* @return the kaleo instance that was updated
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstance updateKaleoInstance(
+		com.liferay.portal.workflow.kaleo.model.KaleoInstance kaleoInstance) {
+		return _kaleoInstanceLocalService.updateKaleoInstance(kaleoInstance);
 	}
 
-	public void deleteCompanyKaleoInstances(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_kaleoInstanceLocalService.deleteCompanyKaleoInstances(companyId);
-	}
-
-	public void deleteKaleoDefinitionKaleoInstances(long kaleoDefinitionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_kaleoInstanceLocalService.deleteKaleoDefinitionKaleoInstances(kaleoDefinitionId);
-	}
-
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> getKaleoInstances(
-		java.lang.Long userId, java.lang.String assetClassName,
-		java.lang.Long assetClassPK, java.lang.Boolean completed, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.getKaleoInstances(userId,
-			assetClassName, assetClassPK, completed, start, end,
-			orderByComparator, serviceContext);
-	}
-
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> getKaleoInstances(
-		java.lang.Long userId, java.lang.String[] assetClassNames,
-		java.lang.Boolean completed, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.getKaleoInstances(userId,
-			assetClassNames, completed, start, end, orderByComparator,
-			serviceContext);
-	}
-
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> getKaleoInstances(
-		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		boolean completed, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.getKaleoInstances(kaleoDefinitionName,
-			kaleoDefinitionVersion, completed, start, end, orderByComparator,
-			serviceContext);
-	}
-
-	public int getKaleoInstancesCount(long kaleoDefinitionId, boolean completed)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.getKaleoInstancesCount(kaleoDefinitionId,
-			completed);
-	}
-
-	public int getKaleoInstancesCount(java.lang.Long userId,
-		java.lang.String assetClassName, java.lang.Long assetClassPK,
-		java.lang.Boolean completed,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.getKaleoInstancesCount(userId,
-			assetClassName, assetClassPK, completed, serviceContext);
-	}
-
-	public int getKaleoInstancesCount(java.lang.Long userId,
-		java.lang.String[] assetClassNames, java.lang.Boolean completed,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.getKaleoInstancesCount(userId,
-			assetClassNames, completed, serviceContext);
-	}
-
-	public int getKaleoInstancesCount(java.lang.String kaleoDefinitionName,
-		int kaleoDefinitionVersion, boolean completed,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoInstanceLocalService.getKaleoInstancesCount(kaleoDefinitionName,
-			kaleoDefinitionVersion, completed, serviceContext);
-	}
-
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstance updateKaleoInstance(
 		long kaleoInstanceId,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoInstanceLocalService.updateKaleoInstance(kaleoInstanceId,
 			workflowContext, serviceContext);
 	}
@@ -362,6 +382,7 @@ public class KaleoInstanceLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public KaleoInstanceLocalService getWrappedKaleoInstanceLocalService() {
 		return _kaleoInstanceLocalService;
 	}
@@ -369,15 +390,18 @@ public class KaleoInstanceLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedKaleoInstanceLocalService(
 		KaleoInstanceLocalService kaleoInstanceLocalService) {
 		_kaleoInstanceLocalService = kaleoInstanceLocalService;
 	}
 
+	@Override
 	public KaleoInstanceLocalService getWrappedService() {
 		return _kaleoInstanceLocalService;
 	}
 
+	@Override
 	public void setWrappedService(
 		KaleoInstanceLocalService kaleoInstanceLocalService) {
 		_kaleoInstanceLocalService = kaleoInstanceLocalService;

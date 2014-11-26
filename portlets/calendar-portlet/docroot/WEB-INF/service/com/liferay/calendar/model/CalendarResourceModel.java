@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,14 +14,15 @@
 
 package com.liferay.calendar.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.GroupedModel;
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -45,8 +46,9 @@ import java.util.Map;
  * @see com.liferay.calendar.model.impl.CalendarResourceModelImpl
  * @generated
  */
+@ProviderType
 public interface CalendarResourceModel extends AttachedModel,
-	BaseModel<CalendarResource>, GroupedModel, StagedModel {
+	BaseModel<CalendarResource>, LocalizedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -73,6 +75,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 * @return the uuid of this calendar resource
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -80,6 +83,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @param uuid the uuid of this calendar resource
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -101,6 +105,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @return the group ID of this calendar resource
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -108,6 +113,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @param groupId the group ID of this calendar resource
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -115,6 +121,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @return the company ID of this calendar resource
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -122,6 +129,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @param companyId the company ID of this calendar resource
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -129,6 +137,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @return the user ID of this calendar resource
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -136,21 +145,23 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @param userId the user ID of this calendar resource
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
 	 * Returns the user uuid of this calendar resource.
 	 *
 	 * @return the user uuid of this calendar resource
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	@Override
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this calendar resource.
 	 *
 	 * @param userUuid the user uuid of this calendar resource
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -159,6 +170,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 * @return the user name of this calendar resource
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -166,6 +178,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @param userName the user name of this calendar resource
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -173,6 +186,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @return the create date of this calendar resource
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -180,6 +194,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @param createDate the create date of this calendar resource
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -187,6 +202,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @return the modified date of this calendar resource
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -194,6 +210,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @param modifiedDate the modified date of this calendar resource
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -215,6 +232,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @return the fully qualified class name of this calendar resource
 	 */
+	@Override
 	public String getClassName();
 
 	public void setClassName(String className);
@@ -224,6 +242,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @return the class name ID of this calendar resource
 	 */
+	@Override
 	public long getClassNameId();
 
 	/**
@@ -231,6 +250,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @param classNameId the class name ID of this calendar resource
 	 */
+	@Override
 	public void setClassNameId(long classNameId);
 
 	/**
@@ -238,6 +258,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @return the class p k of this calendar resource
 	 */
+	@Override
 	public long getClassPK();
 
 	/**
@@ -245,6 +266,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @param classPK the class p k of this calendar resource
 	 */
+	@Override
 	public void setClassPK(long classPK);
 
 	/**
@@ -498,44 +520,74 @@ public interface CalendarResourceModel extends AttachedModel,
 	 */
 	public void setActive(boolean active);
 
+	@Override
 	public boolean isNew();
 
+	@Override
 	public void setNew(boolean n);
 
+	@Override
 	public boolean isCachedModel();
 
+	@Override
 	public void setCachedModel(boolean cachedModel);
 
+	@Override
 	public boolean isEscapedModel();
 
+	@Override
 	public Serializable getPrimaryKeyObj();
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
+	@Override
 	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
 
+	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
 
+	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
+	public String[] getAvailableLanguageIds();
+
+	@Override
+	public String getDefaultLanguageId();
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
 	public Object clone();
 
-	public int compareTo(CalendarResource calendarResource);
+	@Override
+	public int compareTo(
+		com.liferay.calendar.model.CalendarResource calendarResource);
 
+	@Override
 	public int hashCode();
 
-	public CacheModel<CalendarResource> toCacheModel();
+	@Override
+	public CacheModel<com.liferay.calendar.model.CalendarResource> toCacheModel();
 
-	public CalendarResource toEscapedModel();
+	@Override
+	public com.liferay.calendar.model.CalendarResource toEscapedModel();
 
-	public CalendarResource toUnescapedModel();
+	@Override
+	public com.liferay.calendar.model.CalendarResource toUnescapedModel();
 
+	@Override
 	public String toString();
 
+	@Override
 	public String toXmlString();
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.runtime;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -27,7 +26,6 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.BaseKaleoBean;
-import com.liferay.portal.workflow.kaleo.WorkflowTaskAdapter;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
@@ -37,6 +35,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorUtil;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationUtil;
 import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
+import com.liferay.portal.workflow.kaleo.util.WorkflowModelUtil;
 
 import java.io.Serializable;
 
@@ -53,6 +52,7 @@ import java.util.Map;
 public class DefaultTaskManagerImpl
 	extends BaseKaleoBean implements TaskManager {
 
+	@Override
 	public WorkflowTask assignWorkflowTaskToRole(
 			long workflowTaskInstanceId, long roleId, String comment,
 			Date dueDate, Map<String, Serializable> workflowContext,
@@ -69,6 +69,7 @@ public class DefaultTaskManagerImpl
 		}
 	}
 
+	@Override
 	public WorkflowTask assignWorkflowTaskToUser(
 			long workflowTaskInstanceId, long assigneeUserId, String comment,
 			Date dueDate, Map<String, Serializable> workflowContext,
@@ -85,6 +86,7 @@ public class DefaultTaskManagerImpl
 		}
 	}
 
+	@Override
 	public WorkflowTask completeWorkflowTask(
 			long workflowTaskInstanceId, String transitionName, String comment,
 			Map<String, Serializable> workflowContext,
@@ -101,6 +103,7 @@ public class DefaultTaskManagerImpl
 		}
 	}
 
+	@Override
 	public WorkflowTask updateDueDate(
 			long workflowTaskInstanceId, String comment, Date dueDate,
 			ServiceContext serviceContext)
@@ -130,7 +133,7 @@ public class DefaultTaskManagerImpl
 				kaleoTaskInstanceToken, comment, workflowContext,
 				serviceContext);
 
-			return new WorkflowTaskAdapter(
+			return WorkflowModelUtil.toWorkflowTask(
 				kaleoTaskInstanceToken, workflowContext);
 		}
 		catch (Exception e) {
@@ -171,13 +174,13 @@ public class DefaultTaskManagerImpl
 				assigneeClassName, assigneeClassPK, workflowContext,
 				serviceContext);
 
+		workflowContext.put(WorkflowConstants.CONTEXT_TASK_COMMENTS, comment);
+
 		ExecutionContext executionContext = new ExecutionContext(
 			kaleoTaskInstanceToken.getKaleoInstanceToken(),
 			kaleoTaskInstanceToken, workflowContext, serviceContext);
 
 		KaleoTask kaleoTask = kaleoTaskInstanceToken.getKaleoTask();
-
-		workflowContext.put(WorkflowConstants.CONTEXT_TASK_COMMENTS, comment);
 
 		ActionExecutorUtil.executeKaleoActions(
 			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
@@ -191,7 +194,8 @@ public class DefaultTaskManagerImpl
 			previousTaskAssignmentInstances, kaleoTaskInstanceToken, comment,
 			workflowContext, serviceContext);
 
-		return new WorkflowTaskAdapter(kaleoTaskInstanceToken, workflowContext);
+		return WorkflowModelUtil.toWorkflowTask(
+			kaleoTaskInstanceToken, workflowContext);
 	}
 
 	protected WorkflowTask doCompleteWorkflowTask(
@@ -236,13 +240,14 @@ public class DefaultTaskManagerImpl
 		kaleoLogLocalService.addTaskCompletionKaleoLog(
 			kaleoTaskInstanceToken, comment, workflowContext, serviceContext);
 
-		return new WorkflowTaskAdapter(kaleoTaskInstanceToken, workflowContext);
+		return WorkflowModelUtil.toWorkflowTask(
+			kaleoTaskInstanceToken, workflowContext);
 	}
 
 	protected Map<String, Serializable> updateWorkflowContext(
 			Map<String, Serializable> workflowContext,
 			KaleoTaskInstanceToken kaleoTaskInstanceToken)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		KaleoInstance kaleoInstance =
 			kaleoInstanceLocalService.getKaleoInstance(

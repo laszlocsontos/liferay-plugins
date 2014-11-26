@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -23,7 +23,6 @@ import com.liferay.knowledgebase.util.ActionKeys;
 import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.knowledgebase.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -41,35 +40,48 @@ import javax.portlet.PortletURL;
  */
 public class KBArticleAssetRendererFactory extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = KBArticle.class.getName();
-
 	public static final String TYPE = "article";
 
+	public KBArticleAssetRendererFactory() {
+		setLinkable(true);
+	}
+
+	@Override
 	public AssetRenderer getAssetRenderer(long classPK, int type)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		KBArticle kbArticle = null;
 
 		if (type == TYPE_LATEST_APPROVED) {
 			kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
 				classPK, WorkflowConstants.STATUS_APPROVED);
-
-			return new KBArticleAssetRenderer(kbArticle);
+		}
+		else {
+			try {
+				kbArticle = KBArticleLocalServiceUtil.getKBArticle(classPK);
+			}
+			catch (NoSuchArticleException nsae) {
+				kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+					classPK, WorkflowConstants.STATUS_ANY);
+			}
 		}
 
-		try {
-			kbArticle = KBArticleLocalServiceUtil.getKBArticle(classPK);
-		}
-		catch (NoSuchArticleException nsae) {
-			kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
-				classPK, WorkflowConstants.STATUS_ANY);
-		}
+		KBArticleAssetRenderer kbArticleAssetRenderer =
+			new KBArticleAssetRenderer(kbArticle);
 
-		return new KBArticleAssetRenderer(kbArticle);
+		kbArticleAssetRenderer.setAssetRendererType(type);
+
+		return kbArticleAssetRenderer;
 	}
 
+	@Override
 	public String getClassName() {
-		return CLASS_NAME;
+		return KBArticle.class.getName();
+	}
+
+	@Override
+	public String getIconCssClass() {
+		return "icon-file";
 	}
 
 	@Override
@@ -77,6 +89,7 @@ public class KBArticleAssetRendererFactory extends BaseAssetRendererFactory {
 		return PortletKeys.KNOWLEDGE_BASE_DISPLAY;
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}
@@ -85,18 +98,11 @@ public class KBArticleAssetRendererFactory extends BaseAssetRendererFactory {
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		if (!AdminPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_KB_ARTICLE)) {
-
-			return null;
-		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			liferayPortletRequest, PortletKeys.KNOWLEDGE_BASE_ADMIN,
@@ -105,6 +111,15 @@ public class KBArticleAssetRendererFactory extends BaseAssetRendererFactory {
 		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
 
 		return portletURL;
+	}
+
+	@Override
+	public boolean hasAddPermission(
+			PermissionChecker permissionChecker, long groupId, long classTypeId)
+		throws Exception {
+
+		return AdminPermission.contains(
+			permissionChecker, groupId, ActionKeys.ADD_KB_ARTICLE);
 	}
 
 	@Override

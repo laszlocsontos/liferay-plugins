@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,8 @@
 
 package com.liferay.marketplace.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -23,10 +25,11 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.marketplace.service.http.AppServiceSoap}.
  *
- * @author    Ryan Park
- * @see       com.liferay.marketplace.service.http.AppServiceSoap
+ * @author Ryan Park
+ * @see com.liferay.marketplace.service.http.AppServiceSoap
  * @generated
  */
+@ProviderType
 public class AppSoap implements Serializable {
 	public static AppSoap toSoapModel(App model) {
 		AppSoap soapModel = new AppSoap();
@@ -39,6 +42,10 @@ public class AppSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setRemoteAppId(model.getRemoteAppId());
+		soapModel.setTitle(model.getTitle());
+		soapModel.setDescription(model.getDescription());
+		soapModel.setCategory(model.getCategory());
+		soapModel.setIconURL(model.getIconURL());
 		soapModel.setVersion(model.getVersion());
 
 		return soapModel;
@@ -156,6 +163,38 @@ public class AppSoap implements Serializable {
 		_remoteAppId = remoteAppId;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public String getCategory() {
+		return _category;
+	}
+
+	public void setCategory(String category) {
+		_category = category;
+	}
+
+	public String getIconURL() {
+		return _iconURL;
+	}
+
+	public void setIconURL(String iconURL) {
+		_iconURL = iconURL;
+	}
+
 	public String getVersion() {
 		return _version;
 	}
@@ -172,5 +211,9 @@ public class AppSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _remoteAppId;
+	private String _title;
+	private String _description;
+	private String _category;
+	private String _iconURL;
 	private String _version;
 }

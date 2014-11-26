@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,6 +13,8 @@
  */
 
 package com.liferay.marketplace.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.marketplace.model.Module;
 
@@ -32,10 +34,11 @@ import java.io.ObjectOutput;
  * @see Module
  * @generated
  */
+@ProviderType
 public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -43,6 +46,10 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 		sb.append(moduleId);
 		sb.append(", appId=");
 		sb.append(appId);
+		sb.append(", bundleSymbolicName=");
+		sb.append(bundleSymbolicName);
+		sb.append(", bundleVersion=");
+		sb.append(bundleVersion);
 		sb.append(", contextName=");
 		sb.append(contextName);
 		sb.append("}");
@@ -50,6 +57,7 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 		return sb.toString();
 	}
 
+	@Override
 	public Module toEntityModel() {
 		ModuleImpl moduleImpl = new ModuleImpl();
 
@@ -63,6 +71,20 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 		moduleImpl.setModuleId(moduleId);
 		moduleImpl.setAppId(appId);
 
+		if (bundleSymbolicName == null) {
+			moduleImpl.setBundleSymbolicName(StringPool.BLANK);
+		}
+		else {
+			moduleImpl.setBundleSymbolicName(bundleSymbolicName);
+		}
+
+		if (bundleVersion == null) {
+			moduleImpl.setBundleVersion(StringPool.BLANK);
+		}
+		else {
+			moduleImpl.setBundleVersion(bundleVersion);
+		}
+
 		if (contextName == null) {
 			moduleImpl.setContextName(StringPool.BLANK);
 		}
@@ -75,13 +97,17 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 		return moduleImpl;
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		moduleId = objectInput.readLong();
 		appId = objectInput.readLong();
+		bundleSymbolicName = objectInput.readUTF();
+		bundleVersion = objectInput.readUTF();
 		contextName = objectInput.readUTF();
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
@@ -94,6 +120,20 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 		objectOutput.writeLong(moduleId);
 		objectOutput.writeLong(appId);
 
+		if (bundleSymbolicName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(bundleSymbolicName);
+		}
+
+		if (bundleVersion == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(bundleVersion);
+		}
+
 		if (contextName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -105,5 +145,7 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 	public String uuid;
 	public long moduleId;
 	public long appId;
+	public String bundleSymbolicName;
+	public String bundleVersion;
 	public String contextName;
 }

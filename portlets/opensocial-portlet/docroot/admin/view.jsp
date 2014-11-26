@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,10 +24,10 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	emptyResultsMessage="there-are-no-gadgets"
 	headerNames="name"
 	iteratorURL="<%= portletURL %>"
+	total="<%= GadgetLocalServiceUtil.getGadgetsCount(company.getCompanyId()) %>"
 >
 	<liferay-ui:search-container-results
 		results="<%= GadgetLocalServiceUtil.getGadgets(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-		total="<%= GadgetLocalServiceUtil.getGadgetsCount(company.getCompanyId()) %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -52,6 +52,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
+			cssClass="entry-action"
 			path="/admin/gadget_action.jsp"
 			valign="top"
 		/>
@@ -60,12 +61,21 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	<div>
 		<c:if test="<%= GadgetPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.PUBLISH_GADGET) %>">
 			<span>
-				<input onClick="location.href = '<portlet:renderURL><portlet:param name="mvcPath" value="/admin/edit_gadget.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="publish-gadget" />" />
+				<portlet:renderURL var="publishGadgetURL">
+					<portlet:param name="mvcPath" value="/admin/edit_gadget.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:renderURL>
+
+				<aui:button onClick="<%= publishGadgetURL %>" type="button" value="publish-gadget" />
 			</span>
 		</c:if>
 
 		<span>
-			<input onClick="location.href = '<portlet:actionURL name="refreshGadgets"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>';" type="button" value="<liferay-ui:message key="refresh-gadgets" />" />
+			<portlet:actionURL name="refreshGadgetsURL" var="refreshGadgets">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:actionURL>
+
+			<aui:button onClick="<%= refreshGadgetsURL %>" type="button" value="refresh-gadgets" />
 		</span>
 	</div>
 

@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -28,7 +28,7 @@ List<Calendar> calendars = null;
 if (calendarResource != null) {
 	calendarResourceId = calendarResource.getCalendarResourceId();
 
-	calendars = CalendarLocalServiceUtil.getCalendarResourceCalendars(themeDisplay.getScopeGroupId(), calendarResourceId);
+	calendars = CalendarServiceUtil.getCalendarResourceCalendars(themeDisplay.getScopeGroupId(), calendarResourceId);
 }
 
 String code = BeanParamUtil.getString(calendarResource, request, "code");
@@ -36,7 +36,7 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	title='<%= (calendarResource != null) ? calendarResource.getName(locale) : "new-calendar-resource" %>'
+	title='<%= (calendarResource == null) ? "new-calendar-resource" : calendarResource.getName(locale) %>'
 />
 
 <liferay-portlet:actionURL name="updateCalendarResource" var="updateCalendarResourceURL" />
@@ -47,6 +47,7 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 	<aui:input name="calendarResourceId" type="hidden" value="<%= String.valueOf(calendarResourceId) %>" />
 
 	<liferay-ui:error exception="<%= CalendarResourceCodeException.class %>" message="please-enter-a-valid-code" />
+	<liferay-ui:error exception="<%= CalendarResourceNameException.class %>" message="please-enter-a-valid-name" />
 	<liferay-ui:error exception="<%= DuplicateCalendarResourceException.class %>" message="please-enter-a-unique-resource-code" />
 
 	<liferay-ui:asset-categories-error />
@@ -67,9 +68,7 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 						</c:if>
 					</c:when>
 					<c:otherwise>
-						<aui:field-wrapper label="code">
-							<%= code %>
-						</aui:field-wrapper>
+						<aui:input name="code" type="resource" value="<%= code %>" />
 					</c:otherwise>
 				</c:choose>
 
@@ -82,7 +81,7 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 						for (Calendar calendar : calendars) {
 						%>
 
-							<aui:option label="<%= calendar.getName(locale) %>" value="<%= calendar.getCalendarId() %>" />
+							<aui:option label="<%= HtmlUtil.escapeAttribute(calendar.getName(locale)) %>" value="<%= calendar.getCalendarId() %>" />
 
 						<%
 						}
@@ -116,6 +115,10 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 </aui:form>
 
 <aui:script>
+	function <portlet:namespace />getSuggestionsContent() {
+		return document.<portlet:namespace />fm.<portlet:namespace />name.value + ' ' + document.<portlet:namespace />fm.<portlet:namespace />description.value;
+	}
+
 	function <portlet:namespace />updateCalendarResource() {
 		submitForm(document.<portlet:namespace />fm);
 	}

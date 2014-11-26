@@ -4,9 +4,15 @@
 @import url(color_schemes/republican.css);
 @import url(color_schemes/independent.css);
 
-/* -------- Global -------- */
+$dockbarGradientEnd: #1273C7;
+$dockbarGradientStart: #118ADE;
 
-#breadcrumbs, #footer, #heading, #navigation h1, #navigation .child-menu, #skip-to-content, .page-title, .powered-by {
+$dockbarOpenGradientEnd: #0993DD;
+$dockbarOpenGradientStart: #0EA6F9;
+
+/* ---------- Global ---------- */
+
+#breadcrumbs, #footer, #heading, #navigation .child-menu, #skip-to-content, .powered-by {
 	clip: rect(0 0 0 0);
 	margin: 0;
 	padding: 0;
@@ -14,40 +20,68 @@
 }
 
 body {
-	background-position: 0 0;
 	background-repeat: repeat-x;
-	font-size: 12px;
 	line-height: 1;
+}
 
-	&.dockbar-ready {
-		background-position: 0 31px;
+a {
+	color: #009AE5;
+	font-weight: lighter;
 
-		&.lfr-dockbar-pinned {
-			padding-top: 2.8em;
+	&:hover {
+		color: #009AE5;
+	}
+
+	[class^="icon-"], [class*=" icon-"] {
+		display: inline-block;
+	}
+}
+
+.btn {
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+/* ---------- Dockbar ---------- */
+
+.dockbar-split .dockbar {
+	.navbar-inner {
+		.nav {
+			background-color: $dockbarGradientEnd;
+
+			li.dropdown {
+				&.open, &.active, &.open.active {
+					> .dropdown-toggle {
+						background-color: $dockbarOpenGradientEnd;
+					}
+				}
+			}
+
+			> li > a:hover {
+				background-color: #2FA4F5;
+			}
+		}
+
+		.nav-add-controls {
+			background: transparent;
+
+			> li > a {
+				background: #0DB5E7;
+
+				&:hover {
+					background: #0993DD;
+				}
+
+				&.toggle-controls-link {
+					background: #92F545;
+				}
+			}
 		}
 	}
 }
 
-.button {
-	font-size: 14px;
-	font-weight: normal;
-	padding: 5px 10px;
-	text-decoration: none;
-	text-transform: uppercase;
-
-	&:hover {
-		cursor: pointer;
-		text-decoration: none;
-	}
-}
-
-h3 {
-	font-size: 25px;
-	font-weight: bold;
-}
-
 #wrapper {
-	margin: 0 auto;
+	padding: 0;
 	position: relative;
 
 	a {
@@ -85,8 +119,8 @@ h3 {
 				text-indent: -99999px;
 				width: 37px;
 
-				&.facebook, &.twitter {
-					background-position: 0 0;
+				&.facebook, &.twitter, &.linkedin {
+					background-position: -3px 5px;
 				}
 
 				span {
@@ -109,10 +143,10 @@ h3 {
 		border-bottom: 1px dashed;
 		border-top: 1px dashed;
 		display: inline-block;
-		font-size: 2em;
 		margin: 0 20px;
 		padding: 5px 10px;
 		text-transform: uppercase;
+		vertical-align: middle;
 	}
 
 	#sign-in {
@@ -133,9 +167,9 @@ h3 {
 	}
 }
 
-#navigation {
-	margin-top: 5px;
+/* ---------- Navigation ---------- */
 
+#navigation {
 	ul {
 		display: block;
 		height: 30px;
@@ -147,12 +181,12 @@ h3 {
 		li {
 			border-right: 1px solid #FFF;
 			float: left;
+			line-height: 1;
 
 			a {
 				display: block;
-				font-size: 1.3em;
+				font-size: 1.2em;
 				padding: 7px 25px;
-				text-decoration: none;
 				text-transform: uppercase;
 
 				&:hover {
@@ -173,12 +207,30 @@ h3 {
 	}
 }
 
-#content #main-content {
-	background: #FFF;
-	margin: 0 auto;
-	min-height: 100%;
-	padding: 10px 10px 0;
-	width: 940px;
+.modify-pages .delete-tab {
+	background: #555;
+	border: 2px solid #FFF;
+	color: #FFF;
+	font-size: 16px;
+	padding: 4px;
+	right: -10px;
+	top: 0;
+
+	&:hover {
+		@include box-shadow(0 1px 1px -1px #000)
+	}
+}
+
+/* ---------- Content ---------- */
+
+#content {
+	#main-content {
+		background: #FFF;
+		margin: 0 auto;
+		min-height: 100%;
+		padding: 10px 10px 0;
+		width: 940px;
+	}
 }
 
 .portlet {
@@ -189,23 +241,25 @@ h3 {
 
 		.portlet-title {
 			display: block;
-			font-size: 1.5em;
-			padding: 10px;
+			font-size: 1.4em;
+			margin: 0;
 			text-align: center;
 			text-transform: uppercase;
 
-			.icon {
+			img {
 				display: none;
 			}
 		}
 	}
 }
 
+/* ---------- Color scheme---------- */
+
 @each $color-scheme in democrat, republican, independent {
 	body.#{$color-scheme} {
 		background-image: url(../images/color_schemes/#{$color-scheme}/heading.jpg);
 
-		&.aui-dialog-iframe-popup {
+		&.dialog-iframe-popup {
 			background-image: none;
 		}
 
@@ -245,7 +299,7 @@ h3 {
 	}
 }
 
-/* -------- Web Content -------- */
+/* ---------- Web content ---------- */
 
 .home-content {
 	.main-banner {
@@ -254,8 +308,12 @@ h3 {
 		width: 940px;
 	}
 
-	.aui-layout-content {
+	.layout-content {
 		margin-top: 10px;
+	}
+
+	.column-content {
+		padding: 0;
 	}
 
 	.join, .pick-your-state, .vote {
@@ -268,10 +326,22 @@ h3 {
 	height: 4px;
 }
 
-/* -------- Extras -------- */
+/* ---------- Extras ---------- */
 
-.button:hover {
+.btn:hover {
 	@include box-shadow(rgba(0, 0, 0, 0.5) 1px 1px 15px);
+}
+
+.dockbar-split .dockbar {
+	.navbar-inner {
+		.nav li.dropdown.open > .dropdown-toggle {
+			@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
+		}
+
+		.nav-account-controls {
+			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 10%, $dockbarGradientEnd 100%));
+		}
+	}
 }
 
 #heading #sign-in:hover {
@@ -281,4 +351,14 @@ h3 {
 
 #content #main-content {
 	@include box-shadow(rgba(0, 0, 0, 0.1) 1px 1px 15px);
+}
+
+.modify-pages .delete-tab {
+	@include border-radius(50%);
+	@include text-shadow(none);
+	@include transition(opacity 0.2s ease);
+
+	&:hover {
+		@include box-shadow(0 1px 1px -1px #000);
+	}
 }

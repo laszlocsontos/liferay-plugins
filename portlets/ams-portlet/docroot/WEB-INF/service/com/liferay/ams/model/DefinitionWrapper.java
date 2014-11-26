@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.ams.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -25,8 +26,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Definition}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Definition
+ * @author Brian Wing Shun Chan
+ * @see Definition
  * @generated
  */
 public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
@@ -34,14 +35,17 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 		_definition = definition;
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return Definition.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return Definition.class.getName();
 	}
 
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -62,6 +66,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 		return attributes;
 	}
 
+	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long definitionId = (Long)attributes.get("definitionId");
 
@@ -142,58 +147,14 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this definition.
-	*
-	* @return the primary key of this definition
-	*/
-	public long getPrimaryKey() {
-		return _definition.getPrimaryKey();
+	@Override
+	public java.lang.Object clone() {
+		return new DefinitionWrapper((Definition)_definition.clone());
 	}
 
-	/**
-	* Sets the primary key of this definition.
-	*
-	* @param primaryKey the primary key of this definition
-	*/
-	public void setPrimaryKey(long primaryKey) {
-		_definition.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the definition ID of this definition.
-	*
-	* @return the definition ID of this definition
-	*/
-	public long getDefinitionId() {
-		return _definition.getDefinitionId();
-	}
-
-	/**
-	* Sets the definition ID of this definition.
-	*
-	* @param definitionId the definition ID of this definition
-	*/
-	public void setDefinitionId(long definitionId) {
-		_definition.setDefinitionId(definitionId);
-	}
-
-	/**
-	* Returns the group ID of this definition.
-	*
-	* @return the group ID of this definition
-	*/
-	public long getGroupId() {
-		return _definition.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this definition.
-	*
-	* @param groupId the group ID of this definition
-	*/
-	public void setGroupId(long groupId) {
-		_definition.setGroupId(groupId);
+	@Override
+	public int compareTo(com.liferay.ams.model.Definition definition) {
+		return _definition.compareTo(definition);
 	}
 
 	/**
@@ -201,73 +162,9 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*
 	* @return the company ID of this definition
 	*/
+	@Override
 	public long getCompanyId() {
 		return _definition.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this definition.
-	*
-	* @param companyId the company ID of this definition
-	*/
-	public void setCompanyId(long companyId) {
-		_definition.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this definition.
-	*
-	* @return the user ID of this definition
-	*/
-	public long getUserId() {
-		return _definition.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this definition.
-	*
-	* @param userId the user ID of this definition
-	*/
-	public void setUserId(long userId) {
-		_definition.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this definition.
-	*
-	* @return the user uuid of this definition
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _definition.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this definition.
-	*
-	* @param userUuid the user uuid of this definition
-	*/
-	public void setUserUuid(java.lang.String userUuid) {
-		_definition.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this definition.
-	*
-	* @return the user name of this definition
-	*/
-	public java.lang.String getUserName() {
-		return _definition.getUserName();
-	}
-
-	/**
-	* Sets the user name of this definition.
-	*
-	* @param userName the user name of this definition
-	*/
-	public void setUserName(java.lang.String userName) {
-		_definition.setUserName(userName);
 	}
 
 	/**
@@ -275,53 +172,34 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*
 	* @return the create date of this definition
 	*/
+	@Override
 	public java.util.Date getCreateDate() {
 		return _definition.getCreateDate();
 	}
 
 	/**
-	* Sets the create date of this definition.
+	* Returns the definition ID of this definition.
 	*
-	* @param createDate the create date of this definition
+	* @return the definition ID of this definition
 	*/
-	public void setCreateDate(java.util.Date createDate) {
-		_definition.setCreateDate(createDate);
+	@Override
+	public long getDefinitionId() {
+		return _definition.getDefinitionId();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _definition.getExpandoBridge();
 	}
 
 	/**
-	* Returns the modified date of this definition.
+	* Returns the group ID of this definition.
 	*
-	* @return the modified date of this definition
+	* @return the group ID of this definition
 	*/
-	public java.util.Date getModifiedDate() {
-		return _definition.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this definition.
-	*
-	* @param modifiedDate the modified date of this definition
-	*/
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_definition.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the type ID of this definition.
-	*
-	* @return the type ID of this definition
-	*/
-	public long getTypeId() {
-		return _definition.getTypeId();
-	}
-
-	/**
-	* Sets the type ID of this definition.
-	*
-	* @param typeId the type ID of this definition
-	*/
-	public void setTypeId(long typeId) {
-		_definition.setTypeId(typeId);
+	@Override
+	public long getGroupId() {
+		return _definition.getGroupId();
 	}
 
 	/**
@@ -329,17 +207,9 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*
 	* @return the manufacturer of this definition
 	*/
+	@Override
 	public java.lang.String getManufacturer() {
 		return _definition.getManufacturer();
-	}
-
-	/**
-	* Sets the manufacturer of this definition.
-	*
-	* @param manufacturer the manufacturer of this definition
-	*/
-	public void setManufacturer(java.lang.String manufacturer) {
-		_definition.setManufacturer(manufacturer);
 	}
 
 	/**
@@ -347,17 +217,19 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*
 	* @return the model of this definition
 	*/
+	@Override
 	public java.lang.String getModel() {
 		return _definition.getModel();
 	}
 
 	/**
-	* Sets the model of this definition.
+	* Returns the modified date of this definition.
 	*
-	* @param model the model of this definition
+	* @return the modified date of this definition
 	*/
-	public void setModel(java.lang.String model) {
-		_definition.setModel(model);
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _definition.getModifiedDate();
 	}
 
 	/**
@@ -365,35 +237,9 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*
 	* @return the order date of this definition
 	*/
+	@Override
 	public java.util.Date getOrderDate() {
 		return _definition.getOrderDate();
-	}
-
-	/**
-	* Sets the order date of this definition.
-	*
-	* @param orderDate the order date of this definition
-	*/
-	public void setOrderDate(java.util.Date orderDate) {
-		_definition.setOrderDate(orderDate);
-	}
-
-	/**
-	* Returns the quantity of this definition.
-	*
-	* @return the quantity of this definition
-	*/
-	public int getQuantity() {
-		return _definition.getQuantity();
-	}
-
-	/**
-	* Sets the quantity of this definition.
-	*
-	* @param quantity the quantity of this definition
-	*/
-	public void setQuantity(int quantity) {
-		_definition.setQuantity(quantity);
 	}
 
 	/**
@@ -401,73 +247,74 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*
 	* @return the price of this definition
 	*/
+	@Override
 	public double getPrice() {
 		return _definition.getPrice();
 	}
 
 	/**
-	* Sets the price of this definition.
+	* Returns the primary key of this definition.
 	*
-	* @param price the price of this definition
+	* @return the primary key of this definition
 	*/
-	public void setPrice(double price) {
-		_definition.setPrice(price);
+	@Override
+	public long getPrimaryKey() {
+		return _definition.getPrimaryKey();
 	}
 
-	public boolean isNew() {
-		return _definition.isNew();
-	}
-
-	public void setNew(boolean n) {
-		_definition.setNew(n);
-	}
-
-	public boolean isCachedModel() {
-		return _definition.isCachedModel();
-	}
-
-	public void setCachedModel(boolean cachedModel) {
-		_definition.setCachedModel(cachedModel);
-	}
-
-	public boolean isEscapedModel() {
-		return _definition.isEscapedModel();
-	}
-
+	@Override
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _definition.getPrimaryKeyObj();
 	}
 
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_definition.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _definition.getExpandoBridge();
-	}
-
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
-		_definition.setExpandoBridgeAttributes(baseModel);
-	}
-
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
-		_definition.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_definition.setExpandoBridgeAttributes(serviceContext);
-	}
-
+	/**
+	* Returns the quantity of this definition.
+	*
+	* @return the quantity of this definition
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new DefinitionWrapper((Definition)_definition.clone());
+	public int getQuantity() {
+		return _definition.getQuantity();
 	}
 
-	public int compareTo(com.liferay.ams.model.Definition definition) {
-		return _definition.compareTo(definition);
+	/**
+	* Returns the type ID of this definition.
+	*
+	* @return the type ID of this definition
+	*/
+	@Override
+	public long getTypeId() {
+		return _definition.getTypeId();
+	}
+
+	/**
+	* Returns the user ID of this definition.
+	*
+	* @return the user ID of this definition
+	*/
+	@Override
+	public long getUserId() {
+		return _definition.getUserId();
+	}
+
+	/**
+	* Returns the user name of this definition.
+	*
+	* @return the user name of this definition
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _definition.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this definition.
+	*
+	* @return the user uuid of this definition
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _definition.getUserUuid();
 	}
 
 	@Override
@@ -475,16 +322,217 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 		return _definition.hashCode();
 	}
 
+	@Override
+	public boolean isCachedModel() {
+		return _definition.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _definition.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _definition.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_definition.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_definition.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this definition.
+	*
+	* @param companyId the company ID of this definition
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_definition.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this definition.
+	*
+	* @param createDate the create date of this definition
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_definition.setCreateDate(createDate);
+	}
+
+	/**
+	* Sets the definition ID of this definition.
+	*
+	* @param definitionId the definition ID of this definition
+	*/
+	@Override
+	public void setDefinitionId(long definitionId) {
+		_definition.setDefinitionId(definitionId);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_definition.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_definition.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_definition.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the group ID of this definition.
+	*
+	* @param groupId the group ID of this definition
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_definition.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the manufacturer of this definition.
+	*
+	* @param manufacturer the manufacturer of this definition
+	*/
+	@Override
+	public void setManufacturer(java.lang.String manufacturer) {
+		_definition.setManufacturer(manufacturer);
+	}
+
+	/**
+	* Sets the model of this definition.
+	*
+	* @param model the model of this definition
+	*/
+	@Override
+	public void setModel(java.lang.String model) {
+		_definition.setModel(model);
+	}
+
+	/**
+	* Sets the modified date of this definition.
+	*
+	* @param modifiedDate the modified date of this definition
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_definition.setModifiedDate(modifiedDate);
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_definition.setNew(n);
+	}
+
+	/**
+	* Sets the order date of this definition.
+	*
+	* @param orderDate the order date of this definition
+	*/
+	@Override
+	public void setOrderDate(java.util.Date orderDate) {
+		_definition.setOrderDate(orderDate);
+	}
+
+	/**
+	* Sets the price of this definition.
+	*
+	* @param price the price of this definition
+	*/
+	@Override
+	public void setPrice(double price) {
+		_definition.setPrice(price);
+	}
+
+	/**
+	* Sets the primary key of this definition.
+	*
+	* @param primaryKey the primary key of this definition
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_definition.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_definition.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the quantity of this definition.
+	*
+	* @param quantity the quantity of this definition
+	*/
+	@Override
+	public void setQuantity(int quantity) {
+		_definition.setQuantity(quantity);
+	}
+
+	/**
+	* Sets the type ID of this definition.
+	*
+	* @param typeId the type ID of this definition
+	*/
+	@Override
+	public void setTypeId(long typeId) {
+		_definition.setTypeId(typeId);
+	}
+
+	/**
+	* Sets the user ID of this definition.
+	*
+	* @param userId the user ID of this definition
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_definition.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this definition.
+	*
+	* @param userName the user name of this definition
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_definition.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this definition.
+	*
+	* @param userUuid the user uuid of this definition
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_definition.setUserUuid(userUuid);
+	}
+
+	@Override
 	public com.liferay.portal.model.CacheModel<com.liferay.ams.model.Definition> toCacheModel() {
 		return _definition.toCacheModel();
 	}
 
+	@Override
 	public com.liferay.ams.model.Definition toEscapedModel() {
 		return new DefinitionWrapper(_definition.toEscapedModel());
-	}
-
-	public com.liferay.ams.model.Definition toUnescapedModel() {
-		return new DefinitionWrapper(_definition.toUnescapedModel());
 	}
 
 	@Override
@@ -492,26 +540,59 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 		return _definition.toString();
 	}
 
+	@Override
+	public com.liferay.ams.model.Definition toUnescapedModel() {
+		return new DefinitionWrapper(_definition.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _definition.toXmlString();
 	}
 
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_definition.persist();
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DefinitionWrapper)) {
+			return false;
+		}
+
+		DefinitionWrapper definitionWrapper = (DefinitionWrapper)obj;
+
+		if (Validator.equals(_definition, definitionWrapper._definition)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Definition getWrappedDefinition() {
 		return _definition;
 	}
 
+	@Override
 	public Definition getWrappedModel() {
 		return _definition;
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _definition.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _definition.isFinderCacheEnabled();
+	}
+
+	@Override
 	public void resetOriginalValues() {
 		_definition.resetOriginalValues();
 	}

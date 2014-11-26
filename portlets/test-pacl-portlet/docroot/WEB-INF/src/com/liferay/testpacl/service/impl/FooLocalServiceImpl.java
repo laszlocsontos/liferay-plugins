@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -19,7 +19,6 @@ import com.liferay.chat.model.Status;
 import com.liferay.chat.service.EntryLocalServiceUtil;
 import com.liferay.chat.service.StatusLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -37,93 +36,105 @@ import java.util.List;
  */
 public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 
+	@Override
 	public Company getCompanyPersistence_FindByPrimaryKey(long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return companyPersistence.findByPrimaryKey(companyId);
 	}
 
+	@Override
 	public Company getCompanyUtil_FindByPrimaryKey(long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return CompanyUtil.findByPrimaryKey(companyId);
 	}
 
-	public List<Entry> getEntryLocalServiceUtil_GetEntries(int start, int end)
-		throws SystemException {
-
+	@Override
+	public List<Entry> getEntryLocalServiceUtil_GetEntries(int start, int end) {
 		return EntryLocalServiceUtil.getEntries(start, end);
 	}
 
+	@Override
 	public Entry getEntryLocalServiceUtil_GetEntry(long entryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return EntryLocalServiceUtil.getEntry(entryId);
 	}
 
+	@Override
 	public Group getGroupPersistence_FindByPrimaryKey(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return groupPersistence.findByPrimaryKey(groupId);
 	}
 
+	@Override
 	public Group getGroupUtil_FindByPrimaryKey(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return GroupUtil.findByPrimaryKey(groupId);
 	}
 
+	@Override
 	public int getPortalService_GetBuildNumber() {
 		return portalService.getBuildNumber();
 	}
 
+	@Override
 	public int getPortalService_TestGetBuildNumber() {
 		return portalService.testGetBuildNumber();
 	}
 
-	public boolean getPortalService_TestHasClassName() throws SystemException {
+	@Override
+	public boolean getPortalService_TestHasClassName() {
 		return portalService.testHasClassName();
 	}
 
+	@Override
 	public int getPortalServiceUtil_GetBuildNumber() {
 		return PortalServiceUtil.getBuildNumber();
 	}
 
+	@Override
 	public int getPortalServiceUtil_TestGetBuildNumber() {
 		return PortalServiceUtil.testGetBuildNumber();
 	}
 
-	public boolean getPortalServiceUtil_TestHasClassName()
-		throws SystemException {
-
+	@Override
+	public boolean getPortalServiceUtil_TestHasClassName() {
 		return PortalServiceUtil.testHasClassName();
 	}
 
+	@Override
 	public int getReleaseInfo_GetBuildNumber() {
 		return ReleaseInfo.getBuildNumber();
 	}
 
+	@Override
 	public Status getStatusLocalServiceUtil_GetStatus(long statusId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return StatusLocalServiceUtil.getStatus(statusId);
 	}
 
+	@Override
 	public List<Status> getStatusLocalServiceUtil_GetStatuses(
-			int start, int end)
-		throws SystemException {
+		int start, int end) {
 
 		return StatusLocalServiceUtil.getStatuses(start, end);
 	}
 
+	@Override
 	public User getUserPersistence_FindByPrimaryKey(long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userPersistence.findByPrimaryKey(userId);
 	}
 
+	@Override
 	public User getUserUtil_FindByPrimaryKey(long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return UserUtil.findByPrimaryKey(userId);
 	}

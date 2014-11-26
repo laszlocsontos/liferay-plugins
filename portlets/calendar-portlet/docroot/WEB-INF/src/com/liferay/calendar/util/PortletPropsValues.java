@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -36,15 +36,14 @@ public class PortletPropsValues {
 	public static final String CALENDAR_NOTIFICATION_DEFAULT_TYPE =
 		PortletProps.get(PortletPropsKeys.CALENDAR_NOTIFICATION_DEFAULT_TYPE);
 
-	public static final String CALENDAR_NOTIFICATION_FROM_ADDRESS =
-		PortletProps.get(PortletPropsKeys.CALENDAR_NOTIFICATION_FROM_ADDRESS);
-
-	public static final String CALENDAR_NOTIFICATION_FROM_NAME =
-		PortletProps.get(PortletPropsKeys.CALENDAR_NOTIFICATION_FROM_NAME);
-
 	public static final boolean CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE =
 		GetterUtil.getBoolean(
 			PortletProps.get(
 				PortletPropsKeys.CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE));
+
+	public static final boolean CALENDAR_SYNC_CALEVENTS_ON_STARTUP =
+		GetterUtil.getBoolean(
+			PortletProps.get(
+				PortletPropsKeys.CALENDAR_SYNC_CALEVENTS_ON_STARTUP));
 
 }

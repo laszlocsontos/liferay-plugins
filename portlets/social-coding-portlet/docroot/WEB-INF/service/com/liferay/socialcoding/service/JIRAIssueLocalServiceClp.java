@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,11 +14,15 @@
 
 package com.liferay.socialcoding.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.service.InvokableLocalService;
 
 /**
  * @author Brian Wing Shun Chan
+ * @generated
  */
+@ProviderType
 public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 	public JIRAIssueLocalServiceClp(InvokableLocalService invokableLocalService) {
 		_invokableLocalService = invokableLocalService;
@@ -35,130 +39,137 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 
 		_methodName2 = "deleteJIRAIssue";
 
-		_methodParameterTypes2 = new String[] { "long" };
-
-		_methodName3 = "deleteJIRAIssue";
-
-		_methodParameterTypes3 = new String[] {
+		_methodParameterTypes2 = new String[] {
 				"com.liferay.socialcoding.model.JIRAIssue"
 			};
 
-		_methodName4 = "dynamicQuery";
+		_methodName3 = "deleteJIRAIssue";
 
-		_methodParameterTypes4 = new String[] {  };
+		_methodParameterTypes3 = new String[] { "long" };
+
+		_methodName4 = "deletePersistedModel";
+
+		_methodParameterTypes4 = new String[] {
+				"com.liferay.portal.model.PersistedModel"
+			};
 
 		_methodName5 = "dynamicQuery";
 
-		_methodParameterTypes5 = new String[] {
-				"com.liferay.portal.kernel.dao.orm.DynamicQuery"
-			};
+		_methodParameterTypes5 = new String[] {  };
 
 		_methodName6 = "dynamicQuery";
 
 		_methodParameterTypes6 = new String[] {
-				"com.liferay.portal.kernel.dao.orm.DynamicQuery", "int", "int"
+				"com.liferay.portal.kernel.dao.orm.DynamicQuery"
 			};
 
 		_methodName7 = "dynamicQuery";
 
 		_methodParameterTypes7 = new String[] {
+				"com.liferay.portal.kernel.dao.orm.DynamicQuery", "int", "int"
+			};
+
+		_methodName8 = "dynamicQuery";
+
+		_methodParameterTypes8 = new String[] {
 				"com.liferay.portal.kernel.dao.orm.DynamicQuery", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName8 = "dynamicQueryCount";
+		_methodName9 = "dynamicQueryCount";
 
-		_methodParameterTypes8 = new String[] {
+		_methodParameterTypes9 = new String[] {
 				"com.liferay.portal.kernel.dao.orm.DynamicQuery"
 			};
 
-		_methodName9 = "fetchJIRAIssue";
+		_methodName10 = "dynamicQueryCount";
 
-		_methodParameterTypes9 = new String[] { "long" };
-
-		_methodName10 = "getJIRAIssue";
-
-		_methodParameterTypes10 = new String[] { "long" };
-
-		_methodName11 = "getPersistedModel";
-
-		_methodParameterTypes11 = new String[] { "java.io.Serializable" };
-
-		_methodName12 = "getJIRAIssues";
-
-		_methodParameterTypes12 = new String[] { "int", "int" };
-
-		_methodName13 = "getJIRAIssuesCount";
-
-		_methodParameterTypes13 = new String[] {  };
-
-		_methodName14 = "updateJIRAIssue";
-
-		_methodParameterTypes14 = new String[] {
-				"com.liferay.socialcoding.model.JIRAIssue"
+		_methodParameterTypes10 = new String[] {
+				"com.liferay.portal.kernel.dao.orm.DynamicQuery",
+				"com.liferay.portal.kernel.dao.orm.Projection"
 			};
 
-		_methodName15 = "getBeanIdentifier";
+		_methodName11 = "fetchJIRAIssue";
 
-		_methodParameterTypes15 = new String[] {  };
+		_methodParameterTypes11 = new String[] { "long" };
 
-		_methodName16 = "setBeanIdentifier";
+		_methodName12 = "getActionableDynamicQuery";
 
-		_methodParameterTypes16 = new String[] { "java.lang.String" };
+		_methodParameterTypes12 = new String[] {  };
 
-		_methodName18 = "getAssigneeJIRAIssues";
+		_methodName13 = "getAssigneeJIRAIssues";
 
-		_methodParameterTypes18 = new String[] {
+		_methodParameterTypes13 = new String[] {
 				"java.util.Date", "long", "java.lang.String", "int", "int"
 			};
 
-		_methodName19 = "getAssigneeJIRAIssues";
+		_methodName14 = "getAssigneeJIRAIssues";
 
-		_methodParameterTypes19 = new String[] {
+		_methodParameterTypes14 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName20 = "getAssigneeJIRAIssues";
+		_methodName15 = "getAssigneeJIRAIssues";
 
-		_methodParameterTypes20 = new String[] {
+		_methodParameterTypes15 = new String[] {
 				"long", "java.lang.String", "java.lang.String", "int", "int"
 			};
 
-		_methodName21 = "getAssigneeJIRAIssuesCount";
+		_methodName16 = "getAssigneeJIRAIssuesCount";
 
-		_methodParameterTypes21 = new String[] {
+		_methodParameterTypes16 = new String[] {
 				"java.util.Date", "long", "java.lang.String"
 			};
 
-		_methodName22 = "getAssigneeJIRAIssuesCount";
+		_methodName17 = "getAssigneeJIRAIssuesCount";
 
-		_methodParameterTypes22 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes17 = new String[] { "long", "java.lang.String" };
 
-		_methodName23 = "getAssigneeJIRAIssuesCount";
+		_methodName18 = "getAssigneeJIRAIssuesCount";
 
-		_methodParameterTypes23 = new String[] {
+		_methodParameterTypes18 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName24 = "getFirstAssigneeJIRAIssue";
+		_methodName19 = "getBeanIdentifier";
 
-		_methodParameterTypes24 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes19 = new String[] {  };
 
-		_methodName25 = "getFirstReporterJIRAIssue";
+		_methodName20 = "getFirstAssigneeJIRAIssue";
 
-		_methodParameterTypes25 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes20 = new String[] { "long", "java.lang.String" };
 
-		_methodName26 = "getJIRAIssue";
+		_methodName21 = "getFirstReporterJIRAIssue";
 
-		_methodParameterTypes26 = new String[] { "java.lang.String" };
+		_methodParameterTypes21 = new String[] { "long", "java.lang.String" };
 
-		_methodName27 = "getLastAssigneeJIRAIssue";
+		_methodName22 = "getJIRAIssue";
+
+		_methodParameterTypes22 = new String[] { "long" };
+
+		_methodName23 = "getJIRAIssue";
+
+		_methodParameterTypes23 = new String[] { "java.lang.String" };
+
+		_methodName24 = "getJIRAIssues";
+
+		_methodParameterTypes24 = new String[] { "int", "int" };
+
+		_methodName25 = "getJIRAIssuesCount";
+
+		_methodParameterTypes25 = new String[] {  };
+
+		_methodName26 = "getLastAssigneeJIRAIssue";
+
+		_methodParameterTypes26 = new String[] { "long", "java.lang.String" };
+
+		_methodName27 = "getLastreporterJIRAIssue";
 
 		_methodParameterTypes27 = new String[] { "long", "java.lang.String" };
 
-		_methodName28 = "getLastreporterJIRAIssue";
+		_methodName28 = "getPersistedModel";
 
-		_methodParameterTypes28 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes28 = new String[] { "java.io.Serializable" };
 
 		_methodName29 = "getReporterJIRAIssues";
 
@@ -194,14 +205,24 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName35 = "updateJIRAIssues";
+		_methodName36 = "setBeanIdentifier";
 
-		_methodParameterTypes35 = new String[] { "long" };
+		_methodParameterTypes36 = new String[] { "java.lang.String" };
+
+		_methodName37 = "updateJIRAIssue";
+
+		_methodParameterTypes37 = new String[] {
+				"com.liferay.socialcoding.model.JIRAIssue"
+			};
+
+		_methodName38 = "updateJIRAIssues";
+
+		_methodParameterTypes38 = new String[] { "long" };
 	}
 
+	@Override
 	public com.liferay.socialcoding.model.JIRAIssue addJIRAIssue(
-		com.liferay.socialcoding.model.JIRAIssue jiraIssue)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.socialcoding.model.JIRAIssue jiraIssue) {
 		Object returnObj = null;
 
 		try {
@@ -211,10 +232,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -228,6 +245,7 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
 	public com.liferay.socialcoding.model.JIRAIssue createJIRAIssue(
 		long jiraIssueId) {
 		Object returnObj = null;
@@ -251,15 +269,40 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
 	public com.liferay.socialcoding.model.JIRAIssue deleteJIRAIssue(
-		long jiraIssueId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.socialcoding.model.JIRAIssue jiraIssue) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { jiraIssueId });
+					_methodParameterTypes2,
+					new Object[] { ClpSerializer.translateInput(jiraIssue) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.socialcoding.model.JIRAIssue deleteJIRAIssue(
+		long jiraIssueId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName3,
+					_methodParameterTypes3, new Object[] { jiraIssueId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -268,10 +311,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -284,41 +323,43 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public com.liferay.socialcoding.model.JIRAIssue deleteJIRAIssue(
-		com.liferay.socialcoding.model.JIRAIssue jiraIssue)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName3,
-					_methodParameterTypes3,
-					new Object[] { ClpSerializer.translateInput(jiraIssue) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
-	}
-
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName4,
-					_methodParameterTypes4, new Object[] {  });
+					_methodParameterTypes4,
+					new Object[] { ClpSerializer.translateInput(persistedModel) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.model.PersistedModel)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -335,23 +376,18 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (com.liferay.portal.kernel.dao.orm.DynamicQuery)ClpSerializer.translateOutput(returnObj);
 	}
 
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName5,
-					_methodParameterTypes5,
+			returnObj = _invokableLocalService.invokeMethod(_methodName6,
+					_methodParameterTypes6,
 					new Object[] { ClpSerializer.translateInput(dynamicQuery) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -362,18 +398,18 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 			}
 		}
 
-		return (java.util.List)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<T>)ClpSerializer.translateOutput(returnObj);
 	}
 
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName6,
-					_methodParameterTypes6,
+			returnObj = _invokableLocalService.invokeMethod(_methodName7,
+					_methodParameterTypes7,
 					new Object[] {
 						ClpSerializer.translateInput(dynamicQuery),
 						
@@ -385,10 +421,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -398,20 +430,19 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 			}
 		}
 
-		return (java.util.List)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<T>)ClpSerializer.translateOutput(returnObj);
 	}
 
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName7,
-					_methodParameterTypes7,
+			returnObj = _invokableLocalService.invokeMethod(_methodName8,
+					_methodParameterTypes8,
 					new Object[] {
 						ClpSerializer.translateInput(dynamicQuery),
 						
@@ -425,10 +456,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -438,25 +465,21 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 			}
 		}
 
-		return (java.util.List)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<T>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName8,
-					_methodParameterTypes8,
+			returnObj = _invokableLocalService.invokeMethod(_methodName9,
+					_methodParameterTypes9,
 					new Object[] { ClpSerializer.translateInput(dynamicQuery) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -470,54 +493,47 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return ((Long)returnObj).longValue();
 	}
 
-	public com.liferay.socialcoding.model.JIRAIssue fetchJIRAIssue(
-		long jiraIssueId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName9,
-					_methodParameterTypes9, new Object[] { jiraIssueId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
-	}
-
-	public com.liferay.socialcoding.model.JIRAIssue getJIRAIssue(
-		long jiraIssueId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { jiraIssueId });
+					_methodParameterTypes10,
+					new Object[] {
+						ClpSerializer.translateInput(dynamicQuery),
+						
+					ClpSerializer.translateInput(projection)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
 			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
+		return ((Long)returnObj).longValue();
+	}
+
+	@Override
+	public com.liferay.socialcoding.model.JIRAIssue fetchJIRAIssue(
+		long jiraIssueId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName11,
+					_methodParameterTypes11, new Object[] { jiraIssueId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -531,27 +547,16 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11,
-					new Object[] { ClpSerializer.translateInput(primaryKeyObj) });
+			returnObj = _invokableLocalService.invokeMethod(_methodName12,
+					_methodParameterTypes12, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -562,24 +567,32 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 			}
 		}
 
-		return (com.liferay.portal.model.PersistedModel)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getJIRAIssues(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getAssigneeJIRAIssues(
+		java.util.Date modifiedDate, long projectId,
+		java.lang.String assigneeJiraUserId, int start, int end) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName12,
-					_methodParameterTypes12, new Object[] { start, end });
+			returnObj = _invokableLocalService.invokeMethod(_methodName13,
+					_methodParameterTypes13,
+					new Object[] {
+						ClpSerializer.translateInput(modifiedDate),
+						
+					projectId,
+						
+					ClpSerializer.translateInput(assigneeJiraUserId),
+						
+					start,
+						
+					end
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -593,20 +606,93 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (java.util.List<com.liferay.socialcoding.model.JIRAIssue>)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public int getJIRAIssuesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getAssigneeJIRAIssues(
+		long projectId, java.lang.String assigneeJiraUserId, int start, int end) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName13,
-					_methodParameterTypes13, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName14,
+					_methodParameterTypes14,
+					new Object[] {
+						projectId,
+						
+					ClpSerializer.translateInput(assigneeJiraUserId),
+						
+					start,
+						
+					end
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
 			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.socialcoding.model.JIRAIssue>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getAssigneeJIRAIssues(
+		long projectId, java.lang.String assigneeJiraUserId,
+		java.lang.String status, int start, int end) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName15,
+					_methodParameterTypes15,
+					new Object[] {
+						projectId,
+						
+					ClpSerializer.translateInput(assigneeJiraUserId),
+						
+					ClpSerializer.translateInput(status),
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.socialcoding.model.JIRAIssue>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int getAssigneeJIRAIssuesCount(java.util.Date modifiedDate,
+		long projectId, java.lang.String assigneeJiraUserId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName16,
+					_methodParameterTypes16,
+					new Object[] {
+						ClpSerializer.translateInput(modifiedDate),
+						
+					projectId,
+						
+					ClpSerializer.translateInput(assigneeJiraUserId)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -620,22 +706,22 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return ((Integer)returnObj).intValue();
 	}
 
-	public com.liferay.socialcoding.model.JIRAIssue updateJIRAIssue(
-		com.liferay.socialcoding.model.JIRAIssue jiraIssue)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public int getAssigneeJIRAIssuesCount(long projectId,
+		java.lang.String assigneeJiraUserId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName14,
-					_methodParameterTypes14,
-					new Object[] { ClpSerializer.translateInput(jiraIssue) });
+			returnObj = _invokableLocalService.invokeMethod(_methodName17,
+					_methodParameterTypes17,
+					new Object[] {
+						projectId,
+						
+					ClpSerializer.translateInput(assigneeJiraUserId)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -646,15 +732,47 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 			}
 		}
 
-		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
+		return ((Integer)returnObj).intValue();
 	}
 
+	@Override
+	public int getAssigneeJIRAIssuesCount(long projectId,
+		java.lang.String assigneeJiraUserId, java.lang.String status) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName18,
+					_methodParameterTypes18,
+					new Object[] {
+						projectId,
+						
+					ClpSerializer.translateInput(assigneeJiraUserId),
+						
+					ClpSerializer.translateInput(status)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
 	public java.lang.String getBeanIdentifier() {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName15,
-					_methodParameterTypes15, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -671,260 +789,15 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		try {
-			_invokableLocalService.invokeMethod(_methodName16,
-				_methodParameterTypes16,
-				new Object[] { ClpSerializer.translateInput(beanIdentifier) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-	}
-
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		throw new UnsupportedOperationException();
-	}
-
-	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getAssigneeJIRAIssues(
-		java.util.Date modifiedDate, long projectId,
-		java.lang.String assigneeJiraUserId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName18,
-					_methodParameterTypes18,
-					new Object[] {
-						ClpSerializer.translateInput(modifiedDate),
-						
-					projectId,
-						
-					ClpSerializer.translateInput(assigneeJiraUserId),
-						
-					start,
-						
-					end
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<com.liferay.socialcoding.model.JIRAIssue>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getAssigneeJIRAIssues(
-		long projectId, java.lang.String assigneeJiraUserId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19,
-					new Object[] {
-						projectId,
-						
-					ClpSerializer.translateInput(assigneeJiraUserId),
-						
-					start,
-						
-					end
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<com.liferay.socialcoding.model.JIRAIssue>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getAssigneeJIRAIssues(
-		long projectId, java.lang.String assigneeJiraUserId,
-		java.lang.String status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public com.liferay.socialcoding.model.JIRAIssue getFirstAssigneeJIRAIssue(
+		long projectId, java.lang.String assigneeJiraUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
-					new Object[] {
-						projectId,
-						
-					ClpSerializer.translateInput(assigneeJiraUserId),
-						
-					ClpSerializer.translateInput(status),
-						
-					start,
-						
-					end
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<com.liferay.socialcoding.model.JIRAIssue>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	public int getAssigneeJIRAIssuesCount(java.util.Date modifiedDate,
-		long projectId, java.lang.String assigneeJiraUserId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
-					new Object[] {
-						ClpSerializer.translateInput(modifiedDate),
-						
-					projectId,
-						
-					ClpSerializer.translateInput(assigneeJiraUserId)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return ((Integer)returnObj).intValue();
-	}
-
-	public int getAssigneeJIRAIssuesCount(long projectId,
-		java.lang.String assigneeJiraUserId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
-					new Object[] {
-						projectId,
-						
-					ClpSerializer.translateInput(assigneeJiraUserId)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return ((Integer)returnObj).intValue();
-	}
-
-	public int getAssigneeJIRAIssuesCount(long projectId,
-		java.lang.String assigneeJiraUserId, java.lang.String status)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
-					new Object[] {
-						projectId,
-						
-					ClpSerializer.translateInput(assigneeJiraUserId),
-						
-					ClpSerializer.translateInput(status)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return ((Integer)returnObj).intValue();
-	}
-
-	public com.liferay.socialcoding.model.JIRAIssue getFirstAssigneeJIRAIssue(
-		long projectId, java.lang.String assigneeJiraUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
 					new Object[] {
 						projectId,
 						
@@ -936,10 +809,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
 			}
 
 			if (t instanceof RuntimeException) {
@@ -954,15 +823,15 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
 	public com.liferay.socialcoding.model.JIRAIssue getFirstReporterJIRAIssue(
 		long projectId, java.lang.String reporterJiraUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] {
 						projectId,
 						
@@ -976,8 +845,33 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.socialcoding.model.JIRAIssue getJIRAIssue(
+		long jiraIssueId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { jiraIssueId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
 
 			if (t instanceof RuntimeException) {
@@ -992,15 +886,15 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
 	public com.liferay.socialcoding.model.JIRAIssue getJIRAIssue(
 		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { ClpSerializer.translateInput(key) });
 		}
 		catch (Throwable t) {
@@ -1010,10 +904,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -1026,15 +916,62 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public com.liferay.socialcoding.model.JIRAIssue getLastAssigneeJIRAIssue(
-		long projectId, java.lang.String assigneeJiraUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getJIRAIssues(
+		int start, int end) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { start, end });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.socialcoding.model.JIRAIssue>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int getJIRAIssuesCount() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public com.liferay.socialcoding.model.JIRAIssue getLastAssigneeJIRAIssue(
+		long projectId, java.lang.String assigneeJiraUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						projectId,
 						
@@ -1048,10 +985,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -1064,15 +997,15 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
 	public com.liferay.socialcoding.model.JIRAIssue getLastreporterJIRAIssue(
 		long projectId, java.lang.String reporterJiraUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						projectId,
 						
@@ -1086,10 +1019,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -1102,10 +1031,40 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
+					new Object[] { ClpSerializer.translateInput(primaryKeyObj) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.model.PersistedModel)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getReporterJIRAIssues(
 		java.util.Date modifiedDate, long projectId,
-		java.lang.String reporterJiraUserId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String reporterJiraUserId, int start, int end) {
 		Object returnObj = null;
 
 		try {
@@ -1126,10 +1085,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -1142,9 +1097,9 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (java.util.List<com.liferay.socialcoding.model.JIRAIssue>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
 	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getReporterJIRAIssues(
-		long projectId, java.lang.String reporterJiraUserId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long projectId, java.lang.String reporterJiraUserId, int start, int end) {
 		Object returnObj = null;
 
 		try {
@@ -1163,10 +1118,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -1179,10 +1130,10 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (java.util.List<com.liferay.socialcoding.model.JIRAIssue>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
 	public java.util.List<com.liferay.socialcoding.model.JIRAIssue> getReporterJIRAIssues(
 		long projectId, java.lang.String reporterJiraUserId,
-		java.lang.String status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String status, int start, int end) {
 		Object returnObj = null;
 
 		try {
@@ -1203,10 +1154,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -1219,9 +1166,9 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return (java.util.List<com.liferay.socialcoding.model.JIRAIssue>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
 	public int getReporterJIRAIssuesCount(java.util.Date modifiedDate,
-		long projectId, java.lang.String reporterJiraUserId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long projectId, java.lang.String reporterJiraUserId) {
 		Object returnObj = null;
 
 		try {
@@ -1238,10 +1185,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -1254,9 +1197,9 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return ((Integer)returnObj).intValue();
 	}
 
+	@Override
 	public int getReporterJIRAIssuesCount(long projectId,
-		java.lang.String reporterJiraUserId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String reporterJiraUserId) {
 		Object returnObj = null;
 
 		try {
@@ -1271,10 +1214,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -1287,9 +1226,9 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return ((Integer)returnObj).intValue();
 	}
 
+	@Override
 	public int getReporterJIRAIssuesCount(long projectId,
-		java.lang.String reporterJiraUserId, java.lang.String status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String reporterJiraUserId, java.lang.String status) {
 		Object returnObj = null;
 
 		try {
@@ -1306,10 +1245,6 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
 			}
@@ -1322,22 +1257,70 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 		return ((Integer)returnObj).intValue();
 	}
 
-	public void updateJIRAIssues(long projectId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName35,
-				_methodParameterTypes35, new Object[] { projectId });
+			_invokableLocalService.invokeMethod(_methodName36,
+				_methodParameterTypes36,
+				new Object[] { ClpSerializer.translateInput(beanIdentifier) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public com.liferay.socialcoding.model.JIRAIssue updateJIRAIssue(
+		com.liferay.socialcoding.model.JIRAIssue jiraIssue) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
+					new Object[] { ClpSerializer.translateInput(jiraIssue) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.socialcoding.model.JIRAIssue)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void updateJIRAIssues(long projectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName38,
+				_methodParameterTypes38, new Object[] { projectId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
 			}
 
 			if (t instanceof RuntimeException) {
@@ -1385,6 +1368,8 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 	private String[] _methodParameterTypes15;
 	private String _methodName16;
 	private String[] _methodParameterTypes16;
+	private String _methodName17;
+	private String[] _methodParameterTypes17;
 	private String _methodName18;
 	private String[] _methodParameterTypes18;
 	private String _methodName19;
@@ -1419,6 +1404,10 @@ public class JIRAIssueLocalServiceClp implements JIRAIssueLocalService {
 	private String[] _methodParameterTypes33;
 	private String _methodName34;
 	private String[] _methodParameterTypes34;
-	private String _methodName35;
-	private String[] _methodParameterTypes35;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
 }

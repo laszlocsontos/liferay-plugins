@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -16,14 +16,9 @@ package com.liferay.akismet.moderation.portlet;
 
 import com.liferay.akismet.util.AkismetConstants;
 import com.liferay.akismet.util.AkismetUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -50,8 +45,6 @@ import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
-import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +113,9 @@ public class ModerationPortlet extends MVCPortlet {
 				themeDisplay.getUserId(), mbMessageId,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-			AkismetUtil.submitHam(mbMessage);
+			if (AkismetUtil.isMessageBoardsEnabled(mbMessage.getCompanyId())) {
+				AkismetUtil.submitHam(mbMessage);
+			}
 		}
 	}
 
@@ -138,14 +133,13 @@ public class ModerationPortlet extends MVCPortlet {
 
 		List<String> wikiPageLinks = new ArrayList<String>();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		for (long wikiPageId : wikiPageIds) {
 			WikiPage wikiPage = WikiPageLocalServiceUtil.getPageByPageId(
 				wikiPageId);
 
-			WikiPage latestVersionWikiPage = getWikiPage(wikiPage, false);
+			WikiPage latestVersionWikiPage = AkismetUtil.getWikiPage(
+				wikiPage.getNodeId(), wikiPage.getTitle(),
+				wikiPage.getVersion(), false);
 
 			String latestContent = null;
 
@@ -153,7 +147,9 @@ public class ModerationPortlet extends MVCPortlet {
 				latestContent = latestVersionWikiPage.getContent();
 			}
 
-			WikiPage previousVersionWikiPage = getWikiPage(wikiPage, true);
+			WikiPage previousVersionWikiPage = AkismetUtil.getWikiPage(
+				wikiPage.getNodeId(), wikiPage.getTitle(),
+				wikiPage.getVersion(), true);
 
 			String previousContent = null;
 
@@ -161,10 +157,20 @@ public class ModerationPortlet extends MVCPortlet {
 				previousContent = previousVersionWikiPage.getContent();
 			}
 
+			// Selected version
+
+			wikiPage.setStatus(WorkflowConstants.STATUS_APPROVED);
+			wikiPage.setSummary(StringPool.BLANK);
+
+			wikiPage = WikiPageLocalServiceUtil.updateWikiPage(wikiPage);
+
 			// Latest version
 
-			if ((latestContent != null) && (previousContent != null) &&
-				 latestContent.equals(previousContent)) {
+			if ((latestContent != null) && ((previousContent == null) ||
+				 latestContent.equals(previousContent))) {
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
 
 				WikiPageLocalServiceUtil.revertPage(
 					themeDisplay.getUserId(), wikiPage.getNodeId(),
@@ -199,24 +205,19 @@ public class ModerationPortlet extends MVCPortlet {
 				wikiPageLinks.add(sb.toString());
 			}
 
-			// Selected version
-
-			wikiPage.setStatus(WorkflowConstants.STATUS_APPROVED);
-			wikiPage.setSummary(StringPool.BLANK);
-
-			wikiPage = WikiPageLocalServiceUtil.updateWikiPage(wikiPage);
-
 			// Akismet
 
-			AkismetUtil.submitHam(wikiPage);
+			if (AkismetUtil.isWikiEnabled(wikiPage.getCompanyId())) {
+				AkismetUtil.submitHam(wikiPage);
+			}
 		}
 
 		if (!wikiPageLinks.isEmpty()) {
-			SessionMessages.add(actionRequest, "requestProcessed");
-
 			SessionMessages.add(
 				actionRequest, "anotherUserHasMadeChangesToThesePages",
 				StringUtil.merge(wikiPageLinks, "<br />"));
+
+			addSuccessMessage(actionRequest, actionResponse);
 
 			super.sendRedirect(actionRequest, actionResponse);
 		}
@@ -238,8 +239,7 @@ public class ModerationPortlet extends MVCPortlet {
 			WikiPage wikiPage = WikiPageLocalServiceUtil.getPageByPageId(
 				wikiPageId);
 
-			wikiPage.setStatus(WorkflowConstants.STATUS_DENIED);
-			wikiPage.setSummary(AkismetConstants.WIKI_PAGE_SPAM);
+			wikiPage.setSummary(AkismetConstants.WIKI_PAGE_MARKED_AS_SPAM);
 
 			WikiPageLocalServiceUtil.updateWikiPage(wikiPage);
 		}
@@ -271,46 +271,6 @@ public class ModerationPortlet extends MVCPortlet {
 
 			throw new PrincipalException();
 		}
-	}
-
-	protected WikiPage getWikiPage(WikiPage wikiPage, boolean previous)
-		throws SystemException {
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiPage.class);
-
-		Property nodeIdProperty = PropertyFactoryUtil.forName("nodeId");
-
-		dynamicQuery.add(nodeIdProperty.eq(wikiPage.getNodeId()));
-
-		Property titleProperty = PropertyFactoryUtil.forName("title");
-
-		dynamicQuery.add(titleProperty.eq(wikiPage.getTitle()));
-
-		Property statusProperty = PropertyFactoryUtil.forName("status");
-
-		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
-
-		Property versionProperty = PropertyFactoryUtil.forName("version");
-
-		if (previous) {
-			dynamicQuery.add(versionProperty.lt(wikiPage.getVersion()));
-		}
-		else {
-			dynamicQuery.add(versionProperty.ge(wikiPage.getVersion()));
-		}
-
-		OrderFactoryUtil.addOrderByComparator(
-			dynamicQuery, new PageVersionComparator());
-
-		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.dynamicQuery(
-			dynamicQuery, 0, 1);
-
-		if (wikiPages.isEmpty()) {
-			return null;
-		}
-
-		return wikiPages.get(0);
 	}
 
 	@Override

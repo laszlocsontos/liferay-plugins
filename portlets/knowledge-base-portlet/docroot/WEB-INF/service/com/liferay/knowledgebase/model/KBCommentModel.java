@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,13 +14,13 @@
 
 package com.liferay.knowledgebase.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.GroupedModel;
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,8 +42,9 @@ import java.util.Date;
  * @see com.liferay.knowledgebase.model.impl.KBCommentModelImpl
  * @generated
  */
+@ProviderType
 public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
-	GroupedModel, StagedModel {
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -70,6 +71,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 * @return the uuid of this k b comment
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -77,6 +79,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @param uuid the uuid of this k b comment
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -98,6 +101,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @return the group ID of this k b comment
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -105,6 +109,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @param groupId the group ID of this k b comment
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -112,6 +117,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @return the company ID of this k b comment
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -119,6 +125,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @param companyId the company ID of this k b comment
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -126,6 +133,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @return the user ID of this k b comment
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -133,21 +141,23 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @param userId the user ID of this k b comment
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
 	 * Returns the user uuid of this k b comment.
 	 *
 	 * @return the user uuid of this k b comment
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	@Override
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this k b comment.
 	 *
 	 * @param userUuid the user uuid of this k b comment
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -156,6 +166,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 * @return the user name of this k b comment
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -163,6 +174,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @param userName the user name of this k b comment
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -170,6 +182,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @return the create date of this k b comment
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -177,6 +190,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @param createDate the create date of this k b comment
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -184,6 +198,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @return the modified date of this k b comment
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -191,6 +206,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @param modifiedDate the modified date of this k b comment
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -198,6 +214,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @return the fully qualified class name of this k b comment
 	 */
+	@Override
 	public String getClassName();
 
 	public void setClassName(String className);
@@ -207,6 +224,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @return the class name ID of this k b comment
 	 */
+	@Override
 	public long getClassNameId();
 
 	/**
@@ -214,6 +232,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @param classNameId the class name ID of this k b comment
 	 */
+	@Override
 	public void setClassNameId(long classNameId);
 
 	/**
@@ -221,6 +240,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @return the class p k of this k b comment
 	 */
+	@Override
 	public long getClassPK();
 
 	/**
@@ -228,6 +248,7 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 *
 	 * @param classPK the class p k of this k b comment
 	 */
+	@Override
 	public void setClassPK(long classPK);
 
 	/**
@@ -266,41 +287,74 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	 */
 	public void setHelpful(boolean helpful);
 
+	/**
+	 * Returns the status of this k b comment.
+	 *
+	 * @return the status of this k b comment
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this k b comment.
+	 *
+	 * @param status the status of this k b comment
+	 */
+	public void setStatus(int status);
+
+	@Override
 	public boolean isNew();
 
+	@Override
 	public void setNew(boolean n);
 
+	@Override
 	public boolean isCachedModel();
 
+	@Override
 	public void setCachedModel(boolean cachedModel);
 
+	@Override
 	public boolean isEscapedModel();
 
+	@Override
 	public Serializable getPrimaryKeyObj();
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
+	@Override
 	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
 
+	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
 
+	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
 	public Object clone();
 
-	public int compareTo(KBComment kbComment);
+	@Override
+	public int compareTo(com.liferay.knowledgebase.model.KBComment kbComment);
 
+	@Override
 	public int hashCode();
 
-	public CacheModel<KBComment> toCacheModel();
+	@Override
+	public CacheModel<com.liferay.knowledgebase.model.KBComment> toCacheModel();
 
-	public KBComment toEscapedModel();
+	@Override
+	public com.liferay.knowledgebase.model.KBComment toEscapedModel();
 
-	public KBComment toUnescapedModel();
+	@Override
+	public com.liferay.knowledgebase.model.KBComment toUnescapedModel();
 
+	@Override
 	public String toString();
 
+	@Override
 	public String toXmlString();
 }

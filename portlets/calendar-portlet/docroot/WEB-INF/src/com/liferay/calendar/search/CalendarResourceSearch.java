@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -40,8 +40,12 @@ import javax.portlet.PortletURL;
  */
 public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 
-	static List<String> headerNames = new ArrayList<String>();
-	static Map<String, String> orderableHeaders = new HashMap<String, String>();
+	public static final String EMPTY_RESULTS_MESSAGE =
+		"no-calendar-resources-were-found";
+
+	public static List<String> headerNames = new ArrayList<String>();
+	public static Map<String, String> orderableHeaders =
+		new HashMap<String, String>();
 
 	static {
 		headerNames.add("code");
@@ -53,16 +57,13 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 		orderableHeaders.put("name", "name");
 	}
 
-	public static final String EMPTY_RESULTS_MESSAGE =
-		"no-calendar-resources-were-found";
-
 	public CalendarResourceSearch(
 		PortletRequest portletRequest, String curParam,
 		PortletURL iteratorURL) {
 
 		super(
 			portletRequest, new CalendarResourceDisplayTerms(portletRequest),
-			new CalendarResourceSearchTerms(portletRequest), curParam,
+			new CalendarResourceDisplayTerms(portletRequest), curParam,
 			DEFAULT_DELTA, iteratorURL, null, EMPTY_RESULTS_MESSAGE);
 
 		CalendarResourceDisplayTerms displayTerms =
@@ -111,7 +112,7 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 					"asc");
 			}
 
-			OrderByComparator orderByComparator =
+			OrderByComparator<CalendarResource> orderByComparator =
 				CalendarResourceUtil.getOrderByComparator(
 					orderByCol, orderByType);
 

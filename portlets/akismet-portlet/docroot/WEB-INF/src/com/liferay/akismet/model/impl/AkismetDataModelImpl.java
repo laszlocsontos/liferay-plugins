@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -98,26 +98,32 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 	public AkismetDataModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _akismetDataId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setAkismetDataId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _akismetDataId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return AkismetData.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return AkismetData.class.getName();
 	}
@@ -136,6 +142,9 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		attributes.put("userAgent", getUserAgent());
 		attributes.put("userIP", getUserIP());
 		attributes.put("userURL", getUserURL());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -203,18 +212,22 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		}
 	}
 
+	@Override
 	public long getAkismetDataId() {
 		return _akismetDataId;
 	}
 
+	@Override
 	public void setAkismetDataId(long akismetDataId) {
 		_akismetDataId = akismetDataId;
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_columnBitmask |= MODIFIEDDATE_COLUMN_BITMASK;
 
@@ -229,6 +242,7 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		return _originalModifiedDate;
 	}
 
+	@Override
 	public String getClassName() {
 		if (getClassNameId() <= 0) {
 			return StringPool.BLANK;
@@ -237,6 +251,7 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		return PortalUtil.getClassName(getClassNameId());
 	}
 
+	@Override
 	public void setClassName(String className) {
 		long classNameId = 0;
 
@@ -247,10 +262,12 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		setClassNameId(classNameId);
 	}
 
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
 
+	@Override
 	public void setClassNameId(long classNameId) {
 		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
@@ -267,10 +284,12 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		return _originalClassNameId;
 	}
 
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
 
+	@Override
 	public void setClassPK(long classPK) {
 		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
@@ -287,6 +306,7 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		return _originalClassPK;
 	}
 
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return StringPool.BLANK;
@@ -296,10 +316,12 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		}
 	}
 
+	@Override
 	public void setType(String type) {
 		_type = type;
 	}
 
+	@Override
 	public String getPermalink() {
 		if (_permalink == null) {
 			return StringPool.BLANK;
@@ -309,10 +331,12 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		}
 	}
 
+	@Override
 	public void setPermalink(String permalink) {
 		_permalink = permalink;
 	}
 
+	@Override
 	public String getReferrer() {
 		if (_referrer == null) {
 			return StringPool.BLANK;
@@ -322,10 +346,12 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		}
 	}
 
+	@Override
 	public void setReferrer(String referrer) {
 		_referrer = referrer;
 	}
 
+	@Override
 	public String getUserAgent() {
 		if (_userAgent == null) {
 			return StringPool.BLANK;
@@ -335,10 +361,12 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		}
 	}
 
+	@Override
 	public void setUserAgent(String userAgent) {
 		_userAgent = userAgent;
 	}
 
+	@Override
 	public String getUserIP() {
 		if (_userIP == null) {
 			return StringPool.BLANK;
@@ -348,10 +376,12 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		}
 	}
 
+	@Override
 	public void setUserIP(String userIP) {
 		_userIP = userIP;
 	}
 
+	@Override
 	public String getUserURL() {
 		if (_userURL == null) {
 			return StringPool.BLANK;
@@ -361,6 +391,7 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		}
 	}
 
+	@Override
 	public void setUserURL(String userURL) {
 		_userURL = userURL;
 	}
@@ -412,6 +443,7 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		return akismetDataImpl;
 	}
 
+	@Override
 	public int compareTo(AkismetData akismetData) {
 		long primaryKey = akismetData.getPrimaryKey();
 
@@ -428,18 +460,15 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AkismetData)) {
 			return false;
 		}
 
-		AkismetData akismetData = null;
-
-		try {
-			akismetData = (AkismetData)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		AkismetData akismetData = (AkismetData)obj;
 
 		long primaryKey = akismetData.getPrimaryKey();
 
@@ -454,6 +483,16 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -572,6 +611,7 @@ public class AkismetDataModelImpl extends BaseModelImpl<AkismetData>
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(34);
 

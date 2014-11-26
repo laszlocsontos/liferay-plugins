@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,19 +14,26 @@
 
 package com.liferay.marketplace.service.impl;
 
+import com.liferay.marketplace.AppPropertiesException;
+import com.liferay.marketplace.AppTitleException;
 import com.liferay.marketplace.AppVersionException;
-import com.liferay.marketplace.DuplicateAppException;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.base.AppLocalServiceBaseImpl;
+import com.liferay.marketplace.util.BundleUtil;
+import com.liferay.marketplace.util.comparator.AppTitleComparator;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,6 +42,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
@@ -42,61 +50,39 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Ryan Park
+ * @author Joan Kim
  */
 public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
-	public App addApp(long userId, long remoteAppId, String version, File file)
-		throws PortalException, SystemException {
-
-		// App
-
-		User user = userPersistence.fetchByPrimaryKey(userId);
-		Date now = new Date();
-
-		validate(remoteAppId, version);
-
-		long appId = counterLocalService.increment();
-
-		App app = appPersistence.create(appId);
-
-		if (user != null) {
-			app.setCompanyId(user.getCompanyId());
-			app.setUserId(user.getUserId());
-			app.setUserName(user.getFullName());
-		}
-
-		app.setCreateDate(now);
-		app.setModifiedDate(now);
-		app.setRemoteAppId(remoteAppId);
-		app.setVersion(version);
-
-		appPersistence.update(app);
-
-		// File
-
-		if (file != null) {
-			DLStoreUtil.addFile(
-				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath(),
-				false, file);
-		}
-
-		return app;
+	@Override
+	public void clearInstalledAppsCache() {
+		_bundledApps = null;
+		_installedApps = null;
 	}
 
 	@Override
-	public App deleteApp(App app) throws SystemException {
+	public App deleteApp(App app) {
 
 		// App
+
+		clearInstalledAppsCache();
 
 		appPersistence.remove(app);
 
@@ -124,19 +110,145 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	}
 
 	@Override
-	public App deleteApp(long appId) throws PortalException, SystemException {
+	public App deleteApp(long appId) throws PortalException {
 		App app = appPersistence.findByPrimaryKey(appId);
 
 		return deleteApp(app);
 	}
 
-	public App fetchRemoteApp(long remoteAppId) throws SystemException {
+	@Override
+	public App fetchRemoteApp(long remoteAppId) {
 		return appPersistence.fetchByRemoteAppId(remoteAppId);
 	}
 
-	public void installApp(long remoteAppId)
-		throws PortalException, SystemException {
+	@Override
+	public List<App> getApps(String category) {
+		return appPersistence.findByCategory(category);
+	}
 
+	@Override
+	public Map<String, String> getBundledApps() {
+		if (_bundledApps != null) {
+			return _bundledApps;
+		}
+
+		Map<String, String> bundledApps = new HashMap<String, String>();
+
+		List<PluginPackage> pluginPackages =
+			DeployManagerUtil.getInstalledPluginPackages();
+
+		for (PluginPackage pluginPackage : pluginPackages) {
+			ServletContext servletContext = ServletContextPool.get(
+				pluginPackage.getContext());
+
+			InputStream inputStream = null;
+
+			try {
+				inputStream = servletContext.getResourceAsStream(
+					"/WEB-INF/liferay-releng.changelog.md5");
+
+				if (inputStream == null) {
+					continue;
+				}
+
+				String relengHash = StringUtil.read(inputStream);
+
+				if (Validator.isNotNull(relengHash)) {
+					bundledApps.put(pluginPackage.getContext(), relengHash);
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to read plugin package MD5 checksum for " +
+							pluginPackage.getContext());
+				}
+			}
+			finally {
+				StreamUtil.cleanUp(inputStream);
+			}
+		}
+
+		_bundledApps = bundledApps;
+
+		return _bundledApps;
+	}
+
+	@Override
+	public List<App> getInstalledApps() {
+		if (_installedApps != null) {
+			return _installedApps;
+		}
+
+		List<App> installedApps = new ArrayList<App>();
+
+		// Core app
+
+		App coreApp = appPersistence.create(0);
+
+		coreApp.setTitle("Liferay Core");
+		coreApp.setDescription("Plugins bundled with Liferay Portal.");
+		coreApp.setVersion(ReleaseInfo.getVersion());
+
+		coreApp.addContextName(PortalUtil.getPathContext());
+
+		installedApps.add(coreApp);
+
+		// Deployed apps
+
+		List<PluginPackage> pluginPackages =
+			DeployManagerUtil.getInstalledPluginPackages();
+
+		for (PluginPackage pluginPackage : pluginPackages) {
+			List<Module> modules = modulePersistence.findByContextName(
+				pluginPackage.getContext());
+
+			boolean installedApp = false;
+
+			for (Module module : modules) {
+				App app = appPersistence.fetchByPrimaryKey(module.getAppId());
+
+				if ((app != null) && app.isInstalled()) {
+					installedApp = true;
+
+					break;
+				}
+			}
+
+			if (installedApp) {
+				continue;
+			}
+
+			App app = appPersistence.create(0);
+
+			app.setTitle(pluginPackage.getName());
+			app.setDescription(pluginPackage.getLongDescription());
+			app.setVersion(pluginPackage.getVersion());
+
+			app.addContextName(pluginPackage.getContext());
+
+			installedApps.add(app);
+		}
+
+		// Marketplace apps
+
+		List<App> apps = appPersistence.findAll();
+
+		for (App app : apps) {
+			if (app.isInstalled()) {
+				installedApps.add(app);
+			}
+		}
+
+		installedApps = ListUtil.sort(installedApps, new AppTitleComparator());
+
+		_installedApps = installedApps;
+
+		return _installedApps;
+	}
+
+	@Override
+	public void installApp(long remoteAppId) throws PortalException {
 		App app = appPersistence.findByRemoteAppId(remoteAppId);
 
 		if (!DLStoreUtil.hasFile(
@@ -173,22 +285,16 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			while (enu.hasMoreElements()) {
 				ZipEntry zipEntry = enu.nextElement();
 
-				AutoDeploymentContext autoDeploymentContext =
-					new AutoDeploymentContext();
-
 				String fileName = zipEntry.getName();
 
-				if (!fileName.endsWith(".war") &&
+				if (!fileName.endsWith(".jar") &&
+					!fileName.endsWith(".war") &&
 					!fileName.endsWith(".xml") &&
 					!fileName.endsWith(".zip") &&
 					!fileName.equals("liferay-marketplace.properties")) {
 
 					continue;
 				}
-
-				String contextName = getContextName(fileName);
-
-				autoDeploymentContext.setContext(contextName);
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
@@ -216,12 +322,44 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 						FileUtil.write(pluginPackageFile, zipInputStream);
 
+						String bundleSymbolicName = StringPool.BLANK;
+						String bundleVersion = StringPool.BLANK;
+						String contextName = StringPool.BLANK;
+
+						AutoDeploymentContext autoDeploymentContext =
+							new AutoDeploymentContext();
+
+						if (fileName.endsWith(".jar")) {
+							Manifest manifest = BundleUtil.getManifest(
+								pluginPackageFile);
+
+							Attributes attributes =
+								manifest.getMainAttributes();
+
+							bundleSymbolicName = GetterUtil.getString(
+								attributes.getValue("Bundle-SymbolicName"));
+							bundleVersion = GetterUtil.getString(
+								attributes.getValue("Bundle-Version"));
+							contextName = GetterUtil.getString(
+								attributes.getValue("Web-ContextPath"));
+						}
+						else {
+							contextName = getContextName(fileName);
+
+							autoDeploymentContext.setContext(contextName);
+						}
+
 						autoDeploymentContext.setFile(pluginPackageFile);
 
 						DeployManagerUtil.deploy(autoDeploymentContext);
 
-						moduleLocalService.addModule(
-							app.getUserId(), app.getAppId(), contextName);
+						if (Validator.isNotNull(bundleSymbolicName) ||
+							Validator.isNotNull(contextName)) {
+
+							moduleLocalService.addModule(
+								app.getUserId(), app.getAppId(),
+								bundleSymbolicName, bundleVersion, contextName);
+						}
 					}
 				}
 				finally {
@@ -255,11 +393,14 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			}
 
 			StreamUtil.cleanUp(inputStream);
+
+			clearInstalledAppsCache();
 		}
 	}
 
+	@Override
 	public void processMarketplaceProperties(Properties properties)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long[] supersedesRemoteAppIds = StringUtil.split(
 			properties.getProperty("supersedes-remote-app-ids"), 0L);
@@ -274,8 +415,9 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		}
 	}
 
-	public void uninstallApp(long remoteAppId)
-		throws PortalException, SystemException {
+	@Override
+	public void uninstallApp(long remoteAppId) throws PortalException {
+		clearInstalledAppsCache();
 
 		App app = appPersistence.findByRemoteAppId(remoteAppId);
 
@@ -283,6 +425,15 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 		for (Module module : modules) {
 			moduleLocalService.deleteModule(module.getModuleId());
+
+			if (Validator.isNotNull(module.getBundleSymbolicName()) &&
+				Validator.isNotNull(module.getBundleVersion())) {
+
+				BundleUtil.uninstallBundle(
+					module.getBundleSymbolicName(), module.getBundleVersion());
+
+				continue;
+			}
 
 			if (hasDependentApp(module)) {
 				continue;
@@ -297,16 +448,62 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		}
 	}
 
-	public App updateApp(long appId, String version, File file)
-		throws PortalException, SystemException {
+	@Override
+	public App updateApp(
+			long userId, long remoteAppId, String version, File file)
+		throws PortalException {
+
+		Properties properties = getMarketplaceProperties(file);
+
+		if (properties == null) {
+			throw new AppPropertiesException(
+				"Unable to read liferay-marketplace.properties");
+		}
+
+		String title = properties.getProperty("title");
+		String description = properties.getProperty("description");
+		String category = properties.getProperty("category");
+		String iconURL = properties.getProperty("icon-url");
+
+		return updateApp(
+			userId, remoteAppId, title, description, category, iconURL, version,
+			file);
+	}
+
+	@Override
+	public App updateApp(
+			long userId, long remoteAppId, String title, String description,
+			String category, String iconURL, String version, File file)
+		throws PortalException {
 
 		// App
 
-		validate(0, version);
+		User user = userPersistence.fetchByPrimaryKey(userId);
+		Date now = new Date();
 
-		App app = appPersistence.findByPrimaryKey(appId);
+		validate(title, version);
 
-		app.setModifiedDate(new Date());
+		App app = appPersistence.fetchByRemoteAppId(remoteAppId);
+
+		if (app == null) {
+			long appId = counterLocalService.increment();
+
+			app = appPersistence.create(appId);
+		}
+
+		if (user != null) {
+			app.setCompanyId(user.getCompanyId());
+			app.setUserId(user.getUserId());
+			app.setUserName(user.getFullName());
+		}
+
+		app.setCreateDate(now);
+		app.setModifiedDate(now);
+		app.setRemoteAppId(remoteAppId);
+		app.setTitle(title);
+		app.setDescription(description);
+		app.setCategory(category);
+		app.setIconURL(iconURL);
 		app.setVersion(version);
 
 		appPersistence.update(app);
@@ -326,6 +523,8 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath(),
 				false, file);
 		}
+
+		clearInstalledAppsCache();
 
 		return app;
 	}
@@ -355,9 +554,39 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		return fileName;
 	}
 
-	protected boolean hasDependentApp(Module module)
-		throws PortalException, SystemException {
+	protected Properties getMarketplaceProperties(File liferayPackageFile) {
+		InputStream inputStream = null;
+		ZipFile zipFile = null;
 
+		try {
+			zipFile = new ZipFile(liferayPackageFile);
+
+			ZipEntry zipEntry = zipFile.getEntry(
+				"liferay-marketplace.properties");
+
+			inputStream = zipFile.getInputStream(zipEntry);
+
+			String propertiesString = StringUtil.read(inputStream);
+
+			return PropertiesUtil.load(propertiesString);
+		}
+		catch (IOException ioe) {
+			return null;
+		}
+		finally {
+			if (zipFile != null) {
+				try {
+					zipFile.close();
+				}
+				catch (IOException ioe) {
+				}
+			}
+
+			StreamUtil.cleanUp(inputStream);
+		}
+	}
+
+	protected boolean hasDependentApp(Module module) throws PortalException {
 		List<Module> modules = modulePersistence.findByContextName(
 			module.getContextName());
 
@@ -376,22 +605,21 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		return false;
 	}
 
-	protected void validate(long remoteAppId, String version)
-		throws PortalException, SystemException {
+	protected void validate(String title, String version)
+		throws PortalException {
+
+		if (Validator.isNull(title)) {
+			throw new AppTitleException();
+		}
 
 		if (Validator.isNull(version)) {
 			throw new AppVersionException();
 		}
-
-		if (remoteAppId > 0) {
-			App app = appPersistence.fetchByRemoteAppId(remoteAppId);
-
-			if (app != null) {
-				throw new DuplicateAppException();
-			}
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(AppLocalServiceImpl.class);
+
+	private Map<String, String> _bundledApps;
+	private List<App> _installedApps;
 
 }

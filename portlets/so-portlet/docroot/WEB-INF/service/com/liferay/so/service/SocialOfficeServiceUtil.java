@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -19,11 +19,12 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.InvokableService;
 
 /**
- * The utility for the social office remote service. This utility wraps {@link com.liferay.so.service.impl.SocialOfficeServiceImpl} and is the primary access point for service operations in application layer code running on a remote server.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
+ * Provides the remote service utility for SocialOffice. This utility wraps
+ * {@link com.liferay.so.service.impl.SocialOfficeServiceImpl} and is the
+ * primary access point for service operations in application layer code running
+ * on a remote server. Methods of this service are expected to have security
+ * checks based on the propagated JAAS credentials because this service can be
+ * accessed remotely.
  *
  * @author Brian Wing Shun Chan
  * @see SocialOfficeService
@@ -47,13 +48,9 @@ public class SocialOfficeServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
+	public static long[] getUserSocialOfficeGroupIds()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserSocialOfficeGroupIds();
 	}
 
 	public static java.lang.Object invokeMethod(java.lang.String name,
@@ -62,16 +59,18 @@ public class SocialOfficeServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static long[] getUserSocialOfficeGroupIds()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserSocialOfficeGroupIds();
+	public static boolean isSocialOfficeGroup(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().isSocialOfficeGroup(groupId);
 	}
 
-	public static boolean isSocialOfficeGroup(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().isSocialOfficeGroup(groupId);
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void clearService() {
@@ -100,6 +99,7 @@ public class SocialOfficeServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(SocialOfficeService service) {
 	}
 

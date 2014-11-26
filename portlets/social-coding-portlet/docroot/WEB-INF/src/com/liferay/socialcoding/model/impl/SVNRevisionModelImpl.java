@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,6 +13,8 @@
  */
 
 package com.liferay.socialcoding.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -50,6 +52,7 @@ import java.util.Map;
  * @see com.liferay.socialcoding.model.SVNRevisionModel
  * @generated
  */
+@ProviderType
 public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 	implements SVNRevisionModel {
 	/*
@@ -82,35 +85,41 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.socialcoding.model.SVNRevision"),
 			true);
-	public static long SVNREPOSITORYID_COLUMN_BITMASK = 1L;
-	public static long SVNUSERID_COLUMN_BITMASK = 2L;
-	public static long REVISIONNUMBER_COLUMN_BITMASK = 4L;
+	public static final long SVNREPOSITORYID_COLUMN_BITMASK = 1L;
+	public static final long SVNUSERID_COLUMN_BITMASK = 2L;
+	public static final long REVISIONNUMBER_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.socialcoding.model.SVNRevision"));
 
 	public SVNRevisionModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _svnRevisionId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setSvnRevisionId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _svnRevisionId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return SVNRevision.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return SVNRevision.class.getName();
 	}
@@ -125,6 +134,9 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 		attributes.put("svnRepositoryId", getSvnRepositoryId());
 		attributes.put("revisionNumber", getRevisionNumber());
 		attributes.put("comments", getComments());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -168,14 +180,17 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 		}
 	}
 
+	@Override
 	public long getSvnRevisionId() {
 		return _svnRevisionId;
 	}
 
+	@Override
 	public void setSvnRevisionId(long svnRevisionId) {
 		_svnRevisionId = svnRevisionId;
 	}
 
+	@Override
 	public String getSvnUserId() {
 		if (_svnUserId == null) {
 			return StringPool.BLANK;
@@ -185,6 +200,7 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 		}
 	}
 
+	@Override
 	public void setSvnUserId(String svnUserId) {
 		_columnBitmask |= SVNUSERID_COLUMN_BITMASK;
 
@@ -199,18 +215,22 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 		return GetterUtil.getString(_originalSvnUserId);
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
 
+	@Override
 	public long getSvnRepositoryId() {
 		return _svnRepositoryId;
 	}
 
+	@Override
 	public void setSvnRepositoryId(long svnRepositoryId) {
 		_columnBitmask |= SVNREPOSITORYID_COLUMN_BITMASK;
 
@@ -227,16 +247,19 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 		return _originalSvnRepositoryId;
 	}
 
+	@Override
 	public long getRevisionNumber() {
 		return _revisionNumber;
 	}
 
+	@Override
 	public void setRevisionNumber(long revisionNumber) {
 		_columnBitmask = -1L;
 
 		_revisionNumber = revisionNumber;
 	}
 
+	@Override
 	public String getComments() {
 		if (_comments == null) {
 			return StringPool.BLANK;
@@ -246,6 +269,7 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 		}
 	}
 
+	@Override
 	public void setComments(String comments) {
 		_comments = comments;
 	}
@@ -293,6 +317,7 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 		return svnRevisionImpl;
 	}
 
+	@Override
 	public int compareTo(SVNRevision svnRevision) {
 		int value = 0;
 
@@ -317,18 +342,15 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SVNRevision)) {
 			return false;
 		}
 
-		SVNRevision svnRevision = null;
-
-		try {
-			svnRevision = (SVNRevision)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SVNRevision svnRevision = (SVNRevision)obj;
 
 		long primaryKey = svnRevision.getPrimaryKey();
 
@@ -343,6 +365,16 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -417,6 +449,7 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(22);
 
@@ -454,8 +487,8 @@ public class SVNRevisionModelImpl extends BaseModelImpl<SVNRevision>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = SVNRevision.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = SVNRevision.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			SVNRevision.class
 		};
 	private long _svnRevisionId;

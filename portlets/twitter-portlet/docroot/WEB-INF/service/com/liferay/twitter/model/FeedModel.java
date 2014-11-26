@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,6 @@
 package com.liferay.twitter.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -80,6 +79,7 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 *
 	 * @return the company ID of this feed
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -87,6 +87,7 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 *
 	 * @param companyId the company ID of this feed
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -94,6 +95,7 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 *
 	 * @return the user ID of this feed
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -101,21 +103,23 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 *
 	 * @param userId the user ID of this feed
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
 	 * Returns the user uuid of this feed.
 	 *
 	 * @return the user uuid of this feed
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	@Override
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this feed.
 	 *
 	 * @param userUuid the user uuid of this feed
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -124,6 +128,7 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 * @return the user name of this feed
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -131,6 +136,7 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 *
 	 * @param userName the user name of this feed
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -138,6 +144,7 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 *
 	 * @return the create date of this feed
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -145,6 +152,7 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 *
 	 * @param createDate the create date of this feed
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -152,6 +160,7 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 *
 	 * @return the modified date of this feed
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -159,6 +168,7 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 *
 	 * @param modifiedDate the modified date of this feed
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -179,9 +189,8 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 * Returns the twitter user uuid of this feed.
 	 *
 	 * @return the twitter user uuid of this feed
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getTwitterUserUuid() throws SystemException;
+	public String getTwitterUserUuid();
 
 	/**
 	 * Sets the twitter user uuid of this feed.
@@ -219,41 +228,60 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed> {
 	 */
 	public void setLastStatusId(long lastStatusId);
 
+	@Override
 	public boolean isNew();
 
+	@Override
 	public void setNew(boolean n);
 
+	@Override
 	public boolean isCachedModel();
 
+	@Override
 	public void setCachedModel(boolean cachedModel);
 
+	@Override
 	public boolean isEscapedModel();
 
+	@Override
 	public Serializable getPrimaryKeyObj();
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
+	@Override
 	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
 
+	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
 
+	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
 	public Object clone();
 
+	@Override
 	public int compareTo(Feed feed);
 
+	@Override
 	public int hashCode();
 
+	@Override
 	public CacheModel<Feed> toCacheModel();
 
+	@Override
 	public Feed toEscapedModel();
 
+	@Override
 	public Feed toUnescapedModel();
 
+	@Override
 	public String toString();
 
+	@Override
 	public String toXmlString();
 }

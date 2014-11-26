@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,15 +15,17 @@
 package com.liferay.calendar.recurrence;
 
 import com.google.ical.values.DateTimeValue;
-import com.google.ical.values.DateTimeValueImpl;
 import com.google.ical.values.DateValue;
+import com.google.ical.values.DateValueImpl;
 import com.google.ical.values.RDateList;
 import com.google.ical.values.RRule;
 import com.google.ical.values.WeekdayNum;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.text.ParseException;
@@ -77,17 +79,21 @@ public class RecurrenceSerializer {
 				recurrence.setUntilJCalendar(jCalendar);
 			}
 
-			List<Weekday> weekdays = new ArrayList<Weekday>();
+			List<PositionalWeekday> positionalWeekdays =
+				new ArrayList<PositionalWeekday>();
 
 			for (WeekdayNum weekdayNum : rRule.getByDay()) {
 				Weekday weekday = Weekday.parse(weekdayNum.wday.toString());
 
-				weekday.setPosition(weekdayNum.num);
+				PositionalWeekday positionalWeekday = new PositionalWeekday(
+					weekday, weekdayNum.num);
 
-				weekdays.add(weekday);
+				positionalWeekdays.add(positionalWeekday);
 			}
 
-			recurrence.setWeekdays(weekdays);
+			recurrence.setPositionalWeekdays(positionalWeekdays);
+
+			recurrence.setMonths(ListUtil.toList(rRule.getByMonth()));
 
 			return recurrence;
 		}
@@ -103,15 +109,31 @@ public class RecurrenceSerializer {
 
 		List<WeekdayNum> weekdayNums = new ArrayList<WeekdayNum>();
 
-		for (Weekday weekday : recurrence.getWeekdays()) {
-			com.google.ical.values.Weekday wday = _weekdaysMap.get(weekday);
+		for (PositionalWeekday positionalWeekday :
+				recurrence.getPositionalWeekdays()) {
 
-			WeekdayNum weekdayNum = new WeekdayNum(weekday.getPosition(), wday);
+			com.google.ical.values.Weekday wday = _weekdaysMap.get(
+				positionalWeekday.getWeekday());
+
+			WeekdayNum weekdayNum = new WeekdayNum(
+				positionalWeekday.getPosition(), wday);
 
 			weekdayNums.add(weekdayNum);
 		}
 
 		rRule.setByDay(weekdayNums);
+
+		List<Integer> months = recurrence.getMonths();
+
+		if (months != null) {
+			int[] monthsArray = ArrayUtil.toIntArray(months);
+
+			for (int i = 0; i < monthsArray.length; i++) {
+				monthsArray[i]++;
+			}
+
+			rRule.setByMonth(monthsArray);
+		}
 
 		rRule.setCount(recurrence.getCount());
 
@@ -156,10 +178,9 @@ public class RecurrenceSerializer {
 	}
 
 	private static DateValue _toDateValue(Calendar jCalendar) {
-		DateValue dateValue = new DateTimeValueImpl(
+		DateValue dateValue = new DateValueImpl(
 			jCalendar.get(Calendar.YEAR), jCalendar.get(Calendar.MONTH) + 1,
-			jCalendar.get(Calendar.DATE), jCalendar.get(Calendar.HOUR_OF_DAY),
-			jCalendar.get(Calendar.MINUTE), jCalendar.get(Calendar.SECOND));
+			jCalendar.get(Calendar.DATE));
 
 		return dateValue;
 	}

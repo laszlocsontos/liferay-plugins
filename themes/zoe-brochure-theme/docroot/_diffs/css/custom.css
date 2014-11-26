@@ -1,27 +1,31 @@
 @import "compass";
+@import "mixins";
 
-/* -------- Common Color Variables -------- */
+@import url(custom_common.css);
+
+/* ---------- Common color variables ---------- */
 
 $bgColor: #DADADA;
 $textColor: #004461;
 $textShadowColor1: #FFF;
 $textShadowColor2: #333;
-$textShadowColor3: #444;
 
-/* -------- Set Compass Defaults -------- */
+/* ---------- Dockbar color variables ---------- */
+
+$dockbarGradientEnd: #0F3F5F;
+$dockbarGradientStart: #3689AC;
+$dockbarOpenGradientEnd: #035679;
+$dockbarOpenGradientStart: #4F98B6;
+
+/* ---------- Set compass defaults ---------- */
 
 $default-box-shadow-blur-offset: 6px;
 $default-box-shadow-color: #999;
-$default-box-shadow-h-offset: 0px;
+$default-box-shadow-h-offset: 0;
 $default-box-shadow-spread: 1px;
 $default-box-shadow-v-offset: 1px;
 
-/* -------- Global -------- */
-
-#breadcrumbs, #heading .page-title, #navigation h1, #skip-to-content {
-	clip: rect(0 0 0 0);
-	position: absolute;
-}
+/* ---------- Global ---------- */
 
 a {
 	color: $textColor;
@@ -35,25 +39,55 @@ a {
 body {
 	background: $bgColor url(../images/custom/body_bg.png) repeat-x 0 0;
 	font: 12px "Helvetica Neue", Helvetica, Arial, san-serif;
-
-	&.lfr-dockbar-pinned {
-		padding-top: 2.4em;
-	}
-
-	&.portal-popup {
-		padding: 10px;
-
-		#main-content {
-			width: auto;
-		}
-	}
 }
 
 p {
 	color: #666;
 }
 
-/* -------- Wrapper / Skip / Sign-in -------- */
+/* ---------- Dockbar ---------- */
+
+.dockbar-split .dockbar {
+	.navbar-inner {
+		.nav {
+			background-color: $dockbarGradientStart;
+
+			> li {
+				background-color: transparent;
+			}
+
+			li.dropdown {
+				&.active, &.open, &.open.active {
+					> .dropdown-toggle {
+						background-color: $dockbarOpenGradientStart;
+					}
+				}
+			}
+		}
+
+		.nav-account-controls > li > a {
+			font-size: 1.2em;
+		}
+
+		.nav-add-controls {
+			background: transparent;
+
+			> li > a {
+				background: #046C98;
+
+				&:hover {
+					background: $dockbarGradientEnd;
+				}
+
+				&.toggle-controls-link {
+					background: #92F545;
+				}
+			}
+		}
+	}
+}
+
+/* ---------- Wrapper ---------- */
 
 #wrapper {
 	background: #FFF url(../images/custom/header_bg.png) no-repeat 0 0;
@@ -63,27 +97,24 @@ p {
 	width: 1200px;
 }
 
-#skip-to-content, #sign-in {
-	color: #FFF;
-	text-shadow: none;
-}
-
-#skip-to-content {
-	left: 2em;
-
-	&:active, &:focus {
-		clip: auto;
+.signed-in {
+	#wrapper {
+		margin-top: 45px;
 	}
 }
 
+/* ---------- Sign-In ---------- */
+
 #sign-in {
-	font-size: 10px;
+	color: #FFF;
+	font-size: 12px;
 	position: absolute;
 	right: 125px;
+	text-shadow: none;
 	top: 5px;
 }
 
-/* -------- Heading -------- */
+/* ---------- Heading ---------- */
 
 #banner #heading {
 	h1 {
@@ -93,11 +124,7 @@ p {
 
 	.logo {
 		float: left;
-		margin: 7px 10px 7px 130px;
-
-		&.default-logo {
-			padding: 6px 0 3px;
-		}
+		margin: 4px 7px 7px 130px;
 	}
 
 	.site-name {
@@ -110,7 +137,7 @@ p {
 	}
 }
 
-/* -------- Navigation -------- */
+/* ---------- Navigation ---------- */
 
 #navigation {
 	background: url(../images/custom/nav_bg.png) no-repeat 0 0;
@@ -134,8 +161,8 @@ p {
 		span {
 			display: block;
 			float: left;
-			height: 30px;
-			padding: 20px 15px 0;
+			height: 33px;
+			padding: 17px 15px 0;
 		}
 	}
 
@@ -161,7 +188,22 @@ p {
 	}
 }
 
-/* -------- Content -------- */
+.modify-pages .delete-tab {
+	background: #0C466A repeat-x 0 -1px;
+	border: 2px solid #FFF;
+	color: #FFF;
+	font-size: 16px;
+	padding: 4px;
+	right: -10px;
+	top: 0;
+	z-index: 300;
+
+	&:hover {
+		color: #F33;
+	}
+}
+
+/* ---------- Content ---------- */
 
 #content {
 	background: url(../images/custom/content_bg.png) repeat-x 0 285px;
@@ -170,7 +212,7 @@ p {
 	padding: 0 0 20px 0;
 }
 
-.aui-dialog #main-content {
+.dialog #main-content {
 	width: auto;
 }
 
@@ -191,13 +233,9 @@ p {
 	}
 }
 
-.columns-1-3 #column-1 #layout-column_column-1 {
-	margin: 0 0 40px 0;
-}
-
 .columns-1-3-1 {
-	.aui-33 {
-		.layout-column_column-1 .journal-content-article, .layout-column_column-2 .journal-content-article, .layout-column_column-3 .journal-content-article {
+	.span4 {
+		#layout-column_column-1 .journal-content-article, #layout-column_column-2 .journal-content-article, #layout-column_column-3 .journal-content-article {
 			width: 302px;
 		}
 	}
@@ -231,58 +269,49 @@ p {
 			font-style: italic;
 			font-weight: normal;
 			letter-spacing: 1px;
-			margin-bottom: 15px;
 			text-transform: uppercase;
 		}
 
-		#layout-column_column-1 {
-			height: 275px;
-
-			&.empty {
-				height: 185px;
-			}
+		.lfr-icon-actions {
+			margin-top: 23px;
 		}
 	}
 
-	#column-2 .fetured-text h3 {
-		color: #FFF;
-		font-size: 21px;
-		font-style: italic;
-		font-weight: normal;
-		letter-spacing: 1px;
-		margin-bottom: 15px;
-		text-transform: uppercase;
-	}
-
-	#column-3 #layout-column_column-3 {
-		margin-top: 15px;
-		padding: 0;
+	#column-2 {
+		.featured-text h3 {
+			color: #FFF;
+			font-size: 21px;
+			font-style: italic;
+			font-weight: normal;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+		}
 	}
 }
 
 .page-content {
-	.aui-column {
-		&.aui-w33 {
-			&.aui-column-first .aui-column-content {
+	.column {
+		&.span4 {
+			&.column-first {
 				padding: 0 10px 0 0;
 			}
 
-			&.aui-column-last .aui-column-content {
+			&.column-last {
 				padding: 0 0 0 10px;
 			}
 
-			&.center .aui-column-content {
+			&.center {
 				padding: 0 5px;
 			}
 		}
 
-		&.aui-w50 {
-			&.aui-column-first .aui-column-content, &.aui-column-last .aui-column-content {
+		&.span6 {
+			&.column-first, &.column-last {
 				padding: 0 20px 0 0;
 			}
 		}
 
-		&.aui-w100 .aui-column-content {
+		&.span12 {
 			padding: 0;
 		}
 	}
@@ -299,11 +328,13 @@ p {
 	}
 }
 
-/* -------- Footer -------- */
+/* ---------- Footer ---------- */
 
 #footer {
 	background: url(../images/custom/footer_bg.png) repeat-x 0 0;
+	margin: -2px auto 0;
 	padding: 30px 0;
+	width: 1200px;
 
 	p {
 		background: url(../images/custom/footer_logo.png) no-repeat 0 0;
@@ -317,13 +348,7 @@ p {
 	}
 }
 
-/* -------- Portlet -------- */
-
-.portlet ul li a {
-	text-shadow: none;
-}
-
-/* -------- Portlet Max -------- */
+/* ---------- Portlet max ---------- */
 
 .columns-max {
 	.portlet span {
@@ -356,7 +381,7 @@ p {
 	}
 }
 
-/* -------- Custom Classes -------- */
+/* ---------- Custom classes ---------- */
 
 .left {
 	float: left;
@@ -366,29 +391,7 @@ p {
 	float: right;
 }
 
-/* -------- AUI -------- */
-
-.aui-combobox-content {
-	padding: 15px 0 0;
-}
-
-.portlet-topper-toolbar a, .portlet-topper-toolbar a:visited, .aui-tab-active span span a, li.aui-tree-node a {
-	color: #FFF;
-}
-
-.aui-tab-label a {
-	color: #333;
-}
-
-.aui-tree-node-selected .aui-tree-label a {
-	color: $textColor;
-}
-
-.theme-title, li.aui-tree-node a, .aui-tab-active span span a {
-	text-shadow: none;
-}
-
-/* -------- Web Content -------- */
+/* ---------- Web content ---------- */
 
 .pod {
 	background: url(../images/custom/home_pod.png) no-repeat 0 0;
@@ -414,14 +417,11 @@ p {
 		}
 
 		.pod-image {
-			padding-left: 15px;
-			padding-top: 2px;
+			padding: 2px 0 0 15px;
 		}
 
 		.pod-text {
-			padding-left: 110px;
-			padding-right: 5px;
-			padding-top: 8px;
+			padding: 0 5px 0 110px;
 			width: 300px;
 
 			h5 {
@@ -429,6 +429,7 @@ p {
 				font-size: 18px;
 				font-style: normal;
 				font-weight: bold;
+				margin-top: 5px;
 			}
 		}
 	}
@@ -436,7 +437,7 @@ p {
 	.divider {
 		background: url(../images/custom/home_content_divs.png) repeat-x 0 0;
 		height: 20px;
-		margin: 36px -5px 0;
+		margin: 33px -25px 0;
 	}
 }
 
@@ -455,7 +456,7 @@ p {
 
 .pod-text {
 	color: #666;
-	padding: 12px 10px 10px 110px;
+	padding: 0 10px 10px 100px;
 	width: 185px;
 
 	h5 {
@@ -463,7 +464,6 @@ p {
 		font-size: 16px;
 		font-style: italic;
 		font-weight: lighter;
-		padding-bottom: 5px;
 		text-transform: uppercase;
 	}
 
@@ -474,6 +474,53 @@ p {
 		width: 173px;
 	}
 }
+
+.portlet-boundary {
+	margin-bottom: 20px;
+}
+
+/* ---------- Columns ---------- */
+
+.column-text {
+	margin-top: 33px;
+	padding: 15px 2px 0 2px;
+	width: 302px;
+}
+
+.innovation-title {
+	color: $textColor;
+	font-size: 26px;
+	font-style: italic;
+	font-weight: lighter;
+	margin: 0 0 12px 0;
+	padding-top: 25px;
+	text-transform: uppercase;
+}
+
+.columns-2-custom #column-1 {
+	height: 200px;
+}
+
+#column-2 #layout-column_column-2 {
+	padding: 0 5px 0 0;
+}
+
+#column-3 #layout-column_column-3 {
+	padding: 0 5px;
+}
+
+#column-4 {
+	#layout-column_column-4 {
+		padding: 0 0 0 10px;
+
+		.divider {
+			margin-left: -15px;
+			margin-right: 0;
+		}
+	}
+}
+
+/* ---------- Internet explorer ---------- */
 
 .ie6 {
 	#banner #heading .logo.default-logo {
@@ -620,66 +667,74 @@ p {
 	}
 }
 
-#column-2 #layout-column_column-2 {
-	padding: 0 5px 0 0;
-}
+/* ---------- Theme modules ---------- */
 
-#column-3 #layout-column_column-3 {
-	padding: 0 5px;
-}
+.banner {
+	background-color: #FAFAFA;
 
-#column-4 {
-	#layout-column_column-4 {
-		padding: 0 0 0 10px;
+	@include box-shadow(0 1px 1px #E7E7E7);
+	@include box-sizing(border-box);
 
-		.divider {
-			margin-left: -15px;
-			margin-right: 0;
-		}
+	float: left;
+	padding: 30px;
+	width: 100%;
+
+	.banner-button {
+		width: 30%;
+	}
+
+	.banner-button, .banner-message {
+		display: table-cell;
+		text-align: center;
+		vertical-align: middle;
 	}
 }
 
-/* -------- Columns -------- */
+/* ---------- Hidden accessible ---------- */
 
-.column-text {
-	margin-top: 33px;
-	padding: 15px 2px 0 2px;
-	width: 302px;
+#breadcrumbs, #heading .page-title, #navigation h1, #skip-to-content {
+	clip: rect(0 0 0 0);
+	position: absolute;
 }
 
-ul.aui-tabview-list {
-	background: #FFF;
-}
-
-.columns-2-custom #column-1 {
-	height: 200px;
-}
-
-.innovation-title {
-	color: $textColor;
-	font-size: 26px;
-	font-style: italic;
-	font-weight: lighter;
-	margin: 0 0 12px 0;
-	text-transform: uppercase;
-}
-
-/* -------- Extras -------- */
+/* ---------- Extras ---------- */
 
 a, a:link, a:visited, p, #navigation ul, .columns-max .portlet-topper-toolbar, .ie8 .pod.button span.description, .innovation-title, .pod {
 	@include single-text-shadow($textShadowColor1, 1px, 1px, 1px);
 }
 
-.aui-tab-active span span a, .columns-2-1-2 #column-1 .featured-text h3, .columns-2-1-2 #column-2 .fetured-text h3, .featured-text p, .portlet-topper-toolbar a, .portlet-topper-toolbar a:visited {
-	@include single-text-shadow($textShadowColor2, 1px, 1px, 1px);
+.dockbar-split .dockbar {
+	.navbar-inner {
+		@include box-shadow(none);
+
+		.nav {
+			li.dropdown.open > .dropdown-toggle {
+				@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
+				@include box-shadow(none);
+			}
+		}
+
+		.nav-account-controls {
+			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 10%, $dockbarGradientEnd 100%));
+		}
+
+		.dropdown-menu li a {
+			@include text-shadow(none);
+		}
+	}
 }
 
-.blue-content p {
-	@include single-text-shadow($textShadowColor3, 1px, 1px, 1px);
-}
-
-#wrapper {
+.columns-max .portlet-boundary {
+	@include border-radius(5px);
 	@include single-box-shadow;
+}
+
+.pod {
+	@include border-radius(7px);
+}
+
+.tab-active span span a, .columns-2-1-2 #column-1 .featured-text h3, .columns-2-1-2 #column-2 .featured-text h3, .featured-text p, .portlet-topper-toolbar a, .portlet-topper-toolbar a:visited {
+	@include single-text-shadow($textShadowColor2, 1px, 1px, 1px);
 }
 
 #banner #heading .site-name {
@@ -688,7 +743,27 @@ a, a:link, a:visited, p, #navigation ul, .columns-max .portlet-topper-toolbar, .
 	@include text-shadow(1px 1px rgba(0, 0, 0, 0.5));
 }
 
-.columns-max .portlet-boundary {
-	@include border-radius(5px);
+#wrapper {
 	@include single-box-shadow;
+}
+
+.modify-pages .delete-tab {
+	@include border-radius(50%);
+	@include text-shadow(none);
+	@include transition(opacity 0.2s ease);
+
+	&:hover {
+		@include box-shadow(0 1px 1px -1px #000);
+	}
+}
+
+/* ---------- Media queries ---------- */
+
+@media (max-width: 979px) {
+	.banner {
+		.banner-button, .banner-message {
+			display: block;
+			width: 100%;
+		}
+	}
 }

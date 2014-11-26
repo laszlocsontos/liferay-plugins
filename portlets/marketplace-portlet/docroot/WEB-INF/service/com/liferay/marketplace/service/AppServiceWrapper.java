@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,21 +14,28 @@
 
 package com.liferay.marketplace.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link AppService}.
- * </p>
+ * Provides a wrapper for {@link AppService}.
  *
- * @author    Ryan Park
- * @see       AppService
+ * @author Ryan Park
+ * @see AppService
  * @generated
  */
+@ProviderType
 public class AppServiceWrapper implements AppService,
 	ServiceWrapper<AppService> {
 	public AppServiceWrapper(AppService appService) {
 		_appService = appService;
+	}
+
+	@Override
+	public com.liferay.marketplace.model.App deleteApp(long appId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _appService.deleteApp(appId);
 	}
 
 	/**
@@ -36,8 +43,22 @@ public class AppServiceWrapper implements AppService,
 	*
 	* @return the Spring bean ID for this bean
 	*/
+	@Override
 	public java.lang.String getBeanIdentifier() {
 		return _appService.getBeanIdentifier();
+	}
+
+	@Override
+	public void installApp(long remoteAppId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_appService.installApp(remoteAppId);
+	}
+
+	@Override
+	public java.lang.Object invokeMethod(java.lang.String name,
+		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
+		throws java.lang.Throwable {
+		return _appService.invokeMethod(name, parameterTypes, arguments);
 	}
 
 	/**
@@ -45,51 +66,28 @@ public class AppServiceWrapper implements AppService,
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
+	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_appService.setBeanIdentifier(beanIdentifier);
 	}
 
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _appService.invokeMethod(name, parameterTypes, arguments);
-	}
-
-	public com.liferay.marketplace.model.App addApp(long remoteAppId,
-		java.lang.String version, java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _appService.addApp(remoteAppId, version, file);
-	}
-
-	public com.liferay.marketplace.model.App deleteApp(long appId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _appService.deleteApp(appId);
-	}
-
-	public void installApp(long remoteAppId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_appService.installApp(remoteAppId);
-	}
-
+	@Override
 	public void uninstallApp(long remoteAppId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_appService.uninstallApp(remoteAppId);
 	}
 
-	public com.liferay.marketplace.model.App updateApp(long appId,
+	@Override
+	public com.liferay.marketplace.model.App updateApp(long remoteAppId,
 		java.lang.String version, java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _appService.updateApp(appId, version, file);
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _appService.updateApp(remoteAppId, version, file);
 	}
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AppService getWrappedAppService() {
 		return _appService;
 	}
@@ -97,14 +95,17 @@ public class AppServiceWrapper implements AppService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAppService(AppService appService) {
 		_appService = appService;
 	}
 
+	@Override
 	public AppService getWrappedService() {
 		return _appService;
 	}
 
+	@Override
 	public void setWrappedService(AppService appService) {
 		_appService = appService;
 	}

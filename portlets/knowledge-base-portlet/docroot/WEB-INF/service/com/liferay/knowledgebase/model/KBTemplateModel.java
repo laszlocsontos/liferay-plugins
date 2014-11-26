@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,12 +14,12 @@
 
 package com.liferay.knowledgebase.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.GroupedModel;
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,8 +41,9 @@ import java.util.Date;
  * @see com.liferay.knowledgebase.model.impl.KBTemplateModelImpl
  * @generated
  */
-public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
-	StagedModel {
+@ProviderType
+public interface KBTemplateModel extends BaseModel<KBTemplate>,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -69,6 +70,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 * @return the uuid of this k b template
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -76,6 +78,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @param uuid the uuid of this k b template
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -97,6 +100,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @return the group ID of this k b template
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -104,6 +108,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @param groupId the group ID of this k b template
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -111,6 +116,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @return the company ID of this k b template
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -118,6 +124,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @param companyId the company ID of this k b template
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -125,6 +132,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @return the user ID of this k b template
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -132,21 +140,23 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @param userId the user ID of this k b template
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
 	 * Returns the user uuid of this k b template.
 	 *
 	 * @return the user uuid of this k b template
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	@Override
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this k b template.
 	 *
 	 * @param userUuid the user uuid of this k b template
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -155,6 +165,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 * @return the user name of this k b template
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -162,6 +173,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @param userName the user name of this k b template
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -169,6 +181,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @return the create date of this k b template
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -176,6 +189,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @param createDate the create date of this k b template
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -183,6 +197,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @return the modified date of this k b template
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -190,6 +205,7 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 *
 	 * @param modifiedDate the modified date of this k b template
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -222,41 +238,60 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, GroupedModel,
 	 */
 	public void setContent(String content);
 
+	@Override
 	public boolean isNew();
 
+	@Override
 	public void setNew(boolean n);
 
+	@Override
 	public boolean isCachedModel();
 
+	@Override
 	public void setCachedModel(boolean cachedModel);
 
+	@Override
 	public boolean isEscapedModel();
 
+	@Override
 	public Serializable getPrimaryKeyObj();
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
+	@Override
 	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
 
+	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
 
+	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
 	public Object clone();
 
-	public int compareTo(KBTemplate kbTemplate);
+	@Override
+	public int compareTo(com.liferay.knowledgebase.model.KBTemplate kbTemplate);
 
+	@Override
 	public int hashCode();
 
-	public CacheModel<KBTemplate> toCacheModel();
+	@Override
+	public CacheModel<com.liferay.knowledgebase.model.KBTemplate> toCacheModel();
 
-	public KBTemplate toEscapedModel();
+	@Override
+	public com.liferay.knowledgebase.model.KBTemplate toEscapedModel();
 
-	public KBTemplate toUnescapedModel();
+	@Override
+	public com.liferay.knowledgebase.model.KBTemplate toUnescapedModel();
 
+	@Override
 	public String toString();
 
+	@Override
 	public String toXmlString();
 }

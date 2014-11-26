@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,6 +13,8 @@
  */
 
 package com.liferay.socialcoding.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,6 +51,7 @@ import java.util.Map;
  * @see com.liferay.socialcoding.model.SVNRepositoryModel
  * @generated
  */
+@ProviderType
 public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 	implements SVNRepositoryModel {
 	/*
@@ -78,33 +81,39 @@ public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.socialcoding.model.SVNRepository"),
 			true);
-	public static long URL_COLUMN_BITMASK = 1L;
+	public static final long URL_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.socialcoding.model.SVNRepository"));
 
 	public SVNRepositoryModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _svnRepositoryId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setSvnRepositoryId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _svnRepositoryId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return SVNRepository.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return SVNRepository.class.getName();
 	}
@@ -116,6 +125,9 @@ public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 		attributes.put("svnRepositoryId", getSvnRepositoryId());
 		attributes.put("url", getUrl());
 		attributes.put("revisionNumber", getRevisionNumber());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -141,14 +153,17 @@ public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 		}
 	}
 
+	@Override
 	public long getSvnRepositoryId() {
 		return _svnRepositoryId;
 	}
 
+	@Override
 	public void setSvnRepositoryId(long svnRepositoryId) {
 		_svnRepositoryId = svnRepositoryId;
 	}
 
+	@Override
 	public String getUrl() {
 		if (_url == null) {
 			return StringPool.BLANK;
@@ -158,6 +173,7 @@ public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 		}
 	}
 
+	@Override
 	public void setUrl(String url) {
 		_columnBitmask = -1L;
 
@@ -172,10 +188,12 @@ public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 		return GetterUtil.getString(_originalUrl);
 	}
 
+	@Override
 	public long getRevisionNumber() {
 		return _revisionNumber;
 	}
 
+	@Override
 	public void setRevisionNumber(long revisionNumber) {
 		_revisionNumber = revisionNumber;
 	}
@@ -220,6 +238,7 @@ public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 		return svnRepositoryImpl;
 	}
 
+	@Override
 	public int compareTo(SVNRepository svnRepository) {
 		int value = 0;
 
@@ -234,18 +253,15 @@ public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SVNRepository)) {
 			return false;
 		}
 
-		SVNRepository svnRepository = null;
-
-		try {
-			svnRepository = (SVNRepository)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SVNRepository svnRepository = (SVNRepository)obj;
 
 		long primaryKey = svnRepository.getPrimaryKey();
 
@@ -260,6 +276,16 @@ public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -305,6 +331,7 @@ public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(13);
 
@@ -330,8 +357,8 @@ public class SVNRepositoryModelImpl extends BaseModelImpl<SVNRepository>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = SVNRepository.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = SVNRepository.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			SVNRepository.class
 		};
 	private long _svnRepositoryId;

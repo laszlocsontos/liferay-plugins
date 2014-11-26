@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -29,19 +29,18 @@ else {
 }
 %>
 
-<liferay-ui:icon-menu showExpanded="<%= row == null %>" showWhenSingleIcon="<%= row == null %>">
-	<c:if test="<%= !view %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcPath" value="/edit_foo.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="fooId" value="<%= String.valueOf(foo.getFooId()) %>" />
-		</portlet:renderURL>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= row == null %>" showWhenSingleIcon="<%= row == null %>">
+	<portlet:renderURL var="editURL">
+		<portlet:param name="mvcPath" value="/edit_foo.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="fooId" value="<%= String.valueOf(foo.getFooId()) %>" />
+	</portlet:renderURL>
 
-		<liferay-ui:icon
-			image="edit"
-			url="<%= editURL %>"
-		/>
-	</c:if>
+	<liferay-ui:icon
+		iconCssClass="icon-edit"
+		message="edit"
+		url="<%= editURL %>"
+	/>
 
 	<portlet:renderURL var="redirectURL">
 		<portlet:param name="mvcPath" value="/view.jsp" />

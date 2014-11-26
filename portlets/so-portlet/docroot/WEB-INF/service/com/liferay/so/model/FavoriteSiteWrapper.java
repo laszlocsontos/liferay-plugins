@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.so.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -24,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link FavoriteSite}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       FavoriteSite
+ * @author Brian Wing Shun Chan
+ * @see FavoriteSite
  * @generated
  */
 public class FavoriteSiteWrapper implements FavoriteSite,
@@ -34,14 +35,17 @@ public class FavoriteSiteWrapper implements FavoriteSite,
 		_favoriteSite = favoriteSite;
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return FavoriteSite.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return FavoriteSite.class.getName();
 	}
 
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -53,6 +57,7 @@ public class FavoriteSiteWrapper implements FavoriteSite,
 		return attributes;
 	}
 
+	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long favoriteSiteId = (Long)attributes.get("favoriteSiteId");
 
@@ -79,58 +84,14 @@ public class FavoriteSiteWrapper implements FavoriteSite,
 		}
 	}
 
-	/**
-	* Returns the primary key of this favorite site.
-	*
-	* @return the primary key of this favorite site
-	*/
-	public long getPrimaryKey() {
-		return _favoriteSite.getPrimaryKey();
+	@Override
+	public java.lang.Object clone() {
+		return new FavoriteSiteWrapper((FavoriteSite)_favoriteSite.clone());
 	}
 
-	/**
-	* Sets the primary key of this favorite site.
-	*
-	* @param primaryKey the primary key of this favorite site
-	*/
-	public void setPrimaryKey(long primaryKey) {
-		_favoriteSite.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the favorite site ID of this favorite site.
-	*
-	* @return the favorite site ID of this favorite site
-	*/
-	public long getFavoriteSiteId() {
-		return _favoriteSite.getFavoriteSiteId();
-	}
-
-	/**
-	* Sets the favorite site ID of this favorite site.
-	*
-	* @param favoriteSiteId the favorite site ID of this favorite site
-	*/
-	public void setFavoriteSiteId(long favoriteSiteId) {
-		_favoriteSite.setFavoriteSiteId(favoriteSiteId);
-	}
-
-	/**
-	* Returns the group ID of this favorite site.
-	*
-	* @return the group ID of this favorite site
-	*/
-	public long getGroupId() {
-		return _favoriteSite.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this favorite site.
-	*
-	* @param groupId the group ID of this favorite site
-	*/
-	public void setGroupId(long groupId) {
-		_favoriteSite.setGroupId(groupId);
+	@Override
+	public int compareTo(com.liferay.so.model.FavoriteSite favoriteSite) {
+		return _favoriteSite.compareTo(favoriteSite);
 	}
 
 	/**
@@ -138,17 +99,49 @@ public class FavoriteSiteWrapper implements FavoriteSite,
 	*
 	* @return the company ID of this favorite site
 	*/
+	@Override
 	public long getCompanyId() {
 		return _favoriteSite.getCompanyId();
 	}
 
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _favoriteSite.getExpandoBridge();
+	}
+
 	/**
-	* Sets the company ID of this favorite site.
+	* Returns the favorite site ID of this favorite site.
 	*
-	* @param companyId the company ID of this favorite site
+	* @return the favorite site ID of this favorite site
 	*/
-	public void setCompanyId(long companyId) {
-		_favoriteSite.setCompanyId(companyId);
+	@Override
+	public long getFavoriteSiteId() {
+		return _favoriteSite.getFavoriteSiteId();
+	}
+
+	/**
+	* Returns the group ID of this favorite site.
+	*
+	* @return the group ID of this favorite site
+	*/
+	@Override
+	public long getGroupId() {
+		return _favoriteSite.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this favorite site.
+	*
+	* @return the primary key of this favorite site
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _favoriteSite.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _favoriteSite.getPrimaryKeyObj();
 	}
 
 	/**
@@ -156,93 +149,19 @@ public class FavoriteSiteWrapper implements FavoriteSite,
 	*
 	* @return the user ID of this favorite site
 	*/
+	@Override
 	public long getUserId() {
 		return _favoriteSite.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this favorite site.
-	*
-	* @param userId the user ID of this favorite site
-	*/
-	public void setUserId(long userId) {
-		_favoriteSite.setUserId(userId);
 	}
 
 	/**
 	* Returns the user uuid of this favorite site.
 	*
 	* @return the user uuid of this favorite site
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _favoriteSite.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this favorite site.
-	*
-	* @param userUuid the user uuid of this favorite site
-	*/
-	public void setUserUuid(java.lang.String userUuid) {
-		_favoriteSite.setUserUuid(userUuid);
-	}
-
-	public boolean isNew() {
-		return _favoriteSite.isNew();
-	}
-
-	public void setNew(boolean n) {
-		_favoriteSite.setNew(n);
-	}
-
-	public boolean isCachedModel() {
-		return _favoriteSite.isCachedModel();
-	}
-
-	public void setCachedModel(boolean cachedModel) {
-		_favoriteSite.setCachedModel(cachedModel);
-	}
-
-	public boolean isEscapedModel() {
-		return _favoriteSite.isEscapedModel();
-	}
-
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _favoriteSite.getPrimaryKeyObj();
-	}
-
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_favoriteSite.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _favoriteSite.getExpandoBridge();
-	}
-
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
-		_favoriteSite.setExpandoBridgeAttributes(baseModel);
-	}
-
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
-		_favoriteSite.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_favoriteSite.setExpandoBridgeAttributes(serviceContext);
-	}
-
 	@Override
-	public java.lang.Object clone() {
-		return new FavoriteSiteWrapper((FavoriteSite)_favoriteSite.clone());
-	}
-
-	public int compareTo(com.liferay.so.model.FavoriteSite favoriteSite) {
-		return _favoriteSite.compareTo(favoriteSite);
+	public java.lang.String getUserUuid() {
+		return _favoriteSite.getUserUuid();
 	}
 
 	@Override
@@ -250,16 +169,127 @@ public class FavoriteSiteWrapper implements FavoriteSite,
 		return _favoriteSite.hashCode();
 	}
 
+	@Override
+	public boolean isCachedModel() {
+		return _favoriteSite.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _favoriteSite.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _favoriteSite.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_favoriteSite.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_favoriteSite.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this favorite site.
+	*
+	* @param companyId the company ID of this favorite site
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_favoriteSite.setCompanyId(companyId);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_favoriteSite.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_favoriteSite.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_favoriteSite.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the favorite site ID of this favorite site.
+	*
+	* @param favoriteSiteId the favorite site ID of this favorite site
+	*/
+	@Override
+	public void setFavoriteSiteId(long favoriteSiteId) {
+		_favoriteSite.setFavoriteSiteId(favoriteSiteId);
+	}
+
+	/**
+	* Sets the group ID of this favorite site.
+	*
+	* @param groupId the group ID of this favorite site
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_favoriteSite.setGroupId(groupId);
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_favoriteSite.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this favorite site.
+	*
+	* @param primaryKey the primary key of this favorite site
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_favoriteSite.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_favoriteSite.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the user ID of this favorite site.
+	*
+	* @param userId the user ID of this favorite site
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_favoriteSite.setUserId(userId);
+	}
+
+	/**
+	* Sets the user uuid of this favorite site.
+	*
+	* @param userUuid the user uuid of this favorite site
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_favoriteSite.setUserUuid(userUuid);
+	}
+
+	@Override
 	public com.liferay.portal.model.CacheModel<com.liferay.so.model.FavoriteSite> toCacheModel() {
 		return _favoriteSite.toCacheModel();
 	}
 
+	@Override
 	public com.liferay.so.model.FavoriteSite toEscapedModel() {
 		return new FavoriteSiteWrapper(_favoriteSite.toEscapedModel());
-	}
-
-	public com.liferay.so.model.FavoriteSite toUnescapedModel() {
-		return new FavoriteSiteWrapper(_favoriteSite.toUnescapedModel());
 	}
 
 	@Override
@@ -267,26 +297,59 @@ public class FavoriteSiteWrapper implements FavoriteSite,
 		return _favoriteSite.toString();
 	}
 
+	@Override
+	public com.liferay.so.model.FavoriteSite toUnescapedModel() {
+		return new FavoriteSiteWrapper(_favoriteSite.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _favoriteSite.toXmlString();
 	}
 
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_favoriteSite.persist();
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof FavoriteSiteWrapper)) {
+			return false;
+		}
+
+		FavoriteSiteWrapper favoriteSiteWrapper = (FavoriteSiteWrapper)obj;
+
+		if (Validator.equals(_favoriteSite, favoriteSiteWrapper._favoriteSite)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public FavoriteSite getWrappedFavoriteSite() {
 		return _favoriteSite;
 	}
 
+	@Override
 	public FavoriteSite getWrappedModel() {
 		return _favoriteSite;
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _favoriteSite.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _favoriteSite.isFinderCacheEnabled();
+	}
+
+	@Override
 	public void resetOriginalValues() {
 		_favoriteSite.resetOriginalValues();
 	}

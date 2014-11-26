@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -34,25 +33,26 @@ public class KaleoInstanceImpl extends KaleoInstanceBaseImpl {
 	public KaleoInstanceImpl() {
 	}
 
-	public KaleoDefinition getKaleoDefinition()
-		throws PortalException, SystemException {
-
+	@Override
+	public KaleoDefinition getKaleoDefinition() throws PortalException {
 		return KaleoDefinitionLocalServiceUtil.getKaleoDefinition(
 			getKaleoDefinitionId());
 	}
 
+	@Override
 	public KaleoInstanceToken getRootKaleoInstanceToken(
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return KaleoInstanceTokenLocalServiceUtil.getRootKaleoInstanceToken(
 			getKaleoInstanceId(), workflowContext, serviceContext);
 	}
 
+	@Override
 	public KaleoInstanceToken getRootKaleoInstanceToken(
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getRootKaleoInstanceToken(null, serviceContext);
 	}

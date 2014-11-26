@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -30,9 +30,11 @@ import com.liferay.portal.kernel.poller.PollerRequest;
 import com.liferay.portal.kernel.poller.PollerResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Collections;
@@ -55,12 +57,15 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 	}
 
 	@Override
-	protected void doReceive(
-			PollerRequest pollerRequest, PollerResponse pollerResponse)
+	protected PollerResponse doReceive(PollerRequest pollerRequest)
 		throws Exception {
+
+		PollerResponse pollerResponse = pollerRequest.createPollerResponse();
 
 		getBuddies(pollerRequest, pollerResponse);
 		getEntries(pollerRequest, pollerResponse);
+
+		return pollerResponse;
 	}
 
 	@Override
@@ -76,38 +81,51 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 		List<Object[]> buddies = BuddyFinderUtil.getBuddies(
 			pollerRequest.getCompanyId(), pollerRequest.getUserId());
 
-		JSONArray buddiesJSON = JSONFactoryUtil.createJSONArray();
+		JSONArray buddiesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Object[] buddy : buddies) {
-			long userId = (Long)buddy[0];
-			String screenName = (String)buddy[1];
-			String firstName = (String)buddy[2];
-			String middleName = (String)buddy[3];
-			String lastName = (String)buddy[4];
-			long portraitId = (Long)buddy[5];
-			boolean awake = (Boolean)buddy[6];
+			boolean awake = (Boolean)buddy[0];
+			String firstName = (String)buddy[1];
+			long groupId = (Long)buddy[2];
+			String lastName = (String)buddy[3];
+			boolean male = (Boolean)buddy[4];
+			String middleName = (String)buddy[5];
+			long portraitId = (Long)buddy[6];
+			String screenName = (String)buddy[7];
+			long userId = (Long)buddy[8];
+			String userUuid = (String)buddy[9];
 
-			String fullName = ContactConstants.getFullName(
-				firstName, middleName, lastName);
+			JSONObject curUserJSONObject = JSONFactoryUtil.createJSONObject();
 
 			Status buddyStatus = StatusLocalServiceUtil.getUserStatus(userId);
 
 			awake = buddyStatus.getAwake();
+
+			curUserJSONObject.put("awake", awake);
+
+			String fullName = ContactConstants.getFullName(
+				firstName, middleName, lastName);
+
+			curUserJSONObject.put("fullName", fullName);
+			curUserJSONObject.put("groupId", groupId);
+			curUserJSONObject.put("portraitId", portraitId);
+
+			String portraitURL = UserConstants.getPortraitURL(
+				StringPool.BLANK, male, portraitId, userUuid);
+
+			curUserJSONObject.put("portraitURL", portraitURL);
+
+			curUserJSONObject.put("screenName", screenName);
+
 			String statusMessage = buddyStatus.getMessage();
 
-			JSONObject curUserJSON = JSONFactoryUtil.createJSONObject();
+			curUserJSONObject.put("statusMessage", statusMessage);
+			curUserJSONObject.put("userId", userId);
 
-			curUserJSON.put("userId", userId);
-			curUserJSON.put("screenName", screenName);
-			curUserJSON.put("fullName", fullName);
-			curUserJSON.put("portraitId", portraitId);
-			curUserJSON.put("awake", awake);
-			curUserJSON.put("statusMessage", statusMessage);
-
-			buddiesJSON.put(curUserJSON);
+			buddiesJSONArray.put(curUserJSONObject);
 		}
 
-		pollerResponse.setParameter("buddies", buddiesJSON);
+		pollerResponse.setParameter("buddies", buddiesJSONArray);
 	}
 
 	protected void getEntries(
@@ -117,10 +135,10 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 		Status status = StatusLocalServiceUtil.getUserStatus(
 			pollerRequest.getUserId());
 
-		long createDate = status.getModifiedDate();
+		long createDate = 0;
 
 		if (pollerRequest.isInitialRequest()) {
-			createDate = createDate - Time.DAY;
+			createDate = status.getModifiedDate() - Time.DAY;
 		}
 
 		List<Entry> entries = EntryLocalServiceUtil.getNewEntries(
@@ -131,35 +149,37 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 		Collections.reverse(entries);
 
-		JSONArray entriesJSON = JSONFactoryUtil.createJSONArray();
+		JSONArray entriesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Entry entry : entries) {
-			JSONObject entryJSON = JSONFactoryUtil.createJSONObject();
+			JSONObject entryJSONObject = JSONFactoryUtil.createJSONObject();
 
-			entryJSON.put("entryId", entry.getEntryId());
-			entryJSON.put("createDate", entry.getCreateDate());
-			entryJSON.put("fromUserId", entry.getFromUserId());
+			entryJSONObject.put("entryId", entry.getEntryId());
+			entryJSONObject.put("createDate", entry.getCreateDate());
+			entryJSONObject.put("fromUserId", entry.getFromUserId());
 
 			if (entry.getFromUserId() != pollerRequest.getUserId()) {
 				try {
 					User fromUser = UserLocalServiceUtil.getUserById(
 						entry.getFromUserId());
 
-					entryJSON.put("fromFullName", fromUser.getFullName());
-					entryJSON.put("fromPortraitId", fromUser.getPortraitId());
+					entryJSONObject.put("fromFullName", fromUser.getFullName());
+					entryJSONObject.put(
+						"fromPortraitId", fromUser.getPortraitId());
 				}
 				catch (NoSuchUserException nsue) {
 					continue;
 				}
 			}
 
-			entryJSON.put("toUserId", entry.getToUserId());
-			entryJSON.put("content", HtmlUtil.escape(entry.getContent()));
+			entryJSONObject.put("toUserId", entry.getToUserId());
+			entryJSONObject.put("content", HtmlUtil.escape(entry.getContent()));
+			entryJSONObject.put("flag", entry.getFlag());
 
-			entriesJSON.put(entryJSON);
+			entriesJSONArray.put(entryJSONObject);
 		}
 
-		pollerResponse.setParameter("entries", entriesJSON);
+		pollerResponse.setParameter("entries", entriesJSONArray);
 
 		if (!entries.isEmpty()) {
 			pollerResponse.setParameter(
@@ -194,16 +214,16 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 		long timestamp = -1;
 		int online = getInteger(pollerRequest, "online");
 		int awake = getInteger(pollerRequest, "awake");
-		String activePanelId = getString(pollerRequest, "activePanelId");
+		String activePanelIds = getString(pollerRequest, "activePanelIds");
 		String statusMessage = getString(pollerRequest, "statusMessage");
 		int playSound = getInteger(pollerRequest, "playSound");
 
-		if ((online != -1) || (awake != -1) || (activePanelId != null) ||
+		if ((online != -1) || (awake != -1) || (activePanelIds != null) ||
 			(statusMessage != null) || (playSound != -1)) {
 
 			StatusLocalServiceUtil.updateStatus(
 				pollerRequest.getUserId(), timestamp, online, awake,
-				activePanelId, statusMessage, playSound);
+				activePanelIds, statusMessage, playSound);
 		}
 	}
 

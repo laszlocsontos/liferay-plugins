@@ -1,8 +1,15 @@
 @import "compass";
+@import "mixins";
 
-/* -------- Global -------- */
+$dockbarGradientEnd: #7C9057;
+$dockbarGradientStart: #A0BA70;
 
-#breadcrumbs, #heading .page-title, #navigation .child-menu, #navigation h1, #skip-to-content {
+$dockbarOpenGradientEnd: #85A056;
+$dockbarOpenGradientStart: #A7C86C;
+
+/* ---------- Global ---------- */
+
+#navigation .child-menu, #skip-to-content {
 	clip: rect(0 0 0 0);
 	height: 0;
 	margin: 0;
@@ -15,8 +22,6 @@
 }
 
 body {
-	font: 12px Arial, Helvetica, sans-serif;
-	line-height: 1.35;
 
 	&.lfr-dockbar-pinned {
 		padding-top: 31px;
@@ -25,9 +30,61 @@ body {
 	&.signed-in {
 		background-position: 0 31px;
 	}
+
+	a {
+		[class^="icon-"], [class*=" icon-"] {
+			display: inline-block;
+		}
+	}
 }
 
-/* -------- Wrapper / Sign-in -------- */
+/* ---------- Dockbar ---------- */
+
+.dockbar-split .dockbar {
+	.navbar-inner {
+		.nav {
+			background-color: $dockbarGradientEnd;
+
+			> li {
+				background-color: transparent;
+			}
+
+			li.dropdown {
+				&.active, &.open, &.open.active {
+					> .dropdown-toggle {
+						background-color: $dockbarOpenGradientEnd;
+					}
+				}
+			}
+
+			&.nav-account-controls > li > a {
+				padding: 6px 15px;
+
+				&:hover {
+					background-color: $dockbarOpenGradientStart;
+				}
+			}
+		}
+
+		.nav-add-controls {
+			background: transparent;
+
+			> li > a {
+				background: #85A056;
+
+				&:hover {
+					background: #647840;
+				}
+
+				&.toggle-controls-link {
+					background: #92F545;
+				}
+			}
+		}
+	}
+}
+
+/* ---------- Wrapper / Sign-in ---------- */
 
 #wrapper {
 	background: #FFF url(../images/custom/header-bg.png) repeat-x 0 0;
@@ -36,30 +93,26 @@ body {
 	position: relative;
 }
 
-#loggedInUsername, #signIn {
-	color: #E8E8E8;
-	font-size: 12px;
-	height: 16px;
-	padding: 17px 0;
-	position: absolute;
-	text-decoration: none;
-	top: 0;
-}
-
 #loggedInUsername {
 	left: 0;
+
+	&, #signIn {
+		color: #E8E8E8;
+		position: absolute;
+		top: -14px;
+	}
 }
 
 #signIn {
 	right: 0;
 }
 
-/* -------- Banner -------- */
+/* ---------- Banner ---------- */
 
 #banner {
-	background: url(../images/custom/banner-bg.png) repeat-x 0 50px;
-	margin: 0 auto 25px;
-	padding: 50px 0 0;
+	background: url(../images/custom/banner-bg.png) repeat-x 0 23px;
+	margin: 0 auto;
+	padding: 22px 0 0;
 	position: relative;
 	width: 960px;
 
@@ -68,7 +121,6 @@ body {
 	}
 
 	.site-title {
-		height: 100px;
 		margin: 0;
 
 		.logo {
@@ -83,18 +135,14 @@ body {
 			background: #BBD58D;
 			color: #FFF;
 			display: inline-block;
-			font-size: 1em;
 			font-weight: lighter;
 			margin: 16px 20px;
 			padding: 7px 17px;
-			position: relative;
 		}
 	}
 
 	.page-search {
-		float: right;
-		height: 130px;
-		margin: 38px 0;
+		margin: 10px 0;
 		position: absolute;
 		right: 10px;
 		top: 50px;
@@ -109,7 +157,7 @@ body {
 			width: 162px;
 		}
 
-		.lfr-search-button input {
+		.lfr-search-button {
 			display: none;
 		}
 	}
@@ -119,10 +167,9 @@ body {
 	background-image: none;
 }
 
-/* -------- Navigation -------- */
+/* ---------- Navigation ---------- */
 
 #navigation {
-	display: block;
 	height: 50px;
 	margin-bottom: 45px;
 
@@ -130,9 +177,6 @@ body {
 		display: inline-block;
 		height: 50px;
 		margin: 0;
-		padding: 0;
-		position: relative;
-		width: 940px;
 
 		li {
 			float: left;
@@ -142,26 +186,22 @@ body {
 				background: url(../images/custom/selected-bg.png) repeat-x 0 0;
 			}
 		}
+
+		.lfr-nav-hover {
+			background-color: rgba(150, 181, 98, 0.3);
+		}
 	}
 
 	a {
-		color: #000;
 		display: block;
-		padding: 18px 0;
 
 		&:link, &:visited {
 			color: #FFF;
 			font-size: 12px;
-			font-weight: 400;
 			line-height: 14px;
 			padding: 20px 15px 16px 15px;
 			text-decoration: none;
 			text-transform: uppercase;
-		}
-
-		&:hover {
-			background-color: #70844C;
-			background-color: rgba(150, 181, 98, 0.3);
 		}
 	}
 }
@@ -170,7 +210,18 @@ body {
 	min-height: 350px;
 }
 
-/* -------- Content Layout -------- */
+.modify-pages .delete-tab {
+	background: #555;
+	border: 2px solid #FFF;
+	color: #FFF;
+	font-size: 16px;
+	padding: 4px;
+	right: -10px;
+	top: 0;
+	z-index: 300;
+}
+
+/* ---------- Content layout ---------- */
 
 .columns-1-2-3 #layout-column_column-1, .columns-2-1-4 #layout-column_column-1 {
 	padding-top: 0;
@@ -181,7 +232,7 @@ body {
 	padding-right: 0;
 }
 
-.columns-2-1-4 .columns-1-2 .aui-w30 {
+.columns-2-1-4 .columns-1-2 .w30 {
 	width: 25%;
 }
 
@@ -189,10 +240,11 @@ body {
 	padding: 5px 10px;
 }
 
-/* -------- Content -------- */
+/* ---------- Content ---------- */
 
 .left {
 	float: left;
+	margin-right: 20px;
 }
 
 .right {
@@ -218,15 +270,9 @@ h1.underlined {
 
 .underlined {
 	border-bottom: 6px solid #B2CF7D;
-	display: inline-block;
 }
 
 .full {
-	display: block;
-}
-
-.read-more {
-	color: #7E994C;
 	display: block;
 }
 
@@ -247,10 +293,14 @@ h1.underlined {
 	}
 }
 
-/* -------- Navigation Portlet -------- */
+.journal-content-article h4 {
+	margin: 0 0 10px 0;
+}
+
+/* ---------- Navigation portlet ---------- */
 
 .portlet-navigation .nav-menu {
-	background: #E6E6E6;
+	background-color: #E6E6E6;
 
 	h2 {
 		background-color: #343434;
@@ -258,7 +308,7 @@ h1.underlined {
 		border-color: #4D4D4D transparent #3F3F3F transparent;
 		font-size: 1.16em;
 		margin: 0;
-		padding: 8px;
+		padding: 0 8px;
 		text-transform: uppercase;
 
 		a {
@@ -268,7 +318,6 @@ h1.underlined {
 	}
 
 	ul {
-		list-style: none;
 		margin: 0;
 		padding: 0;
 
@@ -280,7 +329,6 @@ h1.underlined {
 				border-top: 1px solid #FFF;
 				color: #5F5F5F;
 				display: block;
-				font-size: 1em;
 				margin: 0;
 				padding: 15px;
 				text-decoration: none;
@@ -290,7 +338,6 @@ h1.underlined {
 					background: #2A2B2B;
 					border-left: 5px solid #A4C667;
 					color: #E8E8E8;
-					margin: 0;
 					padding: 15px 12px;
 				}
 			}
@@ -298,41 +345,35 @@ h1.underlined {
 	}
 }
 
-input {
-	&[type="submit"], &[type="submit"]:hover, &[type="reset"], &[type="reset"]:hover, button, button:hover {
+button[type="submit"], input[type="reset"] {
+	&, &:hover {
 		background-color: #343434;
+		background-image: none;
 		color: #A4C667;
-		margin: 5px 0;
 	}
 
-	&[type="submit"]:hover, &[type="button"]:hover, &[type="reset"]:hover {
+	&:hover {
 		color: #E8E8E8;
 	}
 }
 
-.aui-state-default {
+.state-default {
 	background-color: #343434;
 }
 
-/* -------- Make an Appointment / Web Form -------- */
+/* ---------- Make an appointment / Web form ---------- */
 
 .web-form-portlet.make-appointment {
 	padding: 10px 20px;
 	width: 650px;
 
-	.aui-form .aui-fieldset .aui-field.lfr-textarea-container textarea {
+	.form .fieldset .field.lfr-textarea-container textarea {
 		width: 300px;
 	}
 
-	legend .aui-legend {
-		width: 100%;
-	}
-
 	.description {
-		clear: both;
 		color: #969696;
 		display: inline-block;
-		float: right;
 		font-family: Georgia, "Times New Roman", Times, serif;
 		font-size: 18px;
 		position: absolute;
@@ -340,13 +381,11 @@ input {
 		top: 25%;
 		width: 267px;
 
-		&:before, &:after {
+		&:after, &:before {
 			background-image: url(../images/custom/quotemarks.png);
 			background-repeat: no-repeat;
 			content: " ";
-			display: block;
 			height: 30px;
-			text-indent: -9999px;
 			width: 17px;
 		}
 
@@ -359,7 +398,6 @@ input {
 		&:after {
 			background-position: -20px 0;
 			float: right;
-			text-align: right;
 		}
 	}
 }
@@ -373,7 +411,7 @@ h1.appointment {
 	padding-left: 41px;
 }
 
-/* -------- Footer -------- */
+/* ---------- Footer ---------- */
 
 #footer {
 	background: #202020 url(../images/custom/footer.png) 0 -5px repeat-x;
@@ -386,7 +424,7 @@ h1.appointment {
 		margin: 0 auto;
 		width: 940px;
 
-		.aui-column-content {
+		.column-content {
 			display: inline-block;
 			width: 100%;
 		}
@@ -416,7 +454,7 @@ h1.appointment {
 			}
 		}
 
-		#footerNavigation ul, #footerContact ul {
+		#footerContact ul, #footerNavigation ul {
 			list-style: none;
 			margin-left: 0;
 		}
@@ -437,7 +475,19 @@ h1.appointment {
 	}
 }
 
-/* -------- Extras -------- */
+/* ---------- Extras ---------- */
+
+.dockbar-split .dockbar {
+	.navbar-inner {
+		.nav li.dropdown.open > .dropdown-toggle {
+			@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
+		}
+
+		.nav-account-controls {
+			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 10%, $dockbarGradientEnd 100%));
+		}
+	}
+}
 
 #banner {
 	.site-title .site-name {
@@ -453,19 +503,25 @@ h1.appointment {
 	}
 }
 
-#navigation a {
-	@include text-shadow(1px 1px 1px #CFE99E);
+.modify-pages .delete-tab {
+	@include border-radius(50%);
+	@include text-shadow(none);
+	@include transition(opacity 0.3s ease);
+
+	&:hover {
+		@include box-shadow(0 1px 1px -1px #000);
+	}
 }
 
 .shadow {
 	@include box-shadow(#888 2px 2px 4px);
 }
 
-input[type="submit"], input[type="submit"]:hover, input[type="reset"], input[type="reset"]:hover, .portlet-navigation .nav-menu h2 {
+input[type="reset"], input[type="reset"]:hover, .portlet-navigation .nav-menu h2 {
 	@include background-image(linear-gradient(left top, #343434, #242424));
 }
 
-input[type="submit"], input[type="submit"]:hover, input[type="reset"], input[type="reset"]:hover, #footer #footerContent, #navigation a:link, #navigation a:visited {
+button[type="submit"], button[type="submit"]:hover, input[type="reset"], input[type="reset"]:hover, #footer #footerContent, #navigation a:link, #navigation a:visited {
 	@include text-shadow(1px 1px 1px #000);
 }
 

@@ -1,7 +1,7 @@
 AUI().use(
 	'aui-base',
-	'aui-dialog',
-	'aui-io-plugin',
+	'aui-io-plugin-deprecated',
+	'liferay-util-window',
 	function(A) {
 		Liferay.namespace('Microblogs');
 
@@ -9,6 +9,7 @@ AUI().use(
 			init: function(param) {
 				var instance = this;
 
+				instance._baseActionURL = param.baseActionURL;
 				instance._microblogsEntriesURL = param.microblogsEntriesURL;
 			},
 
@@ -29,7 +30,7 @@ AUI().use(
 
 				popup.show();
 
-				popup.set('title', title);
+				popup.titleNode.html(title);
 
 				popup.io.set('uri', url);
 
@@ -40,14 +41,16 @@ AUI().use(
 				var instance = this;
 
 				if (!instance._popup) {
-					instance._popup = new A.Dialog(
+					instance._popup = Liferay.Util.Window.getWindow(
 						{
-							centered: true,
-							constrain2view: true,
-							cssClass: 'microblogs-portlet',
-							modal: true,
-							resizable: false,
-							width: 475
+							dialog: {
+								centered: true,
+								constrain2view: true,
+								cssClass: 'microblogs-portlet',
+								modal: true,
+								resizable: false,
+								width: 475
+							}
 						}
 					).plug(
 						A.Plugin.IO,
@@ -72,6 +75,8 @@ AUI().use(
 						on: {
 							success: function() {
 								instance.updateMicroblogsList(url, updateContainer);
+
+								Liferay.fire('microblogPosted');
 							}
 						}
 					}
@@ -99,6 +104,18 @@ AUI().use(
 				instance._micrblogsEntries.io.set('uri', url);
 
 				instance._micrblogsEntries.io.start();
+			},
+
+			updateViewCount: function(microblogsEntryId) {
+				var instance = this;
+
+				var portletURL = new Liferay.PortletURL.createURL(instance._baseActionURL);
+
+				portletURL.setParameter('javax.portlet.action', 'updateMicroblogsEntryViewCount');
+				portletURL.setParameter('microblogsEntryId', microblogsEntryId);
+				portletURL.setWindowState('normal');
+
+				A.io.request(portletURL.toString());
 			}
 		};
 

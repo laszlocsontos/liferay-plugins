@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,6 +15,7 @@
 package com.liferay.resourcesimporter.util;
 
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -34,31 +35,46 @@ import java.util.Map;
  */
 public class LARImporter extends BaseImporter {
 
+	@Override
 	public void importResources() throws Exception {
-		LayoutLocalServiceUtil.importLayouts(
-			userId, groupId, privateLayout, getParameterMap(), _larInputStream);
+		if (_privateLARInputStream != null) {
+			LayoutLocalServiceUtil.importLayouts(
+				userId, groupId, true, getParameterMap(),
+				_privateLARInputStream);
+		}
+
+		if (_publicLARInputStream != null) {
+			LayoutLocalServiceUtil.importLayouts(
+				userId, groupId, false, getParameterMap(),
+				_publicLARInputStream);
+		}
 	}
 
-	public void setLARFile(File larFile) {
+	public void setLARFile(File file) {
 		try {
-			setLARInputStream(
-				new BufferedInputStream(new FileInputStream(larFile)));
+			setPublicLARInputStream(
+				new BufferedInputStream(new FileInputStream(file)));
 		}
 		catch (FileNotFoundException fnfe) {
 			_log.error(fnfe, fnfe);
 		}
 	}
 
-	public void setLARInputStream(InputStream larInputStream) {
-		_larInputStream = larInputStream;
+	public void setLARInputStream(InputStream inputStream) {
+		setPublicLARInputStream(inputStream);
+	}
+
+	public void setPrivateLARInputStream(InputStream privateLARInputStream) {
+		_privateLARInputStream = privateLARInputStream;
+	}
+
+	public void setPublicLARInputStream(InputStream publicLARInputStream) {
+		_publicLARInputStream = publicLARInputStream;
 	}
 
 	protected Map<String, String[]> getParameterMap() {
 		Map<String, String[]> parameters = new HashMap<String, String[]>();
 
-		parameters.put(
-			PortletDataHandlerKeys.CATEGORIES,
-			new String[] {Boolean.TRUE.toString()});
 		parameters.put(
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
 			new String[] {Boolean.TRUE.toString()});
@@ -73,7 +89,10 @@ public class LARImporter extends BaseImporter {
 			new String[] {Boolean.TRUE.toString()});
 		parameters.put(
 			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
-			new String[] {Boolean.TRUE.toString()});
+			new String[] {
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID
+			});
 		parameters.put(
 			PortletDataHandlerKeys.LOGO,
 			new String[] {Boolean.TRUE.toString()});
@@ -84,38 +103,39 @@ public class LARImporter extends BaseImporter {
 			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
 			new String[] {Boolean.TRUE.toString()});
 		parameters.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			new String[] {Boolean.TRUE.toString()});
+		parameters.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameters.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
 			new String[] {Boolean.TRUE.toString()});
 		parameters.put(
-			PortletDataHandlerKeys.PORTLET_SETUP,
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameters.put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 			new String[] {Boolean.TRUE.toString()});
 		parameters.put(
 			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
 			new String[] {Boolean.TRUE.toString()});
 		parameters.put(
 			PortletDataHandlerKeys.PORTLETS_MERGE_MODE,
-			new String[] {Boolean.TRUE.toString()});
-		parameters.put(
-			PortletDataHandlerKeys.PUBLIC_LAYOUT_PERMISSIONS,
-			new String[] {Boolean.TRUE.toString()});
-		parameters.put(
-			PortletDataHandlerKeys.PUBLISH_TO_REMOTE,
-			new String[] {Boolean.TRUE.toString()});
-		parameters.put(
-			PortletDataHandlerKeys.THEME,
-			new String[] {Boolean.FALSE.toString()});
+			new String[] {PortletDataHandlerKeys.PORTLETS_MERGE_MODE_REPLACE});
 		parameters.put(
 			PortletDataHandlerKeys.THEME_REFERENCE,
 			new String[] {Boolean.TRUE.toString()});
 		parameters.put(
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
-			new String[] {Boolean.TRUE.toString()});
+			new String[] {UserIdStrategy.CURRENT_USER_ID});
 
 		return parameters;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LARImporter.class);
 
-	private InputStream _larInputStream;
+	private InputStream _privateLARInputStream;
+	private InputStream _publicLARInputStream;
 
 }

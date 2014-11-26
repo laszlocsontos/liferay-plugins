@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,12 +17,10 @@ package com.liferay.so.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link FavoriteSiteLocalService}.
- * </p>
+ * Provides a wrapper for {@link FavoriteSiteLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       FavoriteSiteLocalService
+ * @author Brian Wing Shun Chan
+ * @see FavoriteSiteLocalService
  * @generated
  */
 public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService,
@@ -37,12 +35,18 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	*
 	* @param favoriteSite the favorite site
 	* @return the favorite site that was added
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.so.model.FavoriteSite addFavoriteSite(
-		com.liferay.so.model.FavoriteSite favoriteSite)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.so.model.FavoriteSite favoriteSite) {
 		return _favoriteSiteLocalService.addFavoriteSite(favoriteSite);
+	}
+
+	@Override
+	public com.liferay.so.model.FavoriteSite addFavoriteSite(long userId,
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _favoriteSiteLocalService.addFavoriteSite(userId, groupId);
 	}
 
 	/**
@@ -51,9 +55,22 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	* @param favoriteSiteId the primary key for the new favorite site
 	* @return the new favorite site
 	*/
+	@Override
 	public com.liferay.so.model.FavoriteSite createFavoriteSite(
 		long favoriteSiteId) {
 		return _favoriteSiteLocalService.createFavoriteSite(favoriteSiteId);
+	}
+
+	/**
+	* Deletes the favorite site from the database. Also notifies the appropriate model listeners.
+	*
+	* @param favoriteSite the favorite site
+	* @return the favorite site that was removed
+	*/
+	@Override
+	public com.liferay.so.model.FavoriteSite deleteFavoriteSite(
+		com.liferay.so.model.FavoriteSite favoriteSite) {
+		return _favoriteSiteLocalService.deleteFavoriteSite(favoriteSite);
 	}
 
 	/**
@@ -62,28 +79,31 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	* @param favoriteSiteId the primary key of the favorite site
 	* @return the favorite site that was removed
 	* @throws PortalException if a favorite site with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.so.model.FavoriteSite deleteFavoriteSite(
 		long favoriteSiteId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _favoriteSiteLocalService.deleteFavoriteSite(favoriteSiteId);
 	}
 
-	/**
-	* Deletes the favorite site from the database. Also notifies the appropriate model listeners.
-	*
-	* @param favoriteSite the favorite site
-	* @return the favorite site that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.so.model.FavoriteSite deleteFavoriteSite(
-		com.liferay.so.model.FavoriteSite favoriteSite)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _favoriteSiteLocalService.deleteFavoriteSite(favoriteSite);
+	@Override
+	public void deleteFavoriteSites(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_favoriteSiteLocalService.deleteFavoriteSites(userId, groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _favoriteSiteLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _favoriteSiteLocalService.dynamicQuery();
 	}
@@ -93,12 +113,10 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _favoriteSiteLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -113,12 +131,11 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _favoriteSiteLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -134,14 +151,12 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _favoriteSiteLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -151,18 +166,47 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _favoriteSiteLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _favoriteSiteLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
 	public com.liferay.so.model.FavoriteSite fetchFavoriteSite(
-		long favoriteSiteId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long favoriteSiteId) {
 		return _favoriteSiteLocalService.fetchFavoriteSite(favoriteSiteId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _favoriteSiteLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _favoriteSiteLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -171,20 +215,12 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	* @param favoriteSiteId the primary key of the favorite site
 	* @return the favorite site
 	* @throws PortalException if a favorite site with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.so.model.FavoriteSite getFavoriteSite(
 		long favoriteSiteId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _favoriteSiteLocalService.getFavoriteSite(favoriteSiteId);
-	}
-
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _favoriteSiteLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -197,56 +233,54 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	* @param start the lower bound of the range of favorite sites
 	* @param end the upper bound of the range of favorite sites (not inclusive)
 	* @return the range of favorite sites
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public java.util.List<com.liferay.so.model.FavoriteSite> getFavoriteSites(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _favoriteSiteLocalService.getFavoriteSites(start, end);
+	}
+
+	@Override
+	public java.util.List<java.lang.Object[]> getFavoriteSites(long userId,
+		java.lang.String name, int start, int end) {
+		return _favoriteSiteLocalService.getFavoriteSites(userId, name, start,
+			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.so.model.FavoriteSite> getFavoriteSites(
+		long userId, int start, int end) {
+		return _favoriteSiteLocalService.getFavoriteSites(userId, start, end);
 	}
 
 	/**
 	* Returns the number of favorite sites.
 	*
 	* @return the number of favorite sites
-	* @throws SystemException if a system exception occurred
 	*/
-	public int getFavoriteSitesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public int getFavoriteSitesCount() {
 		return _favoriteSiteLocalService.getFavoriteSitesCount();
 	}
 
-	/**
-	* Updates the favorite site in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param favoriteSite the favorite site
-	* @return the favorite site that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.so.model.FavoriteSite updateFavoriteSite(
-		com.liferay.so.model.FavoriteSite favoriteSite)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _favoriteSiteLocalService.updateFavoriteSite(favoriteSite);
+	@Override
+	public int getFavoriteSitesCount(long userId) {
+		return _favoriteSiteLocalService.getFavoriteSitesCount(userId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier() {
-		return _favoriteSiteLocalService.getBeanIdentifier();
+	@Override
+	public int getFavoriteSitesCount(long userId, java.lang.String name) {
+		return _favoriteSiteLocalService.getFavoriteSitesCount(userId, name);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_favoriteSiteLocalService.setBeanIdentifier(beanIdentifier);
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _favoriteSiteLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
@@ -254,55 +288,42 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 			arguments);
 	}
 
-	public com.liferay.so.model.FavoriteSite addFavoriteSite(long userId,
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _favoriteSiteLocalService.addFavoriteSite(userId, groupId);
-	}
-
-	public void deleteFavoriteSites(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_favoriteSiteLocalService.deleteFavoriteSites(userId, groupId);
-	}
-
-	public java.util.List<com.liferay.so.model.FavoriteSite> getFavoriteSites(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _favoriteSiteLocalService.getFavoriteSites(userId, start, end);
-	}
-
-	public java.util.List<java.lang.Object[]> getFavoriteSites(long userId,
-		java.lang.String name, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _favoriteSiteLocalService.getFavoriteSites(userId, name, start,
-			end);
-	}
-
-	public int getFavoriteSitesCount(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _favoriteSiteLocalService.getFavoriteSitesCount(userId);
-	}
-
-	public int getFavoriteSitesCount(long userId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _favoriteSiteLocalService.getFavoriteSitesCount(userId, name);
-	}
-
-	public boolean isFavoriteSite(long favoriteSiteId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public boolean isFavoriteSite(long favoriteSiteId) {
 		return _favoriteSiteLocalService.isFavoriteSite(favoriteSiteId);
 	}
 
-	public boolean isFavoriteSite(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public boolean isFavoriteSite(long userId, long groupId) {
 		return _favoriteSiteLocalService.isFavoriteSite(userId, groupId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_favoriteSiteLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the favorite site in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param favoriteSite the favorite site
+	* @return the favorite site that was updated
+	*/
+	@Override
+	public com.liferay.so.model.FavoriteSite updateFavoriteSite(
+		com.liferay.so.model.FavoriteSite favoriteSite) {
+		return _favoriteSiteLocalService.updateFavoriteSite(favoriteSite);
 	}
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public FavoriteSiteLocalService getWrappedFavoriteSiteLocalService() {
 		return _favoriteSiteLocalService;
 	}
@@ -310,15 +331,18 @@ public class FavoriteSiteLocalServiceWrapper implements FavoriteSiteLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedFavoriteSiteLocalService(
 		FavoriteSiteLocalService favoriteSiteLocalService) {
 		_favoriteSiteLocalService = favoriteSiteLocalService;
 	}
 
+	@Override
 	public FavoriteSiteLocalService getWrappedService() {
 		return _favoriteSiteLocalService;
 	}
 
+	@Override
 	public void setWrappedService(
 		FavoriteSiteLocalService favoriteSiteLocalService) {
 		_favoriteSiteLocalService = favoriteSiteLocalService;

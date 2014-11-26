@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,12 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
-%>
-
-<link href="<%= request.getContextPath() %>/meetups/css.jsp?themeId=<%= themeDisplay.getTheme().getThemeId() %>&amp;colorSchemeId=<%= themeDisplay.getColorScheme().getColorSchemeId() %>&amp;t=<%= portlet.getTimestamp() %>" rel="stylesheet" type="text/css" />
-
-<%
 String tabs1 = ParamUtil.getString(request, "tabs1", "attending");
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -37,7 +31,7 @@ try {
 catch (NoSuchMeetupsEntryException nsmee) {
 %>
 
-	<span class="portlet-msg-error">
+	<span class="alert alert-error">
 		<liferay-ui:message key="the-meetup-could-not-be-found" />
 	</span>
 
@@ -69,26 +63,24 @@ portletURL.setParameter("meetupsEntryId", String.valueOf(meetupsEntryId));
 String thumbnailURL = null;
 
 if (meetupsEntry.getThumbnailId() == 0) {
-	thumbnailURL = request.getContextPath() + "/meetups/images/calendar.png";
+	thumbnailURL = PortalUtil.getPathContext(request) + "/meetups/images/calendar.png";
 }
 else {
 	thumbnailURL = themeDisplay.getPathImage() + "/meetups?img_id=" + meetupsEntry.getThumbnailId() + "&t=" + WebServerServletTokenUtil.getToken(meetupsEntry.getThumbnailId());
 }
 %>
 
-<img alt="" src="<%= thumbnailURL %>" style="float: left; margin-right: 10px;" />
+<div class="meetup-description">
+	<img alt="" src="<%= thumbnailURL %>" style="float: left; margin-right: 10px;" />
 
-<h4>
-	<%= meetupsEntry.getTitle() %>
-</h4>
+	<h4>
+		<%= meetupsEntry.getTitle() %>
+	</h4>
 
-<br />
-
-<div>
-	<%= meetupsEntry.getDescription() %>
+	<p>
+		<%= meetupsEntry.getDescription() %>
+	</p>
 </div>
-
-<br />
 
 <%
 int yesTotal = MeetupsRegistrationLocalServiceUtil.getMeetupsRegistrationsCount(meetupsEntryId, MeetupsConstants.STATUS_YES);
@@ -96,7 +88,7 @@ int yesTotal = MeetupsRegistrationLocalServiceUtil.getMeetupsRegistrationsCount(
 
 <c:if test="<%= yesTotal > 1 %>">
 	<div>
-		<%= LanguageUtil.format(pageContext, "x-people-are-planning-to-attend-this-meetup", String.valueOf(yesTotal)) %>
+		<%= LanguageUtil.format(request, "x-people-are-planning-to-attend-this-meetup", String.valueOf(yesTotal), false) %>
 	</div>
 
 	<br />
@@ -104,27 +96,28 @@ int yesTotal = MeetupsRegistrationLocalServiceUtil.getMeetupsRegistrationsCount(
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
-		<form action="<portlet:actionURL name="updateMeetupsRegistration" />" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />updateMeetupsRegistration(); return false;">
-		<input name="<portlet:namespace />redirect" type="hidden" value="<%= currentURL %>" />
-		<input name="<portlet:namespace />meetupsEntryId" type="hidden" value="<%= meetupsEntryId %>" />
+		<portlet:actionURL name="updateMeetupsRegistration" var="updateMeetupsRegistrationURL" />
 
-		<liferay-ui:message key="will-you-attend" />
+		<aui:form action="<%= updateMeetupsRegistrationURL %>" cssClass="meetup-form" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "updateMeetupsRegistration(); return false;" %>'>
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="meetupsEntryId" type="hidden" value="<%= meetupsEntryId %>" />
 
-		<input <%= (status == MeetupsConstants.STATUS_YES) ? "checked" : "" %> name="<portlet:namespace />status" type="radio" value="<%= MeetupsConstants.STATUS_YES %>" /> <liferay-ui:message key="yes" />
+			<aui:field-wrapper label="will-you-attend">
+				<aui:input checked="<%= status == MeetupsConstants.STATUS_YES %>" inlineField="<%= true %>" label="yes" name="status" type="radio" value="<%= MeetupsConstants.STATUS_YES %>" />
 
-		<input <%= (status == MeetupsConstants.STATUS_NO) ? "checked" : "" %> name="<portlet:namespace />status" type="radio" value="<%= MeetupsConstants.STATUS_NO %>" /> <liferay-ui:message key="no" />
+				<aui:input checked="<%= status == MeetupsConstants.STATUS_NO %>" inlineField="<%= true %>" label="no" name="status" type="radio" value="<%= MeetupsConstants.STATUS_NO %>" />
 
-		<input <%= (status == MeetupsConstants.STATUS_MAYBE) ? "checked" : "" %> name="<portlet:namespace />status" type="radio" value="<%= MeetupsConstants.STATUS_MAYBE %>" /> <liferay-ui:message key="maybe" />
+				<aui:input checked="<%= status == MeetupsConstants.STATUS_MAYBE %>" inlineField="<%= true %>" label="maybe" name="status" type="radio" value="<%= MeetupsConstants.STATUS_MAYBE %>" />
+			</aui:field-wrapper>
 
-		<br /><br />
+			<aui:model-context bean="<%= meetupsRegistration %>" model="<%= MeetupsRegistration.class %>" />
 
-		<liferay-ui:input-field bean="<%= meetupsRegistration %>" field="comments" model="<%= MeetupsRegistration.class %>" />
+			<aui:input name="comments" />
 
-		<br /><br />
-
-		<input type="submit" value="<liferay-ui:message key="register" />" />
-
-		</form>
+			<aui:button-row>
+				<aui:button type="submit" value="register" />
+			</aui:button-row>
+		</aui:form>
 
 		<br />
 
@@ -151,12 +144,14 @@ int yesTotal = MeetupsRegistrationLocalServiceUtil.getMeetupsRegistrationsCount(
 
 		List<MeetupsRegistration> results = MeetupsRegistrationLocalServiceUtil.getMeetupsRegistrations(meetupsEntryId, tabs1Status, searchContainer.getStart(), searchContainer.getEnd());
 
+		searchContainer.setResults(results);
+
 		for (MeetupsRegistration curMeetupsRegistration : results) {
 		%>
 
 			<div class="response">
 				<liferay-ui:user-display
-					displayStyle="<%= 2 %>"
+					displayStyle="2"
 					userId="<%= curMeetupsRegistration.getUserId() %>"
 					userName="<%= curMeetupsRegistration.getUserName() %>"
 				/>
@@ -202,7 +197,7 @@ int yesTotal = MeetupsRegistrationLocalServiceUtil.getMeetupsRegistrationsCount(
 	</c:when>
 	<c:otherwise>
 		<div>
-			<liferay-ui:message arguments="<%= new Object[] {themeDisplay.getURLSignIn(), PortalUtil.getCreateAccountURL(request, themeDisplay)} %>" key="you-have-to-be-signed-in-to-register-for-this-meetup" />
+			<liferay-ui:message arguments="<%= new Object[] {themeDisplay.getURLSignIn(), PortalUtil.getCreateAccountURL(request, themeDisplay)} %>" key="you-have-to-be-signed-in-to-register-for-this-meetup" translateArguments="<%= false %>" />
 		</div>
 	</c:otherwise>
 </c:choose>

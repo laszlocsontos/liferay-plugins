@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,11 +14,12 @@
 
 package com.liferay.marketplace.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,8 @@ import java.util.Date;
  * @see com.liferay.marketplace.model.impl.AppModelImpl
  * @generated
  */
-public interface AppModel extends AuditedModel, BaseModel<App> {
+@ProviderType
+public interface AppModel extends BaseModel<App>, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -67,6 +69,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 * @return the uuid of this app
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -74,6 +77,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @param uuid the uuid of this app
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -95,6 +99,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @return the company ID of this app
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -102,6 +107,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @param companyId the company ID of this app
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -109,6 +115,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @return the user ID of this app
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -116,21 +123,23 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @param userId the user ID of this app
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
 	 * Returns the user uuid of this app.
 	 *
 	 * @return the user uuid of this app
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	@Override
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this app.
 	 *
 	 * @param userUuid the user uuid of this app
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -139,6 +148,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 * @return the user name of this app
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -146,6 +156,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @param userName the user name of this app
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -153,6 +164,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @return the create date of this app
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -160,6 +172,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @param createDate the create date of this app
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -167,6 +180,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @return the modified date of this app
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -174,6 +188,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @param modifiedDate the modified date of this app
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -191,6 +206,66 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	public void setRemoteAppId(long remoteAppId);
 
 	/**
+	 * Returns the title of this app.
+	 *
+	 * @return the title of this app
+	 */
+	@AutoEscape
+	public String getTitle();
+
+	/**
+	 * Sets the title of this app.
+	 *
+	 * @param title the title of this app
+	 */
+	public void setTitle(String title);
+
+	/**
+	 * Returns the description of this app.
+	 *
+	 * @return the description of this app
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this app.
+	 *
+	 * @param description the description of this app
+	 */
+	public void setDescription(String description);
+
+	/**
+	 * Returns the category of this app.
+	 *
+	 * @return the category of this app
+	 */
+	@AutoEscape
+	public String getCategory();
+
+	/**
+	 * Sets the category of this app.
+	 *
+	 * @param category the category of this app
+	 */
+	public void setCategory(String category);
+
+	/**
+	 * Returns the icon u r l of this app.
+	 *
+	 * @return the icon u r l of this app
+	 */
+	@AutoEscape
+	public String getIconURL();
+
+	/**
+	 * Sets the icon u r l of this app.
+	 *
+	 * @param iconURL the icon u r l of this app
+	 */
+	public void setIconURL(String iconURL);
+
+	/**
 	 * Returns the version of this app.
 	 *
 	 * @return the version of this app
@@ -205,41 +280,60 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 */
 	public void setVersion(String version);
 
+	@Override
 	public boolean isNew();
 
+	@Override
 	public void setNew(boolean n);
 
+	@Override
 	public boolean isCachedModel();
 
+	@Override
 	public void setCachedModel(boolean cachedModel);
 
+	@Override
 	public boolean isEscapedModel();
 
+	@Override
 	public Serializable getPrimaryKeyObj();
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
+	@Override
 	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
 
+	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
 
+	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
 	public Object clone();
 
+	@Override
 	public int compareTo(App app);
 
+	@Override
 	public int hashCode();
 
+	@Override
 	public CacheModel<App> toCacheModel();
 
+	@Override
 	public App toEscapedModel();
 
+	@Override
 	public App toUnescapedModel();
 
+	@Override
 	public String toString();
 
+	@Override
 	public String toXmlString();
 }

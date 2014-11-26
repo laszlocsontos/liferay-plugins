@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -45,25 +46,23 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
 public class FeedLocalServiceImpl extends FeedLocalServiceBaseImpl {
 
-	public void updateFeed(long userId)
-		throws PortalException, SystemException {
-
+	public void updateFeed(long userId) throws PortalException {
 		User user = userLocalService.getUserById(userId);
 
 		updateFeed(user);
 	}
 
-	public void updateFeeds() throws SystemException {
+	public void updateFeeds() {
 		for (long companyId : PortalUtil.getCompanyIds()) {
 			updateFeeds(companyId);
 		}
 	}
 
-	public void updateFeeds(long companyId) throws SystemException {
-
+	public void updateFeeds(long companyId) {
 		ShardUtil.pushCompanyService(companyId);
 
 		try {
@@ -92,9 +91,7 @@ public class FeedLocalServiceImpl extends FeedLocalServiceBaseImpl {
 		}
 	}
 
-	protected void updateFeed(User user)
-		throws PortalException, SystemException {
-
+	protected void updateFeed(User user) throws PortalException {
 		Contact contact = user.getContact();
 
 		String twitterScreenName = contact.getTwitterSn();
@@ -103,8 +100,8 @@ public class FeedLocalServiceImpl extends FeedLocalServiceBaseImpl {
 			throw new FeedTwitterScreenNameException();
 		}
 
-		Feed feed = feedPersistence.fetchByC_TSN(
-			user.getCompanyId(), twitterScreenName);
+		Feed feed = feedPersistence.fetchByU_TSN(
+			user.getUserId(), twitterScreenName);
 
 		JSONArray jsonArray = null;
 
@@ -126,13 +123,8 @@ public class FeedLocalServiceImpl extends FeedLocalServiceBaseImpl {
 			feed.setTwitterScreenName(twitterScreenName);
 
 			feedPersistence.update(feed);
-
-			if (jsonArray == null) {
-				return;
-			}
 		}
-
-		if (jsonArray == null) {
+		else {
 			jsonArray = TimelineProcessorUtil.getUserTimelineJSONArray(
 				twitterScreenName, feed.getLastStatusId());
 		}
@@ -146,7 +138,7 @@ public class FeedLocalServiceImpl extends FeedLocalServiceBaseImpl {
 				JSONObject statusJSONObject = jsonArray.getJSONObject(i);
 
 				SimpleDateFormat sdf = new SimpleDateFormat(
-					"EEE MMM d hh:mm:ss Z yyyy");
+					"EEE MMM d hh:mm:ss Z yyyy", LocaleUtil.US);
 
 				Date createDate = null;
 

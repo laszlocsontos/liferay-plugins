@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -18,15 +18,16 @@ import com.liferay.ams.model.Definition;
 import com.liferay.ams.model.DefinitionModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -95,26 +96,32 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	public DefinitionModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _definitionId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setDefinitionId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _definitionId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return Definition.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return Definition.class.getName();
 	}
@@ -136,6 +143,9 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		attributes.put("orderDate", getOrderDate());
 		attributes.put("quantity", getQuantity());
 		attributes.put("price", getPrice());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -221,46 +231,63 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		}
 	}
 
+	@Override
 	public long getDefinitionId() {
 		return _definitionId;
 	}
 
+	@Override
 	public void setDefinitionId(long definitionId) {
 		_definitionId = definitionId;
 	}
 
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
 
+	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
 
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -270,34 +297,42 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		}
 	}
 
+	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
+	@Override
 	public long getTypeId() {
 		return _typeId;
 	}
 
+	@Override
 	public void setTypeId(long typeId) {
 		_typeId = typeId;
 	}
 
+	@Override
 	public String getManufacturer() {
 		if (_manufacturer == null) {
 			return StringPool.BLANK;
@@ -307,10 +342,12 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		}
 	}
 
+	@Override
 	public void setManufacturer(String manufacturer) {
 		_manufacturer = manufacturer;
 	}
 
+	@Override
 	public String getModel() {
 		if (_model == null) {
 			return StringPool.BLANK;
@@ -320,30 +357,37 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		}
 	}
 
+	@Override
 	public void setModel(String model) {
 		_model = model;
 	}
 
+	@Override
 	public Date getOrderDate() {
 		return _orderDate;
 	}
 
+	@Override
 	public void setOrderDate(Date orderDate) {
 		_orderDate = orderDate;
 	}
 
+	@Override
 	public int getQuantity() {
 		return _quantity;
 	}
 
+	@Override
 	public void setQuantity(int quantity) {
 		_quantity = quantity;
 	}
 
+	@Override
 	public double getPrice() {
 		return _price;
 	}
 
+	@Override
 	public void setPrice(double price) {
 		_price = price;
 	}
@@ -394,6 +438,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		return definitionImpl;
 	}
 
+	@Override
 	public int compareTo(Definition definition) {
 		long primaryKey = definition.getPrimaryKey();
 
@@ -410,18 +455,15 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Definition)) {
 			return false;
 		}
 
-		Definition definition = null;
-
-		try {
-			definition = (Definition)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Definition definition = (Definition)obj;
 
 		long primaryKey = definition.getPrimaryKey();
 
@@ -436,6 +478,16 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -549,6 +601,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(43);
 
@@ -622,7 +675,6 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;

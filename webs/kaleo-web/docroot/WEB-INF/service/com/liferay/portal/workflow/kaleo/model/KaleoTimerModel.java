@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
@@ -80,6 +79,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @return the group ID of this kaleo timer
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -87,6 +87,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @param groupId the group ID of this kaleo timer
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -94,6 +95,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @return the company ID of this kaleo timer
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -101,6 +103,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @param companyId the company ID of this kaleo timer
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -108,6 +111,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @return the user ID of this kaleo timer
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -115,21 +119,23 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @param userId the user ID of this kaleo timer
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
 	 * Returns the user uuid of this kaleo timer.
 	 *
 	 * @return the user uuid of this kaleo timer
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	@Override
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this kaleo timer.
 	 *
 	 * @param userUuid the user uuid of this kaleo timer
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -138,6 +144,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 * @return the user name of this kaleo timer
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -145,6 +152,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @param userName the user name of this kaleo timer
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -152,6 +160,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @return the create date of this kaleo timer
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -159,6 +168,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @param createDate the create date of this kaleo timer
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -166,6 +176,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @return the modified date of this kaleo timer
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -173,6 +184,7 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 *
 	 * @param modifiedDate the modified date of this kaleo timer
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -327,41 +339,60 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 */
 	public void setRecurrenceScale(String recurrenceScale);
 
+	@Override
 	public boolean isNew();
 
+	@Override
 	public void setNew(boolean n);
 
+	@Override
 	public boolean isCachedModel();
 
+	@Override
 	public void setCachedModel(boolean cachedModel);
 
+	@Override
 	public boolean isEscapedModel();
 
+	@Override
 	public Serializable getPrimaryKeyObj();
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
+	@Override
 	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
 
+	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
 
+	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
 	public Object clone();
 
+	@Override
 	public int compareTo(KaleoTimer kaleoTimer);
 
+	@Override
 	public int hashCode();
 
+	@Override
 	public CacheModel<KaleoTimer> toCacheModel();
 
+	@Override
 	public KaleoTimer toEscapedModel();
 
+	@Override
 	public KaleoTimer toUnescapedModel();
 
+	@Override
 	public String toString();
 
+	@Override
 	public String toXmlString();
 }

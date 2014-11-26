@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,17 +14,18 @@
 
 package com.liferay.socialcoding.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link JIRAChangeItemLocalService}.
- * </p>
+ * Provides a wrapper for {@link JIRAChangeItemLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       JIRAChangeItemLocalService
+ * @author Brian Wing Shun Chan
+ * @see JIRAChangeItemLocalService
  * @generated
  */
+@ProviderType
 public class JIRAChangeItemLocalServiceWrapper
 	implements JIRAChangeItemLocalService,
 		ServiceWrapper<JIRAChangeItemLocalService> {
@@ -38,11 +39,10 @@ public class JIRAChangeItemLocalServiceWrapper
 	*
 	* @param jiraChangeItem the j i r a change item
 	* @return the j i r a change item that was added
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.socialcoding.model.JIRAChangeItem addJIRAChangeItem(
-		com.liferay.socialcoding.model.JIRAChangeItem jiraChangeItem)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.socialcoding.model.JIRAChangeItem jiraChangeItem) {
 		return _jiraChangeItemLocalService.addJIRAChangeItem(jiraChangeItem);
 	}
 
@@ -52,9 +52,22 @@ public class JIRAChangeItemLocalServiceWrapper
 	* @param jiraChangeItemId the primary key for the new j i r a change item
 	* @return the new j i r a change item
 	*/
+	@Override
 	public com.liferay.socialcoding.model.JIRAChangeItem createJIRAChangeItem(
 		long jiraChangeItemId) {
 		return _jiraChangeItemLocalService.createJIRAChangeItem(jiraChangeItemId);
+	}
+
+	/**
+	* Deletes the j i r a change item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param jiraChangeItem the j i r a change item
+	* @return the j i r a change item that was removed
+	*/
+	@Override
+	public com.liferay.socialcoding.model.JIRAChangeItem deleteJIRAChangeItem(
+		com.liferay.socialcoding.model.JIRAChangeItem jiraChangeItem) {
+		return _jiraChangeItemLocalService.deleteJIRAChangeItem(jiraChangeItem);
 	}
 
 	/**
@@ -63,28 +76,25 @@ public class JIRAChangeItemLocalServiceWrapper
 	* @param jiraChangeItemId the primary key of the j i r a change item
 	* @return the j i r a change item that was removed
 	* @throws PortalException if a j i r a change item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.socialcoding.model.JIRAChangeItem deleteJIRAChangeItem(
 		long jiraChangeItemId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _jiraChangeItemLocalService.deleteJIRAChangeItem(jiraChangeItemId);
 	}
 
 	/**
-	* Deletes the j i r a change item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param jiraChangeItem the j i r a change item
-	* @return the j i r a change item that was removed
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
-	public com.liferay.socialcoding.model.JIRAChangeItem deleteJIRAChangeItem(
-		com.liferay.socialcoding.model.JIRAChangeItem jiraChangeItem)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _jiraChangeItemLocalService.deleteJIRAChangeItem(jiraChangeItem);
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _jiraChangeItemLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _jiraChangeItemLocalService.dynamicQuery();
 	}
@@ -94,12 +104,10 @@ public class JIRAChangeItemLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _jiraChangeItemLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -114,12 +122,11 @@ public class JIRAChangeItemLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _jiraChangeItemLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -135,14 +142,12 @@ public class JIRAChangeItemLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _jiraChangeItemLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -152,18 +157,47 @@ public class JIRAChangeItemLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _jiraChangeItemLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _jiraChangeItemLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
 	public com.liferay.socialcoding.model.JIRAChangeItem fetchJIRAChangeItem(
-		long jiraChangeItemId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long jiraChangeItemId) {
 		return _jiraChangeItemLocalService.fetchJIRAChangeItem(jiraChangeItemId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _jiraChangeItemLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _jiraChangeItemLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -172,20 +206,18 @@ public class JIRAChangeItemLocalServiceWrapper
 	* @param jiraChangeItemId the primary key of the j i r a change item
 	* @return the j i r a change item
 	* @throws PortalException if a j i r a change item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public com.liferay.socialcoding.model.JIRAChangeItem getJIRAChangeItem(
 		long jiraChangeItemId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _jiraChangeItemLocalService.getJIRAChangeItem(jiraChangeItemId);
 	}
 
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _jiraChangeItemLocalService.getPersistedModel(primaryKeyObj);
+	@Override
+	public java.util.List<com.liferay.socialcoding.model.JIRAChangeItem> getJIRAChangeItems(
+		long jiraChangeGroupId) {
+		return _jiraChangeItemLocalService.getJIRAChangeItems(jiraChangeGroupId);
 	}
 
 	/**
@@ -198,11 +230,10 @@ public class JIRAChangeItemLocalServiceWrapper
 	* @param start the lower bound of the range of j i r a change items
 	* @param end the upper bound of the range of j i r a change items (not inclusive)
 	* @return the range of j i r a change items
-	* @throws SystemException if a system exception occurred
 	*/
+	@Override
 	public java.util.List<com.liferay.socialcoding.model.JIRAChangeItem> getJIRAChangeItems(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _jiraChangeItemLocalService.getJIRAChangeItems(start, end);
 	}
 
@@ -210,44 +241,20 @@ public class JIRAChangeItemLocalServiceWrapper
 	* Returns the number of j i r a change items.
 	*
 	* @return the number of j i r a change items
-	* @throws SystemException if a system exception occurred
 	*/
-	public int getJIRAChangeItemsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	@Override
+	public int getJIRAChangeItemsCount() {
 		return _jiraChangeItemLocalService.getJIRAChangeItemsCount();
 	}
 
-	/**
-	* Updates the j i r a change item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param jiraChangeItem the j i r a change item
-	* @return the j i r a change item that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.socialcoding.model.JIRAChangeItem updateJIRAChangeItem(
-		com.liferay.socialcoding.model.JIRAChangeItem jiraChangeItem)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _jiraChangeItemLocalService.updateJIRAChangeItem(jiraChangeItem);
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _jiraChangeItemLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier() {
-		return _jiraChangeItemLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_jiraChangeItemLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
+	@Override
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
@@ -255,15 +262,32 @@ public class JIRAChangeItemLocalServiceWrapper
 			arguments);
 	}
 
-	public java.util.List<com.liferay.socialcoding.model.JIRAChangeItem> getJIRAChangeItems(
-		long jiraChangeGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _jiraChangeItemLocalService.getJIRAChangeItems(jiraChangeGroupId);
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_jiraChangeItemLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the j i r a change item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param jiraChangeItem the j i r a change item
+	* @return the j i r a change item that was updated
+	*/
+	@Override
+	public com.liferay.socialcoding.model.JIRAChangeItem updateJIRAChangeItem(
+		com.liferay.socialcoding.model.JIRAChangeItem jiraChangeItem) {
+		return _jiraChangeItemLocalService.updateJIRAChangeItem(jiraChangeItem);
 	}
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public JIRAChangeItemLocalService getWrappedJIRAChangeItemLocalService() {
 		return _jiraChangeItemLocalService;
 	}
@@ -271,15 +295,18 @@ public class JIRAChangeItemLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedJIRAChangeItemLocalService(
 		JIRAChangeItemLocalService jiraChangeItemLocalService) {
 		_jiraChangeItemLocalService = jiraChangeItemLocalService;
 	}
 
+	@Override
 	public JIRAChangeItemLocalService getWrappedService() {
 		return _jiraChangeItemLocalService;
 	}
 
+	@Override
 	public void setWrappedService(
 		JIRAChangeItemLocalService jiraChangeItemLocalService) {
 		_jiraChangeItemLocalService = jiraChangeItemLocalService;

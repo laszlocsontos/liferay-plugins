@@ -1,7 +1,9 @@
 AUI().use(
 	'aui-base',
-	'aui-dialog',
-	'aui-io-plugin',
+	'aui-io-plugin-deprecated',
+	'aui-modal',
+	'liferay-util-window',
+	'liferay-widget-zindex',
 	function(A) {
 		Liferay.namespace('Tasks');
 
@@ -13,8 +15,16 @@ AUI().use(
 				instance._setupTagsPopup();
 				instance._setupProgressBar();
 
+				instance._baseActionURL = param.baseActionURL;
 				instance._currentTab = param.currentTab;
+				instance._namespace = param.namespace;
 				instance._taskListURL = param.taskListURL;
+			},
+
+			initUpcomingTasks: function(param) {
+				var instance = this;
+
+				instance._upcomingTasksListURL = param.upcomingTasksListURL;
 			},
 
 			clearFilters: function() {
@@ -28,62 +38,41 @@ AUI().use(
 					groupFilter.set('value', 0);
 				}
 
-				var showAll = A.one('.tasks-portlet input[name="all-tasks"]').get('checked');
-
-				instance.updateTaskList(null, showAll);
-			},
-
-			closePopup: function() {
-				var instance = this;
-
-				instance.getPopup().hide();
+				instance.updateTaskList();
 			},
 
 			displayPopup: function(url, title) {
 				var instance = this;
 
-				var viewportRegion = A.getBody().get('viewportRegion');
-
-				var popup = instance.getPopup();
-
-				popup.show();
-
-				popup.set('title', title);
-
-				popup.io.set('uri', url);
-				popup.io.start();
+				Liferay.Util.openWindow(
+					{
+						dialog: {
+							after: {
+								destroy: function(event) {
+									instance.updateTaskList();
+								}
+							},
+							centered: true,
+							constrain: true,
+							cssClass: 'tasks-dialog',
+							destroyOnHide: true,
+							modal: true,
+							plugins: [Liferay.WidgetZIndex],
+							width: 800
+						},
+						id: instance._namespace + 'Dialog',
+						title: title,
+						uri: url
+					}
+				);
 			},
 
-			getPopup: function() {
+			openTask: function(href, tasksEntryId) {
 				var instance = this;
 
-				if (!instance._popup) {
-					instance._popup = new A.Dialog(
-						{
-							align: {
-								node: null,
-								points: ['tc', 'tc']
-							},
-							constrain2view: true,
-							cssClass: 'tasks-dialog',
-							modal: true,
-							resizable: false,
-							width: 600
-						}
-					).plug(
-						A.Plugin.IO,
-						{autoLoad: false}
-					).render();
-				}
+				instance.displayPopup(href, Liferay.Language.get('model.resource.com.liferay.tasks.model.TasksEntry'));
 
-				instance._popup.io.set('form', null);
-				instance._popup.io.set('uri', null);
-
-				return instance._popup;
-			},
-
-			openTask: function(href) {
-				this.displayPopup(href, "Tasks");
+				instance._updateViewCount(tasksEntryId);
 			},
 
 			toggleCommentForm: function() {
@@ -105,6 +94,14 @@ AUI().use(
 
 				instance._taskList = A.one('.tasks-portlet .list-wrapper');
 
+				if (!instance._taskList) {
+					instance._taskList = A.one('.upcoming-tasks-portlet .tasks-entries-container');
+
+					if (!url) {
+						url = instance._upcomingTasksListURL;
+					}
+				}
+
 				if (!instance._taskList.io) {
 					instance._taskList.plug(
 						A.Plugin.IO,
@@ -115,12 +112,16 @@ AUI().use(
 				if (!url) {
 					url = instance._taskListURL;
 
-					var data = {
-						assetTagIds: instance._getAssetTagIds(),
-						groupId: instance._getGroupId(),
-						tabs1: instance._currentTab,
-						tabs2: showAll ? 'all' : 'open'
-					};
+					var data = {};
+
+					if (!showAll) {
+						var showAll = A.one('.tasks-portlet input[name="all-tasks"]').get('checked');
+					}
+
+					data[instance._namespace + 'assetTagIds'] = instance._getAssetTagIds();
+					data[instance._namespace + 'groupId'] = instance._getGroupId();
+					data[instance._namespace + 'tabs1'] = instance._currentTab;
+					data[instance._namespace + 'tabs2'] = showAll ? 'all' : 'open';
 
 					instance._taskList.io.set('data', data);
 				}
@@ -160,11 +161,18 @@ AUI().use(
 					function(event) {
 						var assetTag = event.currentTarget;
 
+						if (assetTag.hasClass('icon-check')) {
+							assetTag.removeClass('icon-check');
+							assetTag.addClass('icon-check-empty');
+						}
+						else {
+							assetTag.removeClass('icon-check-empty');
+							assetTag.addClass('icon-check');
+						}
+
 						assetTag.toggleClass('selected');
 
-						var showAll = A.one('.tasks-portlet input[name="all-tasks"]').get('checked');
-
-						instance.updateTaskList(null, showAll);
+						instance.updateTaskList();
 					},
 					'.asset-tag'
 				);
@@ -172,9 +180,7 @@ AUI().use(
 				A.all('.tasks-portlet .group-filter select').on(
 					'change',
 					function(event) {
-						var showAll = A.one('.tasks-portlet input[name="all-tasks"]').get('checked');
-
-						instance.updateTaskList(null, showAll);
+						instance.updateTaskList();
 					}
 				);
 			},
@@ -232,12 +238,19 @@ AUI().use(
 						event = event.currentTarget;
 
 						var str = event.getAttribute('class');
+
 						var pos = str.substring(str.indexOf('progress-') + 9);
+
+						var completedText = Liferay.Language.get('complete');
+
+						if (pos !== "100") {
+							completedText = Liferay.Language.get(pos + '-percent-complete');
+						}
 
 						var container = event.ancestor('.progress-wrapper');
 
 						container.one('.new-progress').setStyle('width', pos + '%');
-						container.one('.progress-indicator').set('text', pos + '% Complete');
+						container.one('.progress-indicator').set('text', completedText);
 					},
 					'.progress-selector a'
 				);
@@ -253,6 +266,18 @@ AUI().use(
 					},
 					'.progress-selector a'
 				);
+			},
+
+			_updateViewCount: function(tasksEntryId) {
+				var instance = this;
+
+				var portletURL = new Liferay.PortletURL.createURL(instance._baseActionURL);
+
+				portletURL.setParameter('javax.portlet.action', 'updateTasksEntryViewCount');
+				portletURL.setParameter('tasksEntryId', tasksEntryId);
+				portletURL.setWindowState('normal');
+
+				A.io.request(portletURL.toString());
 			}
 		}
 	}

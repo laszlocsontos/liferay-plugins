@@ -1,11 +1,7 @@
 @import "compass";
 
 .opensocial-portlet-editor {
-	.gadget-editor-content {
-		height: 600px;
-	}
-
-	.aui-tree-view-editor {
+	.tree-view-editor {
 		background: #FFF;
 		height: 100%;
 	}
@@ -22,176 +18,109 @@
 		width: 80%;
 	}
 
-	.aui-tree-view-editor .aui-tree-node, .aui-tree-label {
-		cursor: pointer;
-	}
+	.tree-view-editor {
+		.tree-node {
+			.tree-node-loaded {
+				color: #06C;
+				font-weight: bold;
+			}
 
-	.aui-tree-view-editor {
-		.aui-tree-node-selected {
-			background: #F0FCFF;
+			.tree-label:hover {
+				color: #06C;
+			}
 
-			.aui-tree-label {
+			.tree-node-loaded .tree-label {
+				font-weight: bold;
+			}
+		}
+
+		.tree-node-selected {
+			background: #E4F5FC;
+
+			.tree-label {
 				font-weight: normal;
 			}
 		}
 
-		.aui-tree-label:hover {
-			color: #06C;
+		.tree-node-content:hover .gadget-editor-tree-node-contextmenuicon, .gadget-editor-tree-node-contextmenuicon-open {
+			background-repeat: no-repeat;
+			color: #555;
+			float: right;
+			margin-right: 4px;
+			text-decoration: none;
 		}
 
-		.aui-tree-node {
-			.aui-tree-node-loaded {
-				color: #06C;
-				font-weight: bold;
-				text-decoration: underline;
+		.tree-node-content {
+			.gadget-editor-tree-node-contextmenuicon {
+				display: none;
 			}
 
-			.aui-tree-node-loaded .aui-tree-label {
-				font-weight: bold;
+			.gadget-editor-tree-node-contextmenuicon-open {
+				display: inline;
+
+				@include opacity(0.5);
 			}
-		}
-	}
 
-	.aui-tabview-list .aui-tab-content .gadget-editor-tab-close, .aui-tree-node-content:hover .gadget-editor-tree-node-contextmenuicon, .gadget-editor-tree-node-contextmenuicon-open {
-		background-repeat: no-repeat;
-		float: right;
-		height: 16px;
-		width: 16px;
-	}
+			&:hover {
+				.gadget-editor-tree-node-contextmenuicon {
+					display: inline;
 
-	.aui-tree-node-content:hover .gadget-editor-tree-node-contextmenuicon {
-		background-image: url(../images/tool.png);
-	}
-}
+					@include opacity(0.5);
 
-.gadget-editor-contextmenu-toolbar {
-	background: #EEF0F2;
-}
-
-.aui-editable {
-	z-index: 1;
-}
-
-.opensocial-portlet-editor {
-	.main-editor-column-resize {
-		padding-left: 8px;
-	}
-
-	.main-editor-column-resize-proxy {
-		border-width: 0;
-		border-left: 1px dashed black;
-	}
-
-	.preview-panel-resize-proxy {
-		border-width: 0;
-		border-top: 1px dashed black;
-	}
-
-	.gadget-editor-tree-node-contextmenuicon-open {
-		background-image: url(../images/tool.png);
-	}
-
-	.aui-panel-bd {
-		background: #FFFFFF;
-		overflow: auto;
-	}
-
-	.aui-tabview-list {
-		.aui-tab-content:hover {
-			background: #D3D3D3;
-		}
-
-		.aui-tab-active .aui-tab-content:hover {
-			background: none;
-			color: #D3D3D3;
-		}
-
-		.aui-tab-content {
-			.gadget-editor-tab-close {
-				background-image: url(../images/close.png);
-
-				@include opacity(0.4);
-
-				&:hover {
-					@include opacity(1);
+					&:hover {
+						@include opacity(1);
+					}
 				}
 			}
 		}
 	}
 
-	.aui-tabview-list, .aui-tabview-list-content {
+	.panel-bd {
+		background: #FFFFFF;
+		overflow: auto;
+	}
+
+	.nav-tabs {
 		margin-bottom: 0px;
+
+		.tab {
+			cursor: pointer;
+
+			.gadget-editor-tab-close {
+				color: #555;
+				margin-left: 4px;
+
+				@include opacity(0.5);
+
+				&:hover {
+					@include opacity(1);
+
+					text-decoration: none;
+				}
+			}
+		}
 	}
 
-	.preview-panel {
-		padding-top: 8px;
-	}
-
-	.aui-gadget {
+	.gadget {
 		height: 100%;
 		width: 100%;
 	}
 }
 
-.aui-icon-gadgeteditor-addfile, .aui-icon-gadgeteditor-addfolder, .aui-icon-gadgeteditor-close, .aui-icon-gadgeteditor-delete, .aui-icon-gadgeteditor-disk, .aui-icon-gadgeteditor-refresh, .aui-icon-gadgeteditor-rename, .aui-icon-gadgeteditor-tool, .aui-icon-gadgeteditor-url {
-	background-repeat: no-repeat;
-	height: 16px;
-	width: 16px;
-}
+.gadget-editor-contextmenu-toolbar {
+	background: #EEF0F2;
 
-.aui-toolbar-item {
-	.aui-icon-gadgeteditor-addfile {
-		background-image: url(../images/add_file.png);
-	}
-
-	.aui-icon-gadgeteditor-addfolder {
-		background-image: url(../images/add_folder.png);
-	}
-
-	.aui-icon-gadgeteditor-close {
-		background-image: url(../images/close.png);
-	}
-
-	.aui-icon-gadgeteditor-delete {
-		background-image: url(../images/delete.png);
-	}
-
-	.aui-icon-gadgeteditor-disk {
-		background-image: url(../images/disk.png);
-	}
-
-	.aui-icon-gadgeteditor-publish {
-		background-image: url(../images/publish.png);
-	}
-
-	.aui-icon-gadgeteditor-refresh {
-		background-image: url(../images/refresh.png);
-	}
-
-	.aui-icon-gadgeteditor-rename {
-		background-image: url(../images/rename.png);
-	}
-
-	.aui-icon-gadgeteditor-tool {
-		background-image: url(../images/disk_dirty.png);
-	}
-
-	.aui-icon-gadgeteditor-url {
-		background-image: url(../images/url.png);
+	.btn {
+		width: 100%;
+		text-align: left;
 	}
 }
 
-.aui-resize-handle-l {
-	cursor: col-resize;
-	left: 0;
+.editable {
+	z-index: 10;
 }
 
-.aui-resize-handle-t {
-	cursor: row-resize;
-	left: 0;
-}
-
-.ie .opensocial-portlet-editor .aui-tabview-list .aui-tab-content .gadget-editor-tab-close {
+.ie .opensocial-portlet-editor .tabview-list .tab-content .gadget-editor-tab-close {
 	@include opacity(0.2);
 
 	&:hover {
@@ -201,28 +130,7 @@
 	}
 }
 
-.CodeMirror {
-	background-color: #FFFFFF;
-	font-family: monospace;
-	font-size: 12px;
-}
-
-.CodeMirror-lines:hover {
-	cursor: text;
-}
-
-.CodeMirror-matchingbracket {
-	color: #FF0000 !important;
-}
-
-.CodeMirror-scroll {
-	height: 100%;
-}
-
-.codemirror-activeline {
-	background: #F0FCFF !important;
-}
-
-.codemirror-searched {
-	background: #FFFF00;
+/* ---------- Extras ---------- */
+.gadget-editor-contextmenu-toolbar {
+	box-shadow: 4px 4px 8px #888888;
 }

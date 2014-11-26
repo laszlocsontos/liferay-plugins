@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,16 +15,17 @@
 package com.liferay.socialnetworking.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -96,26 +97,32 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	public WallEntryModelImpl() {
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _wallEntryId;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		setWallEntryId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _wallEntryId;
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return WallEntry.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return WallEntry.class.getName();
 	}
@@ -132,6 +139,9 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("comments", getComments());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -187,18 +197,22 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		}
 	}
 
+	@Override
 	public long getWallEntryId() {
 		return _wallEntryId;
 	}
 
+	@Override
 	public void setWallEntryId(long wallEntryId) {
 		_wallEntryId = wallEntryId;
 	}
 
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
 
+	@Override
 	public void setGroupId(long groupId) {
 		_columnBitmask |= GROUPID_COLUMN_BITMASK;
 
@@ -215,18 +229,22 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		return _originalGroupId;
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_columnBitmask |= USERID_COLUMN_BITMASK;
 
@@ -239,18 +257,27 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		_userId = userId;
 	}
 
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	public long getOriginalUserId() {
 		return _originalUserId;
 	}
 
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -260,28 +287,34 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		}
 	}
 
+	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public void setCreateDate(Date createDate) {
 		_columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
+	@Override
 	public String getComments() {
 		if (_comments == null) {
 			return StringPool.BLANK;
@@ -291,6 +324,7 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		}
 	}
 
+	@Override
 	public void setComments(String comments) {
 		_comments = comments;
 	}
@@ -340,6 +374,7 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		return wallEntryImpl;
 	}
 
+	@Override
 	public int compareTo(WallEntry wallEntry) {
 		int value = 0;
 
@@ -356,18 +391,15 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WallEntry)) {
 			return false;
 		}
 
-		WallEntry wallEntry = null;
-
-		try {
-			wallEntry = (WallEntry)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		WallEntry wallEntry = (WallEntry)obj;
 
 		long primaryKey = wallEntry.getPrimaryKey();
 
@@ -382,6 +414,16 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
 	}
 
 	@Override
@@ -473,6 +515,7 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(28);
 
@@ -528,7 +571,6 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private String _userName;
