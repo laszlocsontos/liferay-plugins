@@ -44,7 +44,7 @@ public class BaseHttpClientFactoryBean implements HttpClientFactory {
 	}
 
 	public void setDefaultMaxConnectionsPerRoute(
-		int defaultMaxConnectionsPerRoute) {
+		Integer defaultMaxConnectionsPerRoute) {
 
 		_defaultMaxConnectionsPerRoute = defaultMaxConnectionsPerRoute;
 	}
@@ -55,7 +55,7 @@ public class BaseHttpClientFactoryBean implements HttpClientFactory {
 		_httpRequestInterceptors = httpRequestInterceptors;
 	}
 
-	public void setMaxTotalConnections(int maxTotalConnections) {
+	public void setMaxTotalConnections(Integer maxTotalConnections) {
 		_maxTotalConnections = maxTotalConnections;
 	}
 
