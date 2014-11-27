@@ -44,22 +44,25 @@ public class SSLSocketFactoryBuilder {
 			return SSLSocketFactory.getSystemSocketFactory();
 		}
 
-		KeyStore trustStore = KeyStoreLoader.load(
-			_trustStoreType, _trustStoreLocation, _trustStorePassword);
-
-		if (trustStore == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Custom trustStore has not been initialized, falling " +
-						"back to system's defaults.");
-			}
-
-			return SSLSocketFactory.getSystemSocketFactory();
-		}
+		KeyStore trustStore = null;
 
 		TrustStrategy trustStrategy = null;
 
-		if (!_verifyServerCertificate) {
+		if (_verifyServerCertificate) {
+			trustStore = KeyStoreLoader.load(
+				_trustStoreType, _trustStoreLocation, _trustStorePassword);
+
+			if (trustStore == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Custom trustStore has not been initialized, falling " +
+							"back to system's defaults.");
+				}
+
+				return SSLSocketFactory.getSystemSocketFactory();
+			}
+		}
+		else {
 			trustStrategy = new TrustSelfSignedStrategy();
 		}
 
