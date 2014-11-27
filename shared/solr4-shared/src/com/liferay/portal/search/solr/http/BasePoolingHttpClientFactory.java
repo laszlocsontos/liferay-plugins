@@ -30,7 +30,7 @@ import org.apache.http.pool.PoolStats;
  * @author Bruno Farache
  * @author André de Oliveira
  */
-public class BasePoolingHttpClientFactory {
+public class BasePoolingHttpClientFactory implements HttpClientFactory {
 
 	public BasePoolingHttpClientFactory(
 		PoolingClientConnectionManager poolingClientConnectionManager) {
