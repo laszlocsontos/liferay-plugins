@@ -68,7 +68,7 @@ public class CertAuthPoolingHttpClientFactory implements HttpClientFactory {
 		_basePoolingHttpClientFactory.shutdown();
 	}
 
-	protected static SchemeRegistry createSchemeRegistry(
+	protected SchemeRegistry createSchemeRegistry(
 		SSLSocketFactory sslSocketFactory) {
 
 		Scheme scheme = new Scheme(
