@@ -14,14 +14,26 @@
 
 package com.liferay.portal.search.solr.http;
 
+import java.util.List;
+
+import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.client.HttpClient;
 
 /**
  * @author André de Oliveira
+ * @author László Csontos
  */
 public interface HttpClientFactory {
 
 	public HttpClient createInstance();
+
+	public void setDefaultMaxConnectionsPerRoute(
+		Integer defaultMaxConnectionsPerRoute);
+
+	public void setHttpRequestInterceptors(
+		List<HttpRequestInterceptor> httpRequestInterceptors);
+
+	public void setMaxTotalConnections(Integer maxTotalConnections);
 
 	public void shutdown();
 
