@@ -31,9 +31,7 @@ import org.apache.http.conn.ssl.X509HostnameVerifier;
 public class SSLSocketFactoryBuilder {
 
 	public SSLSocketFactory build() throws Exception {
-		KeyStoreLoader keyStoreLoader = new KeyStoreLoader();
-
-		KeyStore keyStore = keyStoreLoader.load(
+		KeyStore keyStore = KeyStoreLoader.load(
 			_keyStoreType, _keyStoreLocation, _keyStorePassword);
 
 		if (keyStore == null) {
@@ -46,7 +44,7 @@ public class SSLSocketFactoryBuilder {
 			return SSLSocketFactory.getSystemSocketFactory();
 		}
 
-		KeyStore trustStore = keyStoreLoader.load(
+		KeyStore trustStore = KeyStoreLoader.load(
 			_trustStoreType, _trustStoreLocation, _trustStorePassword);
 
 		if (trustStore == null) {

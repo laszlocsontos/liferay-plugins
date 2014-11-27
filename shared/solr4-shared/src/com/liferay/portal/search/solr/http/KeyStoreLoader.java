@@ -36,7 +36,7 @@ import java.util.Enumeration;
  */
 public class KeyStoreLoader {
 
-	public KeyStore load(
+	public static KeyStore load(
 			String keyStoreType, String keyStoreLocation,
 			char[] keyStorePassword)
 		throws Exception {
@@ -63,7 +63,9 @@ public class KeyStoreLoader {
 		return keyStore;
 	}
 
-	protected void dumpKeyStore(KeyStore keyStore) throws KeyStoreException {
+	protected static void dumpKeyStore(KeyStore keyStore)
+		throws KeyStoreException {
+
 		Enumeration<String> aliases = keyStore.aliases();
 
 		Log log = SanitizerLogWrapper.allowCRLF(_log);
@@ -100,7 +102,7 @@ public class KeyStoreLoader {
 		}
 	}
 
-	protected InputStream loadFile(String fileName)
+	protected static InputStream loadFile(String fileName)
 		throws FileNotFoundException {
 
 		if (_log.isDebugEnabled()) {
@@ -112,7 +114,7 @@ public class KeyStoreLoader {
 		if (fileName.startsWith("classpath:")) {
 			fileName = fileName.substring(10);
 
-			Class<?> clazz = getClass();
+			Class<?> clazz = KeyStoreLoader.class;
 
 			inputStream = clazz.getResourceAsStream(fileName);
 		}
@@ -128,6 +130,9 @@ public class KeyStoreLoader {
 		}
 
 		return new FileInputStream(fileName);
+	}
+
+	private KeyStoreLoader() {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(KeyStoreLoader.class);
