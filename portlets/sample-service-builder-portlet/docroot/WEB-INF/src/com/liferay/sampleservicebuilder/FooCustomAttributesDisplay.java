@@ -15,11 +15,22 @@
 package com.liferay.sampleservicebuilder;
 
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.sampleservicebuilder.constants.SampleServiceBuilderPortletKeys;
 import com.liferay.sampleservicebuilder.model.Foo;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
  */
+@Component(
+	property = {
+		"javax.portlet.name=" +
+			SampleServiceBuilderPortletKeys.SAMPLE_SERVICE_BUILDER_PORTLET
+	},
+	service = CustomAttributesDisplay.class
+)
 public class FooCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 
 	@Override

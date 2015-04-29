@@ -24,21 +24,44 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.sampleservicebuilder.constants.SampleServiceBuilderPortletKeys;
 import com.liferay.sampleservicebuilder.model.Foo;
 import com.liferay.sampleservicebuilder.service.FooLocalServiceUtil;
 
 import java.io.IOException;
-
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alexander Chow
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.display-category=category.sample",
+		"com.liferay.portlet.icon=/icon.png",
+		"javax.portlet.name=" +
+			SampleServiceBuilderPortletKeys.SAMPLE_SERVICE_BUILDER_PORTLET,
+		"javax.portlet.display.name=Sample Service Builder",
+		"javax.portlet.init-param.clear-request-parameters=true",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.supports.mime-type=text/html",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.info.title=Sample Service Builder",
+		"javax.portlet.info.short-title=Sample Service Builder",
+		"javax.portlet.info.keywords=Sample Service Builder",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user"		
+	},
+	service = Portlet.class
+)
 public class ServiceBuilderPortlet extends MVCPortlet {
 
 	@Override
