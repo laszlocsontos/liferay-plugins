@@ -283,6 +283,10 @@
 					<if>
 						<available file="classes/tomcat" type="dir" />
 						<then>
+							<delete file="${sdk.dir}/jspc.javac.output.txt" />
+
+							<record action="start" name="${sdk.dir}/jspc.javac.output.txt" />
+
 							<javac
 								classpathref="jspc.classpath"
 								compiler="${javac.compiler}"
@@ -295,6 +299,19 @@
 								nowarn="on"
 								srcdir="classes/tomcat"
 							/>
+
+							<record action="stop" name="${sdk.dir}/jspc.javac.output.txt" />
+
+							<loadfile property="jspc.javac.output.txt.content" srcfile="${sdk.dir}/jspc.javac.output.txt" />
+
+							<delete file="${sdk.dir}/jspc.javac.output.txt" />
+
+							<if>
+								<matches string="${jspc.javac.output.txt.content}" pattern="error: package .* does not exist" />
+								<then>
+									<fail>JSPs failed to compile. Please check whether all dependencies modules are deployed.</fail>
+								</then>
+							</if>
 
 							<delete dir="classes/tomcat" quiet="true" />
 						</then>
@@ -353,23 +370,6 @@
 
 		<delete dir="docroot/WEB-INF/client/classes" />
 		<delete dir="docroot/WEB-INF/client/src" />
-	</target>
-
-	<target name="build-db">
-		<java
-			classname="com.liferay.portal.tools.DBBuilder"
-			classpathref="portal.classpath"
-			fork="true"
-			maxmemory="384m"
-			newenvironment="true"
-		>
-			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="db.database.name=${database.name}" />
-			<arg value="db.database.types=${database.types}" />
-			<arg value="db.sql.dir=docroot/WEB-INF/sql" />
-		</java>
-
-		<delete file="velocity.log" quiet="true" />
 	</target>
 
 	<target name="build-lang">
@@ -556,41 +556,48 @@ Include-Resource: WEB-INF/=server-config.wsdd,classes;filter:=*.wsdd
 		/>
 
 		<if>
-			<and>
-				<resourcecount count="0" when="gt">
-					<fileset dir="${basedir}" includes="docroot/**/*.jsp,src/META-INF/resources/**/*.jsp" />
-				</resourcecount>
-				<available file="bnd.bnd" type="file" />
-			</and>
+			<isset property="compile.jsp.docroot.dir" />
 			<then>
-				<antcall target="jar">
-					<param name="plugins.includes.path" value="${basedir}" />
-				</antcall>
+				<compile
+					module.dir="${basedir}"
+				/>
 
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<unzip dest="${tstamp.value}" src="${plugin.file}" />
-
-				<if>
-					<available file="${tstamp.value}/META-INF/resources" type="dir" />
-					<then>
-						<compile-jsp
-							compile.jsp.docroot.dir="${tstamp.value}/META-INF/resources"
-							compile.jsp.temp.dir="${tstamp.value}"
-						/>
-					</then>
-					<else>
-						<compile-jsp
-							compile.jsp.docroot.dir="${tstamp.value}"
-							compile.jsp.temp.dir="${tstamp.value}"
-						/>
-					</else>
-				</if>
-
-				<delete dir="${tstamp.value}" />
+				<compile-jsp
+					compile.jsp.docroot.dir="${compile.jsp.docroot.dir}"
+				/>
 			</then>
+			<elseif>
+				<available file="bnd.bnd" type="file" />
+				<then>
+					<antcall target="jar">
+						<param name="plugins.includes.path" value="${basedir}" />
+					</antcall>
+
+					<tstamp>
+						<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+					</tstamp>
+
+					<unzip dest="${tstamp.value}" src="${plugin.file}" />
+
+					<if>
+						<available file="${tstamp.value}/META-INF/resources" type="dir" />
+						<then>
+							<compile-jsp
+								compile.jsp.docroot.dir="${tstamp.value}/META-INF/resources"
+								compile.jsp.temp.dir="${tstamp.value}"
+							/>
+						</then>
+						<else>
+							<compile-jsp
+								compile.jsp.docroot.dir="${tstamp.value}"
+								compile.jsp.temp.dir="${tstamp.value}"
+							/>
+						</else>
+					</if>
+
+					<delete dir="${tstamp.value}" />
+				</then>
+			</elseif>
 			<else>
 				<loop-macrodef-or-target
 					module.dirs="${basedir}"
